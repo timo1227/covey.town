@@ -15,12 +15,15 @@ export enum Steps {
   deviceSelectionStep,
 }
 
-export default function PreJoinScreens() {
+interface PreJoinScreensProps {
+  onConnectButtonClick: () => void;
+}
+
+export default function PreJoinScreens({ onConnectButtonClick }: PreJoinScreensProps) {
   const { user } = useAppState();
   const { getAudioAndVideoTracks } = useVideoContext();
 
   const [mediaError, setMediaError] = useState<Error>();
-
 
   useEffect(() => {
     if (!mediaError) {
@@ -32,18 +35,23 @@ export default function PreJoinScreens() {
     }
   }, [getAudioAndVideoTracks, mediaError]);
 
+  const handleConnect = () => {
+    onConnectButtonClick();
+  };
 
   return (
     <IntroContainer>
       <MediaErrorSnackbar error={mediaError} />
-      <Heading as="h2" size="xl">Welcome to Covey.Town!</Heading>
-      <Text p="4">
-        Covey.Town is a social platform that integrates a 2D game-like metaphor with video chat.
-        To get started, setup your camera and microphone, choose a username, and then create a new town
+      <Heading as='h2' size='xl' className='text-center'>
+        Welcome to Covey.Town!
+      </Heading>
+      <Text p='4'>
+        Covey.Town is a social platform that integrates a 2D game-like metaphor with video chat. To
+        To get started, setup your camera and microphone, choose a username, and then create a new
         to hang out in, or join an existing one.
       </Text>
-        <DeviceSelectionScreen />
-        <TownSelection />
+      <DeviceSelectionScreen />
+      <TownSelection onConnect={handleConnect} />
     </IntroContainer>
   );
 }
