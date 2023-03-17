@@ -15,11 +15,7 @@ export enum Steps {
   deviceSelectionStep,
 }
 
-interface PreJoinScreensProps {
-  onConnectButtonClick: () => void;
-}
-
-export default function PreJoinScreens({ onConnectButtonClick }: PreJoinScreensProps) {
+export default function PreJoinScreens() {
   const { user } = useAppState();
   const { getAudioAndVideoTracks } = useVideoContext();
 
@@ -35,10 +31,6 @@ export default function PreJoinScreens({ onConnectButtonClick }: PreJoinScreensP
     }
   }, [getAudioAndVideoTracks, mediaError]);
 
-  const handleConnect = () => {
-    onConnectButtonClick();
-  };
-
   return (
     <IntroContainer>
       <MediaErrorSnackbar error={mediaError} />
@@ -51,7 +43,7 @@ export default function PreJoinScreens({ onConnectButtonClick }: PreJoinScreensP
         to hang out in, or join an existing one.
       </Text>
       <DeviceSelectionScreen />
-      <TownSelection onConnect={handleConnect} />
+      <TownSelection />
     </IntroContainer>
   );
 }

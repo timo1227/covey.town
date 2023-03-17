@@ -24,11 +24,7 @@ import useLoginController from '../../hooks/useLoginController';
 import TownController from '../../classes/TownController';
 import useVideoContext from '../VideoCall/VideoFrontend/hooks/useVideoContext/useVideoContext';
 
-interface TownSelectionProps {
-  onConnect: () => void;
-}
-
-export default function TownSelection({ onConnect }: TownSelectionProps): JSX.Element {
+export default function TownSelection(): JSX.Element {
   const [userName, setUserName] = useState<string>('');
   const [newTownName, setNewTownName] = useState<string>('');
   const [newTownIsPublic, setNewTownIsPublic] = useState<boolean>(true);
@@ -97,9 +93,8 @@ export default function TownSelection({ onConnect }: TownSelectionProps): JSX.El
           });
         }
       }
-      onConnect();
     },
-    [onConnect, userName, loginController, videoConnect, setTownController, toast],
+    [userName, loginController, videoConnect, setTownController, toast],
   );
 
   const handleCreate = async () => {

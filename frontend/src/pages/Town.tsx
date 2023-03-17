@@ -19,23 +19,13 @@ import TownControllerContext from '../contexts/TownControllerContext';
 import LoginControllerContext from '../contexts/LoginControllerContext';
 import { TownsServiceClient } from '../generated/client';
 
-interface AppStateWrapperProps {
-  onJoinTown: () => void;
-  onLeaveTown: () => void;
-}
-
-function JoinTown({ onJoinTown, onLeaveTown }: AppStateWrapperProps) {
+function JoinTown() {
   const [townController, setTownController] = useState<TownController | null>(null);
   const { error, setError } = useAppState();
   const connectionOptions = useConnectionOptions();
   const onDisconnect = useCallback(() => {
     townController?.disconnect();
-    onLeaveTown();
-  }, [onLeaveTown, townController]);
-
-  const hadnleButtonClicked = () => {
-    onJoinTown();
-  };
+  }, [townController]);
 
   let page: JSX.Element;
   if (townController) {
@@ -48,7 +38,7 @@ function JoinTown({ onJoinTown, onLeaveTown }: AppStateWrapperProps) {
       </TownControllerContext.Provider>
     );
   } else {
-    page = <PreJoinScreens onConnectButtonClick={hadnleButtonClicked} />;
+    page = <PreJoinScreens />;
   }
   const url = process.env.REACT_APP_TOWNS_SERVICE_URL;
   assert(url);
@@ -68,16 +58,13 @@ function JoinTown({ onJoinTown, onLeaveTown }: AppStateWrapperProps) {
   );
 }
 
-export default function AppStateWrapper({
-  onJoinTown,
-  onLeaveTown,
-}: AppStateWrapperProps): JSX.Element {
+export default function AppStateWrapper(): JSX.Element {
   return (
     <BrowserRouter>
       <ChakraProvider>
         <MuiThemeProvider theme={theme}>
           <AppStateProvider>
-            <JoinTown onJoinTown={onJoinTown} onLeaveTown={onLeaveTown} />
+            <JoinTown />
           </AppStateProvider>
         </MuiThemeProvider>
       </ChakraProvider>

@@ -83,10 +83,9 @@ const listTowns = (suffix: string) =>
   );
 
 export function wrappedTownSelection() {
-  const onConnect = jest.fn();
   return (
     <ChakraProvider>
-      <TownSelection onConnect={onConnect} />
+      <TownSelection />
     </ChakraProvider>
   );
 }
