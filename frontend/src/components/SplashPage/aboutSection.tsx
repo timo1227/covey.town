@@ -1,5 +1,6 @@
 import React from 'react';
 import { RxSpeakerLoud } from 'react-icons/rx';
+import { FiMonitor, FiLock } from 'react-icons/fi';
 
 export default function AboutSection() {
   return (
@@ -61,8 +62,8 @@ export default function AboutSection() {
         <div className='mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none flex flex-col sm:flex-row justify-center items-center gap-5'>
           <div className='max-w-sm rounded-md overflow-hidden shadow-lg border-gray-700 border bg-gray-700 bg-opacity-25 backdrop-blur-sm pb-5 flex-1'>
             <div className='header flex items-center gap-2 px-3 mt-5'>
-              <RxSpeakerLoud className='text-indigo-500 sm:text-l text-md' />
-              <p className='text-l text-white'>Audio</p>
+              <FiMonitor className='text-indigo-500 sm:text-l text-md' />
+              <p className='text-l text-white'>Virtual</p>
             </div>
             <div>
               <p className='text-white px-9 py-3'>
@@ -85,8 +86,8 @@ export default function AboutSection() {
           </div>
           <div className='max-w-sm rounded-md overflow-hidden shadow-lg border-gray-700 border bg-gray-700 bg-opacity-25 backdrop-blur-sm pb-5 flex-1'>
             <div className='header flex items-center gap-2 px-3 mt-5'>
-              <RxSpeakerLoud className='text-indigo-500 sm:text-l text-md' />
-              <p className='text-l text-white'>Audio</p>
+              <FiLock className='text-indigo-500 sm:text-l text-md' />
+              <p className='text-l text-white'>Security</p>
             </div>
             <div>
               <p className='text-white px-9 py-3'>
