@@ -7,7 +7,7 @@ import logo from '../../public/logo.png';
 const NAVIGATION = [
   { name: 'Town', href: '/Town' },
   { name: 'Features', href: '#' },
-  { name: 'About', href: '#' },
+  { name: 'About', href: '#About' },
 ];
 
 export default function HeroSection() {
@@ -43,7 +43,7 @@ export default function HeroSection() {
             ))}
           </div>
           <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-            <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
+            <a href='/Login' className='text-sm font-semibold leading-6 text-gray-900'>
               Log in <span aria-hidden='true'>&rarr;</span>
             </a>
           </div>
@@ -78,7 +78,7 @@ export default function HeroSection() {
                 </div>
                 <div className='py-6'>
                   <a
-                    href='#'
+                    href='/Login'
                     className='-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
                     Log in
                   </a>
@@ -133,7 +133,7 @@ export default function HeroSection() {
             </p>
             <div className='mt-10 flex items-center justify-center gap-x-6'>
               <a
-                href='#'
+                href='/Register'
                 className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'>
                 Get started
               </a>

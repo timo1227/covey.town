@@ -2,9 +2,54 @@ import React from 'react';
 import { RxSpeakerLoud } from 'react-icons/rx';
 import { FiMonitor, FiLock } from 'react-icons/fi';
 
+interface CardProps {
+  icon: string;
+  title: string;
+  description: string;
+}
+
 export default function AboutSection() {
+  const cards = [
+    {
+      icon: 'FiMonitor',
+      title: 'Virtual',
+      description:
+        'Covey.town is a virtual event platform designed to create an immersive and collaborative environment for remote teams, communities, and organizations.',
+    },
+    {
+      icon: 'RxSpeakerLoud',
+      title: 'Audio',
+      description:
+        'Our platform uses advanced technology, including spatial audio and customizable virtual rooms, to provide a unique and engaging experience for participants.',
+    },
+    {
+      icon: 'FiLock',
+      title: 'Privacy',
+      description:
+        'Covey.town is committed to protecting your privacy. We do not collect any personal information and all data is encrypted and stored securely.',
+    },
+  ];
+
+  function aboutCards({ icon, title, description }: CardProps) {
+    return (
+      <div className='max-w-sm rounded-md overflow-hidden shadow-lg border-gray-700 border bg-gray-700 bg-opacity-25 backdrop-blur-sm pb-5 flex-1'>
+        <div className='header flex items-center gap-2 px-3 mt-5'>
+          {icon === 'FiMonitor' && <FiMonitor className='text-indigo-500 sm:text-l text-md' />}
+          {icon === 'RxSpeakerLoud' && (
+            <RxSpeakerLoud className='text-indigo-500 sm:text-l text-md' />
+          )}
+          {icon === 'FiLock' && <FiLock className='text-indigo-500 sm:text-l text-md' />}
+          <p className='text-l text-white'>{title}</p>
+        </div>
+        <div>
+          <p className='text-white px-9 py-3'>{description}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className='relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32'>
+    <div id='About' className='relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32'>
       <svg
         viewBox='0 0 1097 845'
         aria-hidden='true'
@@ -59,43 +104,8 @@ export default function AboutSection() {
             physical space despite being remote.
           </p>
         </div>
-        <div className='mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none flex flex-col sm:flex-row justify-center items-center gap-5'>
-          <div className='max-w-sm rounded-md overflow-hidden shadow-lg border-gray-700 border bg-gray-700 bg-opacity-25 backdrop-blur-sm pb-5 flex-1'>
-            <div className='header flex items-center gap-2 px-3 mt-5'>
-              <FiMonitor className='text-indigo-500 sm:text-l text-md' />
-              <p className='text-l text-white'>Virtual</p>
-            </div>
-            <div>
-              <p className='text-white px-9 py-3'>
-                Covey.town provides a high quality audio experience for all participants. The audio
-                is transmitted in real time, and is processed to reduce echo.
-              </p>
-            </div>
-          </div>
-          <div className='max-w-sm rounded-md overflow-hidden shadow-lg border-gray-700 border bg-gray-700 bg-opacity-25 backdrop-blur-sm pb-5 flex-1'>
-            <div className='header flex items-center gap-2 px-3 mt-5'>
-              <RxSpeakerLoud className='text-indigo-500 sm:text-l text-md' />
-              <p className='text-l text-white'>Audio</p>
-            </div>
-            <div>
-              <p className='text-white px-9 py-3'>
-                Covey.town provides a high quality audio experience for all participants. The audio
-                is transmitted in real time, and is processed to reduce echo.
-              </p>
-            </div>
-          </div>
-          <div className='max-w-sm rounded-md overflow-hidden shadow-lg border-gray-700 border bg-gray-700 bg-opacity-25 backdrop-blur-sm pb-5 flex-1'>
-            <div className='header flex items-center gap-2 px-3 mt-5'>
-              <FiLock className='text-indigo-500 sm:text-l text-md' />
-              <p className='text-l text-white'>Security</p>
-            </div>
-            <div>
-              <p className='text-white px-9 py-3'>
-                Covey.town provides a high quality audio experience for all participants. The audio
-                is transmitted in real time, and is processed to reduce echo.
-              </p>
-            </div>
-          </div>
+        <div className='mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none grid grid-flow-row sm:grid-flow-col justify-center py-2 gap-5'>
+          {cards.map(card => aboutCards(card))}
         </div>
       </div>
     </div>
