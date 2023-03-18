@@ -3,8 +3,5 @@
     "typescript.tsdk": "./townService/node_modules/typescript/lib",
     "editor.quickSuggestions": {
         "strings": "on"
-    },
-    "files.associations": {
-        "*.css": "tailwindcss"
     }
 }
