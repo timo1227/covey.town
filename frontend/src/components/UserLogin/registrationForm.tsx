@@ -25,7 +25,39 @@ export default function registrationForm() {
                       type='text'
                       name='user-name'
                       id='user-name'
+                      required
                       className='mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                      placeholder='User name'
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor='password'
+                      className='block text-sm font-medium leading-6 text-gray-900'>
+                      Password
+                    </label>
+                    <input
+                      id='password'
+                      name='password'
+                      type='password'
+                      required
+                      className='relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                      placeholder='Password'
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor='password'
+                      className='block text-sm font-medium leading-6 text-gray-900'>
+                      Confirm Password
+                    </label>
+                    <input
+                      id='confirmPassword'
+                      name='password'
+                      type='password'
+                      required
+                      className='relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                      placeholder='Confirm Password'
                     />
                   </div>
                   <div className='col-span-6 sm:col-span-2'>
@@ -38,6 +70,7 @@ export default function registrationForm() {
                       type='text'
                       name='first-name'
                       id='first-name'
+                      required
                       className='mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                     />
                   </div>
@@ -66,7 +99,9 @@ export default function registrationForm() {
                       type='text'
                       name='email-address'
                       id='email-address'
+                      required
                       className='mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                      placeholder='example@example.com'
                     />
                   </div>
                 </div>

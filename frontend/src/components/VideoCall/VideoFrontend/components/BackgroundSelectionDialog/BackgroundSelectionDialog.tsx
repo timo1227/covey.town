@@ -29,14 +29,13 @@ function BackgroundSelectionDialog() {
 
   return (
     <Drawer
-      variant="persistent"
-      anchor="right"
+      variant='persistent'
+      anchor='right'
       open={isBackgroundSelectionOpen}
       transitionDuration={0}
       classes={{
         paper: classes.drawer,
-      }}
-    >
+      }}>
       <BackgroundSelectionHeader onClose={() => setIsBackgroundSelectionOpen(false)} />
       <div className={classes.thumbnailContainer}>
         <BackgroundThumbnail thumbnail={'none'} name={'None'} />

@@ -9,16 +9,14 @@ import Login from './pages/Login';
 export default function App() {
   return (
     <>
-      <main className='w-full'>
-        <CompatRouter>
-          <Routes>
-            <Route path='/' element={<CoveyTownSplash />} />
-            <Route path='/Town' element={<AppStateWrapper />} />
-            <Route path='/Login' element={<Login />} />
-            <Route path='/Register' element={<Register />} />
-          </Routes>
-        </CompatRouter>
-      </main>
+      <CompatRouter>
+        <Routes>
+          <Route path='/' element={<CoveyTownSplash />} />
+          <Route path='/Town' element={<AppStateWrapper />} />
+          <Route path='/Login' element={<Login />} />
+          <Route path='/Register' element={<Register />} />
+        </Routes>
+      </CompatRouter>
     </>
   );
 }

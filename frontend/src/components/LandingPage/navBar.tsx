@@ -5,6 +5,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import logo from '../../public/logo.png';
 
 const NAVIGATION = [
+  { name: 'Home', href: '/' },
   { name: 'Town', href: '/Town' },
   { name: 'Features', href: '#' },
   { name: 'About', href: '#About' },
