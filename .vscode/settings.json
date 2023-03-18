@@ -1,4 +1,7 @@
 {
     "jest.jestCommandLine": "npx jest",
-    "typescript.tsdk": "./townService/node_modules/typescript/lib"
+    "typescript.tsdk": "./townService/node_modules/typescript/lib",
+    "editor.quickSuggestions": {
+        "strings": "on"
+    }
 }

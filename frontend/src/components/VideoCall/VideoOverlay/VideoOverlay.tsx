@@ -120,7 +120,8 @@ export default function VideoGrid(props: Props) {
           <Main style={{ paddingBottom: '90px' }}>
             <ReconnectingNotification />
             <MobileTopMenuBar />
-            <Container className="videochat-container">
+            {/* To-do: Edit the VideoChat container to move above town */}
+            <Container className="videochat-container"> 
               <Room />
             </Container>
             <MenuBar />

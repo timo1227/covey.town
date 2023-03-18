@@ -117,3 +117,8 @@ ngrok.yml
 
 # Local Netlify folder
 .netlify
+
+# VS Code files
+.vscode/
+.vscode/*
+.vscode/settings.json
