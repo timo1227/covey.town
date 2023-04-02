@@ -77,5 +77,11 @@ describe('[T2] ConversationAreaController', () => {
         occupantsByID: testArea.occupants.map(eachOccupant => eachOccupant.id),
       });
     });
+    it('creates a new conversation channel', () => {
+      const newTopic = nanoid();
+      testArea.topic = newTopic;
+      expect(mockListeners.topicChange).toBeCalledWith(newTopic);
+      expect(testArea.topic).toEqual(newTopic);
+    });
   });
 });

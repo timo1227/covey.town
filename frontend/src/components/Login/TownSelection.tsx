@@ -94,7 +94,7 @@ export default function TownSelection(): JSX.Element {
         }
       }
     },
-    [setTownController, userName, toast, videoConnect, loginController],
+    [userName, loginController, videoConnect, setTownController, toast],
   );
 
   const handleCreate = async () => {

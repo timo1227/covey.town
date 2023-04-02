@@ -48,7 +48,7 @@ interface VideoProviderProps {
   children: ReactNode;
 }
 
-export function VideoProvider({ options, children, onError = () => {}, onDisconnect=()=>{} }: VideoProviderProps) {
+export function VideoProvider({ options, children, onError = () => { }, onDisconnect = () => { } }: VideoProviderProps) {
   const onErrorCallback: ErrorCallback = useCallback(
     error => {
       console.log(`ERROR: ${error.message}`, error);

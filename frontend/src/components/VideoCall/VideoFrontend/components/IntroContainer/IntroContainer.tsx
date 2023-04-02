@@ -93,13 +93,13 @@ const IntroContainer = (props: IntroContainerProps) => {
   const location = useLocation();
 
   return (
-    <div className={classes.background}>
-      <div className={classes.container}>
-        <div className={classes.innerContainer}>
-          <div className={classes.content}>{props.children}</div>
-            </div>
-          </div>
-    </div>
+    <div className='bg-gray-700 flex justify-center py-5'>
+      <div className='w-1/3 bg-white rounded-md p-5'>
+        <div className='rounded flex'>
+          <div className=''>{props.children}</div>
+        </div>
+      </div>
+    </div >
   );
 };
 
