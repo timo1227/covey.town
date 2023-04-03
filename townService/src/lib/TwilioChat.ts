@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-import AccessToken, { ChatGrant } from 'twilio/lib/jwt/AccessToken';
+import Twilio from 'twilio';
+import { ChatGrant } from 'twilio/lib/jwt/AccessToken';
 import { logError } from '../Utils';
 
 dotenv.config();
@@ -56,20 +57,16 @@ export default class TwilioChat {
 
     // Create an access token which we will sign and return to the client,
     // containing the grant we just created
-    const token = new AccessToken(
+    const token = new Twilio.jwt.AccessToken(
       this._twilioAccountSid,
       this._twilioApiKeySID,
       this._twilioApiKeySecret,
-      {
-        identity: clientIdentity,
-      },
+      { identity: clientIdentity },
     );
 
-    const serviceSid = this._twilioChatServiceSID;
-    token.identity = clientIdentity;
     // Create a "grant" which enables a client to use Chat as a given user,
     // on a given device
-    const chatGrant = new ChatGrant({ serviceSid });
+    const chatGrant = new ChatGrant({ serviceSid: this._twilioChatServiceSID });
     token.addGrant(chatGrant);
     return token.toJwt();
   }

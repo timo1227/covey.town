@@ -19,6 +19,7 @@ import ConversationArea from './ConversationArea';
 import InteractableArea from './InteractableArea';
 import ViewingArea from './ViewingArea';
 import TwilioChat from '../lib/TwilioChat';
+import IChatClient from '../lib/IChatClient';
 
 /**
  * The Town class implements the logic for each town: managing the various events that
@@ -73,7 +74,7 @@ export default class Town {
   /** The videoClient that this CoveyTown will use to provision video resources * */
   private _videoClient: IVideoClient = TwilioVideo.getInstance();
 
-  private _chatClient: TwilioChat = TwilioChat.getInstance();
+  private _chatClient: IChatClient = TwilioChat.getInstance();
 
   private _interactables: InteractableArea[] = [];
 
@@ -120,7 +121,7 @@ export default class Town {
     // Create a video token for this user to join this town
     newPlayer.videoToken = await this._videoClient.getTokenForTown(this._townID, newPlayer.id);
 
-    // Creates a chat token for this user to join this town
+    // // Creates a chat token for this user to join this town
     newPlayer.chatToken = await this._chatClient.getTokenForChat(newPlayer.id);
 
     // Notify other players that this player has joined
