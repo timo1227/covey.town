@@ -4,12 +4,6 @@ import { logError } from '../Utils';
 
 dotenv.config();
 
-declare global {
-  interface Error {
-    code: undefined;
-  }
-}
-
 const MISSING_TOKEN_NAME = 'missing';
 export default class TwilioChat {
   private static _instance: TwilioChat;
@@ -47,7 +41,7 @@ export default class TwilioChat {
     return TwilioChat._instance;
   }
 
-  async getTokenForTown(clientIdentity: string): Promise<string> {
+  async getTokenForChat(clientIdentity: string): Promise<string> {
     if (
       this._twilioAccountSid === MISSING_TOKEN_NAME ||
       this._twilioApiKeySID === MISSING_TOKEN_NAME ||

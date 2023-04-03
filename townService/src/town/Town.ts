@@ -121,7 +121,7 @@ export default class Town {
     newPlayer.videoToken = await this._videoClient.getTokenForTown(this._townID, newPlayer.id);
 
     // Creates a chat token for this user to join this town
-    newPlayer.chatToken = await this._chatClient.getTokenForTown(newPlayer.id);
+    newPlayer.chatToken = await this._chatClient.getTokenForChat(newPlayer.id);
 
     // Notify other players that this player has joined
     this._broadcastEmitter.emit('playerJoined', newPlayer.toPlayerModel());
