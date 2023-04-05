@@ -1,19 +1,19 @@
 import React, { ChangeEvent, useState, FormEvent } from 'react';
 import { useAppState } from '../../state';
 
-import Button from '@material-ui/core/Button';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import Grid from '@material-ui/core/Grid';
+import Button from '@mui/material/Button';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import Grid from '@mui/material/Grid';
 import { ReactComponent as GoogleLogo } from './google-logo.svg';
-import { InputLabel, Theme } from '@material-ui/core';
+import { InputLabel, Theme } from '@mui/material';
 import IntroContainer from '../IntroContainer/IntroContainer';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 import { useLocation, useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   googleButton: {
     'background': 'white',
     'color': 'rgb(0, 94, 166)',
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     'textTransform': 'none',
     'boxShadow': 'none',
     'padding': '0.3em 1em',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
     '&:hover': {
@@ -47,14 +47,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '120px',
   },
   submitButton: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
 }));
 
 export default function LoginPage() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const { signIn, user, isAuthReady } = useAppState();
   const history = useHistory();
   const location = useLocation();
@@ -67,7 +67,7 @@ export default function LoginPage() {
     setAuthError(null);
     signIn?.(passcode)
       .then(() => {
-        history.replace(location?.state?.from || { pathname: '/' });
+        history.replace({ pathname: '/' });
       })
       .catch(err => setAuthError(err));
   };

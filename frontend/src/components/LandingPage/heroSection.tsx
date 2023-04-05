@@ -1,7 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
+'use client';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
 import logo from '../../public/logo.png';
 
 const NAVIGATION = [
@@ -21,7 +21,7 @@ export default function HeroSection() {
           <div className='flex lg:flex-1'>
             <a href='/' className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <img className='h-8 w-auto' src={logo} alt='Covey Town Logo' />
+              <img className='h-8 w-auto' src={logo.src} alt='Covey Town Logo' />
             </a>
           </div>
           <div className='flex lg:hidden'>
@@ -55,7 +55,7 @@ export default function HeroSection() {
             <div className='flex items-center justify-between'>
               <a href='#' className='-m-1.5 p-1.5'>
                 <span className='sr-only'>Covey Town</span>
-                <img className='h-8 w-auto' src={logo} alt='Covey Town Logo' />
+                <img className='h-8 w-auto' src={logo.src} alt='Covey Town Logo' />
               </a>
               <button
                 type='button'

@@ -1,6 +1,5 @@
-import React from 'react';
+import { FiLock, FiMonitor } from 'react-icons/fi';
 import { RxSpeakerLoud } from 'react-icons/rx';
-import { FiMonitor, FiLock } from 'react-icons/fi';
 
 interface CardProps {
   icon: string;

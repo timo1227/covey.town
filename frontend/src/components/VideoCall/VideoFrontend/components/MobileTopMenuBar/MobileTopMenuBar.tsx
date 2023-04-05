@@ -1,16 +1,17 @@
-import { Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { makeStyles } from 'tss-react/mui';
+import { Grid, Theme, Typography } from '@mui/material';
 import React from 'react';
 import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import EndCallButton from '../Buttons/EndCallButton/EndCallButton';
 import Menu from '../MenuBar/Menu/Menu';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   container: {
     background: 'white',
     paddingLeft: '1em',
     display: 'none',
     height: `${theme.mobileTopBarHeight}px`,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex',
     },
   },
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '0 0.6em',
   },
   settingsButton: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: '28px',
       minWidth: '28px',
       border: '1px solid rgb(136, 140, 142)',
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export default function MobileTopMenuBar() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const { room } = useVideoContext();
 
   return (

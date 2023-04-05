@@ -1,13 +1,12 @@
-import { makeStyles } from '@material-ui/core';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import clsx from 'clsx';
+import { makeStyles } from 'tss-react/mui';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 import React, { useEffect, useRef, useState } from 'react';
 import TextConversation from '../../../../../../classes/TextConversation';
 import useTownController from '../../../../../../hooks/useTownController';
 import { isMobile } from '../../../utils';
 import Snackbar from '../../Snackbar/Snackbar';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles()(theme => ({
   chatInputContainer: {
     borderTop: '1px solid #e4e7e9',
     borderBottom: '1px solid #e4e7e9',
@@ -67,7 +66,7 @@ const ALLOWED_FILE_TYPES =
   'audio/*, image/*, text/*, video/*, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document .xslx, .ppt, .pdf, .key, .svg, .csv';
 
 export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const [messageBody, setMessageBody] = useState('');
   const [isSendingFile, setIsSendingFile] = useState(false);
   const [fileSendError, setFileSendError] = useState<string | null>(null);
@@ -120,7 +119,7 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
         variant="error"
         handleClose={() => setFileSendError(null)}
       />
-      <div className={clsx(classes.textAreaContainer, { [classes.isTextareaFocused]: isTextareaFocused })}>
+      <div className={cx(classes.textAreaContainer, { [classes.isTextareaFocused]: isTextareaFocused })}>
         {/* 
         Here we add the "isTextareaFocused" class when the user is focused on the TextareaAutosize component.
         This helps to ensure a consistent appearance across all browsers. Adding padding to the TextareaAutosize

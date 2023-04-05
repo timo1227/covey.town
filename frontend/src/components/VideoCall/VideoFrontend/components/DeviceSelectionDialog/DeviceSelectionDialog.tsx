@@ -11,15 +11,15 @@ import {
   Button,
   Theme,
   DialogTitle,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
 import VideoInputList from './VideoInputList/VideoInputList';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   container: {
     width: '600px',
     minHeight: '400px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 'calc(100vw - 32px)',
     },
     '& .inputSelect': {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     float: 'right',
   },
   paper: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: '16px',
     },
   },
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export default function DeviceSelectionDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Dialog open={open} onClose={onClose} classes={{ paper: classes.paper }}>

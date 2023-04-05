@@ -1,5 +1,5 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import clsx from 'clsx';
+import { makeStyles } from 'tss-react/mui';
+import { Theme } from '@mui/material/styles';
 import React from 'react';
 import { usePlayersInVideoCall } from '../../../../../classes/TownController';
 import ViewingAreaVideo from '../../../../Town/interactables/ViewingAreaVideo';
@@ -10,44 +10,49 @@ import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import Participant from '../Participant/Participant';
 import useSelectedParticipant from '../VideoProvider/useSelectedParticipant/useSelectedParticipant';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles()((theme: Theme) =>
+  ({
     container: {
       overflowY: 'auto',
       background: 'rgb(79, 83, 85)',
       gridArea: '1 / 2 / 1 / 3',
       zIndex: 5,
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         gridArea: '2 / 1 / 3 / 3',
         overflowY: 'initial',
         overflowX: 'auto',
         display: 'flex',
       },
     },
+
     transparentBackground: {
       background: 'transparent',
     },
+
     scrollContainer: {
       display: 'flex',
       justifyContent: 'center',
     },
+
     innerScrollContainer: {
       width: `calc(${theme.sidebarWidth}px - 3em)`,
       padding: '1.5em 0',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         width: 'auto',
         padding: `${theme.sidebarMobilePadding}px`,
         display: 'flex',
       },
     },
+
     gridContainer: {
       gridArea: '1 / 1 / 1 / 3',
       overflowX: 'hidden',
       overflowY: 'auto',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         gridArea: '1 / 1 / 3 / 1',
       },
     },
+
     gridInnerContainer: {
       // display: 'flex',
       // gridTemplateColumns: '1fr 1fr 1fr 1fr',
@@ -64,9 +69,8 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       justifyContent: 'center',
       alignContent: 'center'
-    },
-  })
-);
+    }
+  }));
 
 export default function ParticipantList() {
   // const classes = useStyles();
@@ -79,7 +83,7 @@ export default function ParticipantList() {
   const nearbyPlayers = usePlayersInVideoCall();
   const isRemoteParticipantScreenSharing = screenShareParticipant && screenShareParticipant !== localParticipant;
 
-  const classes = useStyles('fullwidth');
+  const { classes } = useStyles('fullwidth');
   // if (participants.length === 0) return null; // Don't render this component if there are no remote participants.
 
   // return (

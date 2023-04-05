@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from '../../public/SplashImage.png';
 import { LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid';
 import { BsWechat } from 'react-icons/bs';
@@ -55,7 +54,7 @@ export default function UpdateSection() {
         <div className='-mt-12 -ml-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden'>
           <img
             className='w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]'
-            src={Image}
+            src={Image.src}
             alt=''
           />
         </div>
@@ -70,7 +69,7 @@ export default function UpdateSection() {
                 vitae sed turpis id.
               </p>
               <ul role='list' className='mt-8 space-y-8 text-gray-600'>
-                <li className='flex gap-x-3'>
+                <li key='DM' className='flex gap-x-3'>
                   <BsWechat className='mt-1 h-5 w-5 flex-none text-indigo-600' aria-hidden='true' />
                   <span>
                     <strong className='font-semibold text-gray-900'>Direct Message</strong> Lorem
@@ -78,7 +77,7 @@ export default function UpdateSection() {
                     suscipit eaque, iste dolor cupiditate blanditiis ratione.
                   </span>
                 </li>
-                <li className='flex gap-x-3'>
+                <li key='SSl' className='flex gap-x-3'>
                   <LockClosedIcon
                     className='mt-1 h-5 w-5 flex-none text-indigo-600'
                     aria-hidden='true'
@@ -89,7 +88,7 @@ export default function UpdateSection() {
                     commodo.
                   </span>
                 </li>
-                <li className='flex gap-x-3'>
+                <li key='DB' className='flex gap-x-3'>
                   <ServerIcon
                     className='mt-1 h-5 w-5 flex-none text-indigo-600'
                     aria-hidden='true'

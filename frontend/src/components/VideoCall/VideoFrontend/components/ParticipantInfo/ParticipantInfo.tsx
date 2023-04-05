@@ -1,6 +1,6 @@
 import React from 'react';
-import clsx from 'clsx';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
+import { Theme } from '@mui/material/styles';
 import { LocalAudioTrack, LocalVideoTrack, Participant, RemoteAudioTrack, RemoteVideoTrack } from 'twilio-video';
 
 import AudioLevelIndicator from '../AudioLevelIndicator/AudioLevelIndicator';
@@ -8,7 +8,7 @@ import AvatarIcon from '../../icons/AvatarIcon';
 import NetworkQualityLevel from '../NetworkQualityLevel/NetworkQualityLevel';
 import PinIcon from './PinIcon/PinIcon';
 import ScreenShareIcon from '../../icons/ScreenShareIcon';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 import useIsTrackSwitchedOff from '../../hooks/useIsTrackSwitchedOff/useIsTrackSwitchedOff';
 import usePublications from '../../hooks/usePublications/usePublications';
@@ -16,8 +16,8 @@ import useTrack from '../../hooks/useTrack/useTrack';
 import useParticipantIsReconnecting from '../../hooks/useParticipantIsReconnecting/useParticipantIsReconnecting';
 import { UserProfile } from '../../../../../CoveyTypes';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles()((theme: Theme) =>
+  ({
     container: {
       position: 'relative',
       display: 'flex',
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: `calc(${(9 / 16) * 100}% - ${theme.participantBorderWidth}px)`,
       background: 'black',
     },
+
     innerContainer: {
       position: 'absolute',
       top: 0,
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       height: '100%',
     },
+
     infoContainer: {
       position: 'absolute',
       zIndex: 2,
@@ -52,6 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'transparent',
       top: 0,
     },
+
     avatarContainer: {
       display: 'flex',
       alignItems: 'center',
@@ -63,12 +66,13 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 0,
       left: 0,
       zIndex: 1,
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         '& svg': {
           transform: 'scale(0.7)',
         },
       },
     },
+
     reconnectingContainer: {
       position: 'absolute',
       top: 0,
@@ -81,6 +85,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'rgba(40, 42, 43, 0.75)',
       zIndex: 1,
     },
+
     screenShareIconContainer: {
       background: 'rgba(0, 0, 0, 0.5)',
       padding: '0.18em 0.3em',
@@ -90,6 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
         fill: 'white',
       },
     },
+
     identity: {
       background: 'rgba(0, 0, 0, 0.5)',
       color: 'white',
@@ -98,6 +104,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
     },
+
     infoRowBottom: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -105,20 +112,22 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 0,
       left: 0,
     },
+
     typeography: {
       color: 'white',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         fontSize: '0.75rem',
       },
     },
+
     hideParticipant: {
       display: 'none',
     },
+
     cursorPointer: {
       cursor: 'pointer',
-    },
-  })
-);
+    }
+  }));
 
 interface ParticipantInfoProps {
   participant: Participant;
@@ -157,11 +166,11 @@ export default function ParticipantInfo({
   const audioTrack = useTrack(audioPublication) as LocalAudioTrack | RemoteAudioTrack | undefined;
   const isParticipantReconnecting = useParticipantIsReconnecting(participant);
 
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <div
-      className={clsx(classes.container, {
+      className={cx(classes.container, {
         [classes.hideParticipant]: hideParticipant,
         [classes.cursorPointer]: Boolean(onClick),
       },

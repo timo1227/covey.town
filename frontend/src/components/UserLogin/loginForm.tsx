@@ -1,6 +1,5 @@
-import React from 'react';
-import logo from '../../public/logo.png';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
+import logo from '../../public/logo.png';
 
 export default function LoginForm() {
   return (
@@ -9,7 +8,7 @@ export default function LoginForm() {
         <div className='w-full max-w-md space-y-8'>
           <div>
             <a href='/'>
-              <img className='mx-auto h-12 w-auto' src={logo} alt='Covey Town Logo' />
+              <img className='mx-auto h-12 w-auto' src={logo.src} alt='Covey Town Logo' />
             </a>
             <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
               Sign in to your account
@@ -34,7 +33,7 @@ export default function LoginForm() {
                   type='email'
                   autoComplete='email'
                   required
-                  className='relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className='relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                   placeholder='Email address'
                 />
               </div>
@@ -48,7 +47,7 @@ export default function LoginForm() {
                   type='password'
                   autoComplete='current-password'
                   required
-                  className='relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className='relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                   placeholder='Password'
                 />
               </div>

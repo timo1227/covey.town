@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from '@material-ui/core';
+import { Link } from '@mui/material';
 import Snackbar from '../Snackbar/Snackbar';
 import useIsRecording from '../../hooks/useIsRecording/useIsRecording';
 
@@ -40,37 +40,39 @@ export default function RecordingNotifications() {
     prevIsRecording.current = isRecording;
   }, [isRecording]);
 
-  return (
-    <>
-      <Snackbar
-        open={activeSnackbar === Snackbars.recordingStarted}
-        handleClose={() => setActiveSnackbar(Snackbars.none)}
-        variant="info"
-        headline="Recording has started."
-        message=""
-      />
-      <Snackbar
-        open={activeSnackbar === Snackbars.recordingInProgress}
-        handleClose={() => setActiveSnackbar(Snackbars.none)}
-        variant="info"
-        headline="Recording is in progress."
-        message=""
-      />
-      <Snackbar
-        open={activeSnackbar === Snackbars.recordingFinished}
-        headline="Recording Complete"
-        message={
-          <>
-            You can view the recording in the{' '}
-            <Link target="_blank" rel="noopener" href="https://www.twilio.com/console/video/logs/recordings">
-              Twilio Console
-            </Link>
-            . Recordings will be available once this room has ended.
-          </>
-        }
-        variant="info"
-        handleClose={() => setActiveSnackbar(Snackbars.none)}
-      />
-    </>
-  );
+  return <>
+    <Snackbar
+      open={activeSnackbar === Snackbars.recordingStarted}
+      handleClose={() => setActiveSnackbar(Snackbars.none)}
+      variant="info"
+      headline="Recording has started."
+      message=""
+    />
+    <Snackbar
+      open={activeSnackbar === Snackbars.recordingInProgress}
+      handleClose={() => setActiveSnackbar(Snackbars.none)}
+      variant="info"
+      headline="Recording is in progress."
+      message=""
+    />
+    <Snackbar
+      open={activeSnackbar === Snackbars.recordingFinished}
+      headline="Recording Complete"
+      message={
+        <>
+          You can view the recording in the{' '}
+          <Link
+            target="_blank"
+            rel="noopener"
+            href="https://www.twilio.com/console/video/logs/recordings"
+            underline="hover">
+            Twilio Console
+          </Link>
+          . Recordings will be available once this room has ended.
+        </>
+      }
+      variant="info"
+      handleClose={() => setActiveSnackbar(Snackbars.none)}
+    />
+  </>;
 }

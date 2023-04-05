@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, Theme, Typography } from '@material-ui/core';
+import { makeStyles } from 'tss-react/mui';
+import { Theme, Typography } from '@mui/material';
 import Swoosh from './swoosh';
 import VideoLogo from './VideoLogo';
 import TwilioLogo from './TwilioLogo';
@@ -7,7 +8,7 @@ import { useAppState } from '../../state';
 import UserMenu from './UserMenu/UserMenu';
 import { useLocation } from 'react-router-dom';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   background: {
     display: 'flex',
     alignItems: 'center',
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundImage: Swoosh,
     backgroundSize: 'cover',
     width: '296px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       height: '100px',
       backgroundPositionY: '140px',
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: 'absolute',
     width: '210px',
     textAlign: 'center',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex',
       alignItems: 'center',
       width: '90%',
@@ -70,14 +71,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     padding: '4em',
     flex: 1,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '2em',
     },
   },
   title: {
     color: 'white',
     margin: '1em 0 0',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       margin: 0,
       fontSize: '1.1rem',
     },
@@ -89,7 +90,7 @@ interface IntroContainerProps {
 }
 
 const IntroContainer = (props: IntroContainerProps) => {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const location = useLocation();
 
   return (

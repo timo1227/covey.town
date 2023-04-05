@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
+import { Theme } from '@mui/material/styles';
 import { LocalAudioTrack, LocalVideoTrack, Participant, RemoteAudioTrack, RemoteVideoTrack } from 'twilio-video';
 
 import AudioLevelIndicator from '../AudioLevelIndicator/AudioLevelIndicator';
 import AvatarIcon from '../../icons/AvatarIcon';
 import NetworkQualityLevel from '../NetworkQualityLevel/NetworkQualityLevel';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
 import useIsRecording from '../../hooks/useIsRecording/useIsRecording';
 import useIsTrackSwitchedOff from '../../hooks/useIsTrackSwitchedOff/useIsTrackSwitchedOff';
@@ -18,7 +18,7 @@ import useTrack from '../../hooks/useTrack/useTrack';
 import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import { UserProfile } from '../../../../../CoveyTypes';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   container: {
     position: 'relative',
     display: 'flex',
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   fullWidth: {
     gridArea: '1 / 1 / 2 / 3',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       gridArea: '1 / 1 / 3 / 3',
     },
   },
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '0.1em 0.3em 0.1em 0',
     fontSize: '1.2rem',
     height: '28px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       bottom: 'auto',
       right: 0,
       top: 0,
@@ -117,7 +117,7 @@ interface MainParticipantInfoProps {
 }
 
 export default function MainParticipantInfo({ participant, children }: MainParticipantInfoProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const { room } = useVideoContext();
   const localParticipant = room!.localParticipant;
   const isLocal = localParticipant === participant;
@@ -145,7 +145,7 @@ export default function MainParticipantInfo({ participant, children }: MainParti
     <div
       data-cy-main-participant
       data-cy-participant={participant.identity}
-      className={clsx(classes.container, {
+      className={cx(classes.container, {
         [classes.fullWidth]: !isRemoteParticipantScreenSharing,
       })}
     >

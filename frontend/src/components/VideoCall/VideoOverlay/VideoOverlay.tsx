@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useRef, useState } from 'react';
-import { styled, Theme } from '@material-ui/core/styles';
+import { styled, Theme } from '@mui/material/styles';
 
 import { Room as TwilioRoom } from 'twilio-video';
 
@@ -13,7 +13,6 @@ import useRoomState from '../VideoFrontend/hooks/useRoomState/useRoomState';
 import useLocalAudioToggle from '../VideoFrontend/hooks/useLocalAudioToggle/useLocalAudioToggle';
 import useVideoContext from '../VideoFrontend/hooks/useVideoContext/useVideoContext';
 import useLocalVideoToggle from '../VideoFrontend/hooks/useLocalVideoToggle/useLocalVideoToggle';
-import './VideoGrid.scss';
 import MediaErrorSnackbar from '../VideoFrontend/components/PreJoinScreens/MediaErrorSnackbar/MediaErrorSnackbar';
 import useTownController from '../../../hooks/useTownController';
 
@@ -25,10 +24,6 @@ const Container = styled('div')({
 const Main = styled('main')(({ theme: _theme }: { theme: Theme }) => ({
   overflow: 'hidden',
   position: 'relative',
-  paddingBottom: `${_theme.footerHeight}px`, // Leave some space for the footer
-  [_theme.breakpoints.down('sm')]: {
-    paddingBottom: `${_theme.mobileFooterHeight + _theme.mobileTopBarHeight}px`, // Leave some space for the mobile header and footer
-  },
 }));
 
 interface Props {

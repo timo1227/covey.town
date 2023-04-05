@@ -1,8 +1,9 @@
 import React, { ChangeEvent, FormEvent } from 'react';
-import { Typography, makeStyles, TextField, Grid, Button, InputLabel, Theme } from '@material-ui/core';
+import { makeStyles } from 'tss-react/mui';
+import { Typography, TextField, Grid, Button, InputLabel, Theme } from '@mui/material';
 import { useAppState } from '../../../state';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   gutterBottom: {
     marginBottom: '1em',
   },
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& div:not(:last-child)': {
       marginRight: '1em',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       margin: '1.5em 0 2em',
     },
   },
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
   },
   continueButton: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
@@ -36,7 +37,7 @@ interface RoomNameScreenProps {
 }
 
 export default function RoomNameScreen({ name, roomName, setName, setRoomName, handleSubmit }: RoomNameScreenProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const { user } = useAppState();
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {

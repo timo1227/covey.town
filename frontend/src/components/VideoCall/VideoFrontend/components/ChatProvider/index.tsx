@@ -11,8 +11,10 @@ type ChatContextType = {
   conversation: TextConversation | null;
 };
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const ChatContext = createContext<ChatContextType>(null!);
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const ChatProvider: React.FC = ({ children }) => {
   const coveyTownController = useTownController();
   const isChatWindowOpenRef = useRef(false);

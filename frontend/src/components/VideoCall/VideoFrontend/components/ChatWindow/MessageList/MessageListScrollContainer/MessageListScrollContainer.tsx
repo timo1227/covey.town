@@ -1,10 +1,11 @@
 /* istanbul ignore file */
 import React from 'react';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import Button from '@material-ui/core/Button';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import Button from '@mui/material/Button';
 import clsx from 'clsx';
 import throttle from 'lodash.throttle';
-import { withStyles, WithStyles, createStyles } from '@material-ui/core/styles';
+import { withStyles } from 'tss-react/mui';
+import { WithStyles } from '@mui/styles';
 import { ChatMessage } from '../../../../../../../types/CoveyTownSocket';
 
 const styles = createStyles({
@@ -162,4 +163,4 @@ export class MessageListScrollContainer extends React.Component<
   }
 }
 
-export default withStyles(styles)(MessageListScrollContainer);
+export default withStyles(MessageListScrollContainer, styles);

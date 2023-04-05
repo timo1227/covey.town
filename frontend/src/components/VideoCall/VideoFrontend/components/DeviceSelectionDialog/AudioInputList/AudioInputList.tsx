@@ -1,7 +1,7 @@
 import React from 'react';
 import AudioLevelIndicator from '../../AudioLevelIndicator/AudioLevelIndicator';
 import { LocalAudioTrack } from 'twilio-video';
-import { FormControl, MenuItem, Typography, Select, Grid } from '@material-ui/core';
+import { FormControl, MenuItem, Typography, Select, Grid } from '@mui/material';
 import { SELECTED_AUDIO_INPUT_KEY } from '../../../constants';
 import useDevices from '../../../hooks/useDevices/useDevices';
 import useMediaStreamTrack from '../../../hooks/useMediaStreamTrack/useMediaStreamTrack';
@@ -30,7 +30,7 @@ export default function AudioInputList() {
       <Grid container alignItems="center" justifyContent="space-between">
         <div className="inputSelect">
           {audioInputDevices.length > 1 ? (
-            <FormControl fullWidth>
+            <FormControl variant="standard" fullWidth>
               <Select
                 onChange={e => replaceTrack(e.target.value as string)}
                 value={localAudioInputDeviceId || ''}
