@@ -1,8 +1,10 @@
 'use client';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 import { useState } from 'react';
 import logo from '../../public/logo.png';
+import Image from 'next/image';
 
 const NAVIGATION = [
   { name: 'Home', href: '/' },
@@ -21,7 +23,13 @@ export default function HeroSection() {
           <div className='flex lg:flex-1'>
             <a href='/' className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <img className='h-8 w-auto' src={logo.src} alt='Covey Town Logo' />
+              <Image
+                className='h-8 w-auto'
+                width={300}
+                height={500}
+                src={logo.src}
+                alt='Covey Town Logo'
+              />
             </a>
           </div>
           <div className='flex lg:hidden'>
@@ -35,28 +43,34 @@ export default function HeroSection() {
           </div>
           <div className='hidden lg:flex lg:gap-x-12'>
             {NAVIGATION.map(item => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className='text-sm font-semibold leading-6 text-gray-900'>
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
           <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-            <a href='/Login' className='text-sm font-semibold leading-6 text-gray-900'>
+            <Link href='/Login' className='text-sm font-semibold leading-6 text-gray-900'>
               Log in <span aria-hidden='true'>&rarr;</span>
-            </a>
+            </Link>
           </div>
         </nav>
         <Dialog as='div' className='lg:hidden' open={mobileMenuOpen} onClose={setMobileMenuOpen}>
           <div className='fixed inset-0 z-50' />
           <Dialog.Panel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
             <div className='flex items-center justify-between'>
-              <a href='#' className='-m-1.5 p-1.5'>
+              <Link href='#' className='-m-1.5 p-1.5'>
                 <span className='sr-only'>Covey Town</span>
-                <img className='h-8 w-auto' src={logo.src} alt='Covey Town Logo' />
-              </a>
+                <Image
+                  className='h-8 w-auto'
+                  src={logo.src}
+                  width={300}
+                  height={500}
+                  alt='Covey Town Logo'
+                />
+              </Link>
               <button
                 type='button'
                 className='-m-2.5 rounded-md p-2.5 text-gray-700'
@@ -69,20 +83,20 @@ export default function HeroSection() {
               <div className='-my-6 divide-y divide-gray-500/10'>
                 <div className='space-y-2 py-6'>
                   {NAVIGATION.map(item => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
                       className='-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
                 <div className='py-6'>
-                  <a
+                  <Link
                     href='/Login'
                     className='-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
                     Log in
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -118,10 +132,10 @@ export default function HeroSection() {
           <div className='hidden sm:mb-8 sm:flex sm:justify-center'>
             <div className='relative rounded-full py-1 px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20'>
               New 1.01 Release.{' '}
-              <a href='#patchNotes' className='font-semibold text-blue-600'>
+              <Link href='#patchNotes' className='font-semibold text-blue-600'>
                 <span className='absolute inset-0' aria-hidden='true' />
                 Read more <span aria-hidden='true'>&rarr;</span>
-              </a>
+              </Link>
             </div>
           </div>
           <div className='text-center'>
@@ -133,14 +147,14 @@ export default function HeroSection() {
               event in a Private Town?
             </p>
             <div className='mt-10 flex items-center justify-center gap-x-6'>
-              <a
+              <Link
                 href='/Register'
                 className='rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'>
                 Get started
-              </a>
-              <a href='#About' className='text-sm font-semibold leading-6 text-gray-900'>
+              </Link>
+              <Link href='#About' className='text-sm font-semibold leading-6 text-gray-900'>
                 Learn more <span aria-hidden='true'>→</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

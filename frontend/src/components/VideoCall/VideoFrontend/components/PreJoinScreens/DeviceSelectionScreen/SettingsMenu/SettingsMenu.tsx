@@ -37,8 +37,7 @@ export default function SettingsMenu({ mobileButtonClass }: { mobileButtonClass?
           ref={anchorRef}
           onClick={() => setMenuOpen(true)}
           startIcon={<MoreIcon />}
-          className={mobileButtonClass}
-        >
+          className={mobileButtonClass}>
           More
         </Button>
       ) : (
@@ -46,8 +45,7 @@ export default function SettingsMenu({ mobileButtonClass }: { mobileButtonClass?
           ref={anchorRef}
           onClick={() => setMenuOpen(true)}
           startIcon={<SettingsIcon />}
-          className={classes.settingsButton}
-        >
+          className={classes.settingsButton}>
           Settings
         </Button>
       )}
@@ -55,7 +53,7 @@ export default function SettingsMenu({ mobileButtonClass }: { mobileButtonClass?
         open={menuOpen}
         onClose={() => setMenuOpen(isOpen => !isOpen)}
         anchorEl={anchorRef.current}
-        getContentAnchorEl={null}
+        // getContentAnchorEl={null}
         anchorOrigin={{
           vertical: 'top',
           horizontal: isMobile ? 'left' : 'right',
@@ -63,17 +61,16 @@ export default function SettingsMenu({ mobileButtonClass }: { mobileButtonClass?
         transformOrigin={{
           vertical: 0,
           horizontal: 'center',
-        }}
-      >
+        }}>
         <MenuItem onClick={() => setAboutOpen(true)}>
-          <Typography variant="body1">About</Typography>
+          <Typography variant='body1'>About</Typography>
         </MenuItem>
         <MenuItem onClick={() => setDeviceSettingsOpen(true)}>
-          <Typography variant="body1">Audio and Video Settings</Typography>
+          <Typography variant='body1'>Audio and Video Settings</Typography>
         </MenuItem>
         {roomType !== 'peer-to-peer' && roomType !== 'go' && (
           <MenuItem onClick={() => setConnectionSettingsOpen(true)}>
-            <Typography variant="body1">Connection Settings</Typography>
+            <Typography variant='body1'>Connection Settings</Typography>
           </MenuItem>
         )}
       </MenuContainer>

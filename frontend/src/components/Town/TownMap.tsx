@@ -1,4 +1,3 @@
-import React from 'react';
 import Phaser from 'phaser';
 import { useEffect } from 'react';
 import useTownController from '../../hooks/useTownController';

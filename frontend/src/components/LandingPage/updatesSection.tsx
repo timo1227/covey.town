@@ -1,4 +1,5 @@
-import Image from '../../public/SplashImage.png';
+import img from '../../public/SplashImage.png';
+import Image from 'next/image';
 import { LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid';
 import { BsWechat } from 'react-icons/bs';
 
@@ -52,10 +53,12 @@ export default function UpdateSection() {
           </div>
         </div>
         <div className='-mt-12 -ml-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden'>
-          <img
+          <Image
             className='w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]'
-            src={Image.src}
+            src={img.src}
             alt=''
+            width={300}
+            height={500}
           />
         </div>
         <div className='lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8'>

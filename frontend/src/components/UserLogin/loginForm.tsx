@@ -1,5 +1,7 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid';
+import Link from 'next/link';
 import logo from '../../public/logo.png';
+import Image from 'next/image';
 
 export default function LoginForm() {
   return (
@@ -7,17 +9,23 @@ export default function LoginForm() {
       <div className='flex h-[calc(100vh-11rem)] items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
         <div className='w-full max-w-md space-y-8'>
           <div>
-            <a href='/'>
-              <img className='mx-auto h-12 w-auto' src={logo.src} alt='Covey Town Logo' />
-            </a>
+            <Link href='/'>
+              <Image
+                className='mx-auto h-12 w-auto'
+                width={300}
+                height={500}
+                src={logo.src}
+                alt='Covey Town Logo'
+              />
+            </Link>
             <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
               Sign in to your account
             </h2>
             <p className='mt-2 text-center text-sm text-gray-600'>
               Or{' '}
-              <a href='/Register' className='font-medium text-indigo-600 hover:text-indigo-500'>
+              <Link href='/Register' className='font-medium text-indigo-600 hover:text-indigo-500'>
                 Create your Account today
-              </a>
+              </Link>
             </p>
           </div>
           <form className='mt-8 space-y-6' action='#' method='POST'>
@@ -67,9 +75,9 @@ export default function LoginForm() {
               </div>
 
               <div className='text-sm'>
-                <a href='#' className='font-medium text-indigo-600 hover:text-indigo-500'>
+                <Link href='#' className='font-medium text-indigo-600 hover:text-indigo-500'>
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 

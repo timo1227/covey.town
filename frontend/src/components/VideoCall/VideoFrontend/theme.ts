@@ -84,11 +84,6 @@ export default createTheme(
           fontSize: '0.9rem',
         },
       },
-      MuiSelect: {
-        root: {
-          padding: '0.85em',
-        },
-      },
       MuiDialogActions: {
         root: {
           padding: '16px',
@@ -121,14 +116,14 @@ export default createTheme(
         main: '#027AC5',
       },
     },
-    brand: '#E22525',
-    footerHeight: 72,
-    mobileFooterHeight: 56,
-    sidebarWidth: 300,
-    sidebarMobileHeight: 90,
-    sidebarMobilePadding: 8,
-    participantBorderWidth: 2,
-    mobileTopBarHeight: 52,
-    rightDrawerWidth: 320,
+    // brand: '#E22525',
+    // footerHeight: 72,
+    // mobileFooterHeight: 56,
+    // sidebarWidth: 300,
+    // sidebarMobileHeight: 90,
+    // sidebarMobilePadding: 8,
+    // participantBorderWidth: 1,
+    // mobileTopBarHeight: 52,
+    // rightDrawerWidth: 320,
   }),
 );

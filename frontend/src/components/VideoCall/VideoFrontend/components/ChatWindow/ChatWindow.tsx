@@ -1,5 +1,4 @@
 import { Theme } from '@mui/material/styles';
-import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 import useChatContext from '../../hooks/useChatContext/useChatContext';
 import ChatInput from './ChatInput/ChatInput';
@@ -8,12 +7,12 @@ import MessageList from './MessageList/MessageList';
 
 const useStyles = makeStyles()((theme: Theme) => ({
   chatWindowContainer: {
-    'pointerEvents': 'auto',
-    'background': '#FFFFFF',
-    'zIndex': 1000,
-    'display': 'flex',
-    'flexDirection': 'column',
-    'borderLeft': '1px solid #E4E7E9',
+    pointerEvents: 'auto',
+    background: '#FFFFFF',
+    zIndex: 1000,
+    display: 'flex',
+    flexDirection: 'column',
+    borderLeft: '1px solid #E4E7E9',
     [theme.breakpoints.down('md')]: {
       position: 'fixed',
       top: 0,
@@ -22,13 +21,11 @@ const useStyles = makeStyles()((theme: Theme) => ({
       right: 0,
       zIndex: 100,
     },
-    'position': 'fixed',
-    'bottom': 0,
-    'left': 0,
-    'top': 0,
-    'max-width': '250px',
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    top: 0,
   },
-
   hide: {
     display: 'none',
   },

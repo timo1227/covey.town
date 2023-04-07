@@ -3,92 +3,62 @@ import BlurIcon from '@mui/icons-material/BlurOnOutlined';
 import NoneIcon from '@mui/icons-material/NotInterestedOutlined';
 import { makeStyles } from 'tss-react/mui';
 import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
+import { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 export type Thumbnail = 'none' | 'blur' | 'image';
 
 interface BackgroundThumbnailProps {
   thumbnail: Thumbnail;
-  imagePath?: string;
-  name?: string;
+  imagePath: string | StaticImageData;
+  name: string;
   index?: number;
 }
 
 const useStyles = makeStyles<void, 'thumbOverlay'>()((theme: Theme, _params, classes) => ({
   thumbContainer: {
-    'margin': '5px',
-    'width': 'calc(50% - 10px)',
-    'display': 'flex',
-    'position': 'relative',
-    '&::after': {
-      content: '""',
-      paddingBottom: '55.5%',
-    },
+    margin: '5px',
+    width: 'calc(50% - 10px)',
+    display: 'flex',
+    position: 'relative',
   },
   thumbIconContainer: {
-    'width': '100%',
-    'display': 'flex',
-    'justifyContent': 'center',
-    'alignItems': 'center',
-    'borderRadius': '10px',
-    'border': `solid ${theme.palette.grey[400]}`,
-    '&.selected': {
-      'border': `solid ${theme.palette.primary.main}`,
-      '& svg': {
-        color: `${theme.palette.primary.main}`,
-      },
-    },
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '10px',
+    border: `solid ${theme.palette.grey[400]}`,
   },
   thumbIcon: {
-    'height': 50,
-    'width': 50,
-    'color': `${theme.palette.grey[400]}`,
-    '&.selected': {
-      color: `${theme.palette.primary.main}`,
-    },
+    height: 50,
+    width: 50,
+    color: `${theme.palette.grey[400]}`,
   },
   thumbImage: {
-    'width': '100%',
-    'height': '100%',
-    'position': 'absolute',
-    'top': 0,
-    'bottom': 0,
-    'left': 0,
-    'right': 0,
-    'objectFit': 'cover',
-    'borderRadius': '10px',
-    'border': `solid ${theme.palette.grey[400]}`,
-    '&:hover': {
-      'cursor': 'pointer',
-      '& svg': {
-        color: `${theme.palette.primary.main}`,
-      },
-      [`& .${classes.thumbOverlay}`]: {
-        visibility: 'visible',
-      },
-    },
-    '&.selected': {
-      'border': `solid ${theme.palette.primary.main}`,
-      '& svg': {
-        color: `${theme.palette.primary.main}`,
-      },
-    },
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    objectFit: 'cover',
+    borderRadius: '10px',
+    border: `solid ${theme.palette.grey[400]}`,
   },
   thumbOverlay: {
-    'position': 'absolute',
-    'color': 'transparent',
-    'padding': '20px',
-    'fontSize': '14px',
-    'fontWeight': 'bold',
-    'width': '100%',
-    'height': '100%',
-    'borderRadius': '10px',
-    'display': 'flex',
-    'justifyContent': 'center',
-    'alignItems': 'center',
-    '&:hover': {
-      background: 'rgba(95, 93, 128, 0.6)',
-      color: 'white',
-    },
+    position: 'absolute',
+    color: 'transparent',
+    padding: '20px',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    width: '100%',
+    height: '100%',
+    borderRadius: '10px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
 
@@ -109,6 +79,7 @@ export default function BackgroundThumbnail({
     blur: BlurIcon,
     image: null,
   };
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const ThumbnailIcon = icons[thumbnail];
 
   return (
@@ -125,7 +96,7 @@ export default function BackgroundThumbnail({
           <ThumbnailIcon className={classes.thumbIcon} />
         </div>
       ) : (
-        <img
+        <Image
           className={cx(classes.thumbImage, { selected: thumbnailSelected })}
           src={imagePath}
           alt={name}

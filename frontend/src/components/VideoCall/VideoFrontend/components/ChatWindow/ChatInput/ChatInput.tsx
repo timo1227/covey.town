@@ -11,6 +11,8 @@ const useStyles = makeStyles()(theme => ({
     borderTop: '1px solid #e4e7e9',
     borderBottom: '1px solid #e4e7e9',
     padding: '1em 1.2em 1em',
+    position: 'relative',
+    bottom: 0,
   },
   textArea: {
     width: '100%',
@@ -21,10 +23,10 @@ const useStyles = makeStyles()(theme => ({
     outline: 'none',
   },
   button: {
-    padding: '0.56em',
-    minWidth: 'auto',
+    'padding': '0.56em',
+    'minWidth': 'auto',
     '&:disabled': {
-      background: 'none',
+      'background': 'none',
       '& path': {
         fill: '#d8d8d8',
       },
@@ -77,9 +79,9 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
   const coveyTownController = useTownController();
 
   useEffect(() => {
-    if(isTextareaFocused){
+    if (isTextareaFocused) {
       coveyTownController.pause();
-    }else{
+    } else {
       coveyTownController.unPause();
     }
   }, [isTextareaFocused, coveyTownController]);
@@ -114,12 +116,15 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
     <div className={classes.chatInputContainer}>
       <Snackbar
         open={Boolean(fileSendError)}
-        headline="Error"
+        headline='Error'
         message={fileSendError || ''}
-        variant="error"
+        variant='error'
         handleClose={() => setFileSendError(null)}
       />
-      <div className={cx(classes.textAreaContainer, { [classes.isTextareaFocused]: isTextareaFocused })}>
+      <div
+        className={cx(classes.textAreaContainer, {
+          [classes.isTextareaFocused]: isTextareaFocused,
+        })}>
         {/* 
         Here we add the "isTextareaFocused" class when the user is focused on the TextareaAutosize component.
         This helps to ensure a consistent appearance across all browsers. Adding padding to the TextareaAutosize
@@ -129,8 +134,8 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
           minRows={1}
           maxRows={3}
           className={classes.textArea}
-          aria-label="chat input"
-          placeholder="Write a message..."
+          aria-label='chat input'
+          placeholder='Write a message...'
           onKeyPress={handleReturnKeyPress}
           onChange={handleChange}
           value={messageBody}

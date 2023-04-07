@@ -1,7 +1,6 @@
 /* eslint-disable no-await-in-loop,@typescript-eslint/no-loop-func,no-restricted-syntax */
 import { ChakraProvider } from '@chakra-ui/react';
 import '@testing-library/jest-dom';
-import React from 'react';
 import { fireEvent, render, RenderResult, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mock, mockClear, MockProxy, mockReset } from 'jest-mock-extended';

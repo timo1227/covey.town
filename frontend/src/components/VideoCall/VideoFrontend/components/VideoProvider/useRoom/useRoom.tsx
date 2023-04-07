@@ -1,11 +1,10 @@
-import { VideoRoomMonitor } from '@twilio/video-room-monitor';
+// import { VideoRoomMonitor } from '@twilio/video-room-monitor'; Uncomment when VideoRoomMonitor is updated
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Video, { ConnectOptions, LocalTrack, Room } from 'twilio-video';
 import { Callback } from '../../../types';
 import { isMobile } from '../../../utils';
 
-// @ts-ignore
-window.TwilioVideo = Video;
+(window as any).TwilioVideo = Video;
 
 export default function useRoom(
   localTracks: LocalTrack[],
@@ -23,12 +22,12 @@ export default function useRoom(
   }, [options]);
 
   const connect = useCallback(
-    token => {
+    (token: string) => {
       setIsConnecting(true);
       return Video.connect(token, { ...optionsRef.current, tracks: localTracks }).then(
         newRoom => {
           setRoom(newRoom);
-          VideoRoomMonitor.registerVideoRoom(newRoom);
+          // VideoRoomMonitor.registerVideoRoom(newRoom); Uncomment when VideoRoomMonitor is updated
           const disconnect = () => newRoom.disconnect();
 
           // This app can add up to 13 'participantDisconnected' listeners to the room object, which can trigger
@@ -45,8 +44,7 @@ export default function useRoom(
             }
           });
 
-          // @ts-ignore
-          window.twilioRoom = newRoom;
+          (window as any).TwilioRoom = newRoom;
 
           newRoom.localParticipant.videoTracks.forEach(publication =>
             // All video tracks are published with 'low' priority because the video track

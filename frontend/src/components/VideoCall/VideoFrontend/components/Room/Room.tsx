@@ -1,4 +1,3 @@
-import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { Theme } from '@mui/material';
 import ChatWindow from '../ChatWindow/ChatWindow';
@@ -11,10 +10,10 @@ import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 // Arrow function has parameter type of Identifier instead of ObjectPattern (e.g. `(props) => ({...})` instead of `({color}) => ({...})`).
 const useStyles = makeStyles()((theme: Theme) => {
   const totalMobileSidebarHeight = `${
-    theme.sidebarMobileHeight + theme.sidebarMobilePadding * 2 + theme.participantBorderWidth
+    theme.sidebarMobileHeight + theme.sidebarMobilePadding * 2 + 2
   }px`;
   return {
-    container: props => ({
+    container: {
       position: 'relative',
       height: '100%',
       display: 'grid',
@@ -25,7 +24,7 @@ const useStyles = makeStyles()((theme: Theme) => {
         gridTemplateRows: `calc(100% - ${totalMobileSidebarHeight}) ${totalMobileSidebarHeight}`,
         overflow: 'auto',
       },
-    }),
+    },
     rightDrawerOpen: {
       gridTemplateColumns: `1fr ${theme.sidebarWidth}px ${theme.rightDrawerWidth}px`,
     },

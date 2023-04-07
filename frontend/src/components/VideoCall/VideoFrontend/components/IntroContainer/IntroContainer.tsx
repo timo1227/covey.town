@@ -1,12 +1,7 @@
+import { Theme } from '@mui/material';
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
-import { Theme, Typography } from '@mui/material';
 import Swoosh from './swoosh';
-import VideoLogo from './VideoLogo';
-import TwilioLogo from './TwilioLogo';
-import { useAppState } from '../../state';
-import UserMenu from './UserMenu/UserMenu';
-import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles()((theme: Theme) => ({
   background: {
@@ -51,10 +46,10 @@ const useStyles = makeStyles()((theme: Theme) => ({
     width: '210px',
     textAlign: 'center',
     [theme.breakpoints.down('md')]: {
-      display: 'flex',
-      alignItems: 'center',
-      width: '90%',
-      textAlign: 'initial',
+      'display': 'flex',
+      'alignItems': 'center',
+      'width': '90%',
+      'textAlign': 'initial',
       '& svg': {
         height: '64px',
       },
@@ -88,19 +83,18 @@ const useStyles = makeStyles()((theme: Theme) => ({
 interface IntroContainerProps {
   children: React.ReactNode;
 }
-
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const IntroContainer = (props: IntroContainerProps) => {
   const { classes } = useStyles();
-  const location = useLocation();
 
   return (
-    <div className='bg-gray-700 flex justify-center py-5'>
-      <div className='w-1/3 bg-white rounded-md p-5'>
-        <div className='rounded flex'>
-          <div className=''>{props.children}</div>
+    <div className={classes.background}>
+      <div className={classes.container}>
+        <div className={classes.innerContainer}>
+          <div className={classes.content}>{props.children}</div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

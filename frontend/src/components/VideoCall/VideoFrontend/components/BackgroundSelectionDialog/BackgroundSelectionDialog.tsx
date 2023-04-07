@@ -1,4 +1,3 @@
-import React from 'react';
 import BackgroundSelectionHeader from './BackgroundSelectionHeader/BackgroundSelectionHeader';
 import BackgroundThumbnail from './BackgroundThumbnail/BackgroundThumbnail';
 import Drawer from '@mui/material/Drawer';
@@ -19,15 +18,15 @@ function BackgroundSelectionDialog() {
       transitionDuration={0}>
       <BackgroundSelectionHeader onClose={() => setIsBackgroundSelectionOpen(false)} />
       <div>
-        <BackgroundThumbnail thumbnail={'none'} name={'None'} />
-        <BackgroundThumbnail thumbnail={'blur'} name={'Blur'} />
+        <BackgroundThumbnail thumbnail={'none'} name={'None'} imagePath={''} />
+        <BackgroundThumbnail thumbnail={'blur'} name={'Blur'} imagePath={''} />
         {images.map((image, index) => (
           <BackgroundThumbnail
             thumbnail={'image'}
             name={imageNames[index]}
             index={index}
             imagePath={image}
-            key={image}
+            key={imageNames[index]}
           />
         ))}
       </div>

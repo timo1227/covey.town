@@ -1,0 +1,31 @@
+.outerContainer {
+  min-height: 0;
+  flex: 1;
+  position: 'relative';
+}
+.innerScrollContainer {
+  height: '100%';
+  overflow: 'auto';
+  padding: '0 1.2em 0';
+}
+.messageListContainer {
+  overflow: 'auto';
+  flex: '1';
+  padding-bottom: '1em';
+}
+button {
+  position: 'absolute';
+  bottom: '14px';
+  right: '2em';
+  z-index: 100;
+  padding: '0.5em 0.9em';
+  visibility: 'hidden';
+  opacity: 0;
+  box-shadow: '0px 4px 16px rgba(18, 28, 45, 0.2)';
+  transition: 'all 0.5s ease';
+}
+.showButton {
+  visibility: 'visible';
+  opacity: 1;
+  bottom: '24px';
+}

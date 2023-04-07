@@ -11,7 +11,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { isSupported } from '@twilio/video-processors';
-import { VideoRoomMonitor } from '@twilio/video-room-monitor';
+// import { VideoRoomMonitor } from '@twilio/video-room-monitor'; Uncomment when VideoRoomMonitor is updated
 import React, { useRef, useState } from 'react';
 import useChatContext from '../../../hooks/useChatContext/useChatContext';
 import useFlipCameraToggle from '../../../hooks/useFlipCameraToggle/useFlipCameraToggle';
@@ -128,7 +128,7 @@ export default function Menu(props: { buttonClassName?: string }) {
 
         <MenuItem
           onClick={() => {
-            VideoRoomMonitor.toggleMonitor();
+            // VideoRoomMonitor.toggleMonitor(); Uncomment when VideoRoomMonitor is updated
             setMenuOpen(false);
           }}>
           <IconContainer>
