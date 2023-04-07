@@ -1,3 +1,4 @@
+'use client';
 import React, { ChangeEvent, useState, FormEvent } from 'react';
 import { useAppState } from '../../state';
 import Button from '@mui/material/Button';
@@ -10,7 +11,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { makeStyles } from 'tss-react/mui';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 const useStyles = makeStyles()((theme: Theme) => ({
   googleButton: {
@@ -55,8 +56,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
 export default function LoginPage() {
   const { classes } = useStyles();
   const { signIn, user, isAuthReady } = useAppState();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useRouter();
   const [passcode, setPasscode] = useState('');
   const [authError, setAuthError] = useState<Error | null>(null);
 
@@ -66,7 +66,7 @@ export default function LoginPage() {
     setAuthError(null);
     signIn?.(passcode)
       .then(() => {
-        navigate({ pathname: '/' });
+        navigate.push('/');
       })
       .catch(err => setAuthError(err));
   };
@@ -77,7 +77,7 @@ export default function LoginPage() {
   };
 
   if (user || !isAuthEnabled) {
-    navigate('/');
+    navigate.push('/');
   }
 
   if (!isAuthReady) {

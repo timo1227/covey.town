@@ -3,7 +3,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material';
 import assert from 'assert';
 import { useCallback, useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import TownController from '../../classes/TownController';
 import Nav from '../../components/LandingPage/navBar';
 import TownMap from '../../components/Town/TownMap';
@@ -66,16 +65,14 @@ function JoinTown() {
 
 export default function AppStateWrapper(): JSX.Element {
   return (
-    <BrowserRouter>
-      <ChakraProvider>
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={theme}>
-            <AppStateProvider>
-              <JoinTown />
-            </AppStateProvider>
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </ChakraProvider>
-    </BrowserRouter>
+    <ChakraProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <AppStateProvider>
+            <JoinTown />
+          </AppStateProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </ChakraProvider>
   );
 }

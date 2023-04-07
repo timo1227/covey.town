@@ -1,5 +1,6 @@
+'use client';
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
@@ -63,7 +64,7 @@ export function getErrorMessage(message: string) {
 }
 
 export default function usePasscodeAuth() {
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const [user, setUser] = useState<{
     displayName: undefined;
@@ -123,7 +124,7 @@ export default function usePasscodeAuth() {
           if (verification?.isValid) {
             setUser({ passcode } as any);
             window.sessionStorage.setItem('passcode', passcode);
-            navigate(window.location.pathname);
+            navigate.push(window.location.pathname);
           }
         })
         .then(() => setIsAuthReady(true));
