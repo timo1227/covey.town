@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import { Client } from '@twilio/conversations';
 import { Player as PlayerModel, PlayerLocation, TownEmitter } from '../types/CoveyTownSocket';
 
 /**
@@ -22,6 +23,8 @@ export default class Player {
 
   /** The secret token that allows this client to access chat resources for this town */
   private _chatToken?: string;
+
+  private _chatClient?: Client;
 
   /** A special town emitter that will emit events to the entire town BUT NOT to this player */
   public readonly townEmitter: TownEmitter;
@@ -61,6 +64,14 @@ export default class Player {
 
   get chatToken(): string | undefined {
     return this._chatToken;
+  }
+
+  set chatClient(value: Client | undefined) {
+    this._chatClient = value;
+  }
+
+  get chatClient(): Client | undefined {
+    return this._chatClient;
   }
 
   get sessionToken(): string {
