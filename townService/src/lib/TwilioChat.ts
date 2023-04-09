@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import Twilio from 'twilio';
-// import { Conversation, Client } from '@twilio/conversations';
+import { Conversation, Client } from '@twilio/conversations';
 import { logError } from '../Utils';
 
 dotenv.config();
@@ -74,55 +74,60 @@ export default class TwilioChat {
   }
 }
 
-// export async function addConversation(name?: string, client?: Client): Promise<Conversation> {
-//   if (client === undefined) {
-//     throw new Error('Client is suddenly undefined, are you sure everything is ok?');
-//   }
-//   if (name === undefined || name.length === 0) {
-//     throw new Error('Conversation name is empty');
-//   }
+export async function addConversation(name?: string, client?: Client): Promise<Conversation> {
+  if (client === undefined) {
+    throw new Error('Client is suddenly undefined, are you sure everything is ok?');
+  }
+  if (name === undefined || name.length === 0) {
+    throw new Error('Conversation name is empty');
+  }
 
-//   try {
-//     const conversation = await client.createConversation({
-//       friendlyName: name,
-//     });
+  try {
+    const conversation = await client.createConversation({
+      friendlyName: name,
+    });
 
-//     return conversation;
-//   } catch {
-//     throw new Error('There was a problem creating the conversation');
-//   }
-// }
+    return conversation;
+  } catch {
+    throw new Error('There was a problem creating the conversation');
+  }
+}
 
-// export function removeConversation(conversation?: Conversation) {
-//   if (conversation === undefined) {
-//     throw new Error('Conversation is suddenly undefined, could not remove conversation.');
-//   }
+export async function removeConversation(conversation?: Conversation) {
+  if (conversation === undefined) {
+    throw new Error('Conversation is suddenly undefined, could not remove conversation.');
+  }
 
-//   return conversation.delete;
-// }
+  try {
+    const result = await conversation.delete();
+    return result;
+  } catch {
+    throw new Error('Unable to remove conversation');
+  }
+}
 
-// export async function addChatParticipant(identity: string, conversation?: Conversation) {
-//   if (conversation === undefined) {
-//     throw new Error('Conversation is suddenly undefined, could not add participant.');
-//   }
+export async function addChatParticipant(identity: string, conversation?: Conversation) {
+  if (conversation === undefined) {
+    throw new Error('Conversation is suddenly undefined, could not add participant.');
+  }
 
-//   try {
-//     const result = await conversation.add(identity);
-//     return result;
-//   } catch {
-//     throw new Error('Unable to add participant.');
-//   }
-// }
+  try {
+    const result = await conversation.add(identity);
+    return result;
+  } catch {
+    throw new Error('Unable to add participant.');
+  }
+}
 
-// export async function removeChatParticipant(identity: string, conversation?: Conversation) {
-//   if (conversation === undefined) {
-//     throw new Error('Conversation is suddenly undefined, could not remove participant.');
-//   }
+export async function removeChatParticipant(identity: string, conversation?: Conversation) {
+  if (conversation === undefined) {
+    throw new Error('Conversation is suddenly undefined, could not remove participant.');
+  }
 
-//   try {
-//     conversation.removeParticipant(identity);
-//     return;
-//   } catch {
-//     throw new Error('Unable to remove participant.');
-//   }
-// }
+  try {
+    conversation.removeParticipant(identity);
+    return;
+  } catch {
+    throw new Error('Unable to remove participant.');
+  }
+}
