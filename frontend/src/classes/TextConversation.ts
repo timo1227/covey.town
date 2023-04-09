@@ -37,7 +37,7 @@ export default class TextConversation {
    * Send a text message to this channel
    * @param message
    */
-  public sendGlobalMessage(message: string) {
+  public sendMessage(message: string) {
     const msg: ChatMessage = {
       sid: nanoid(),
       body: message,

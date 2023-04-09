@@ -98,7 +98,7 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
 
   const handleSendMessage = (message: string) => {
     if (isValidMessage) {
-      conversation.sendGlobalMessage(message.trim());
+      conversation.sendMessage(message.trim());
       setMessageBody('');
     }
   };

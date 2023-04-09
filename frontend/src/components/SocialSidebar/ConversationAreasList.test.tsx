@@ -172,7 +172,6 @@ describe('ConversationAreasList', () => {
         friendlyName: nanoid(),
         isPubliclyListed: true,
         providerVideoToken: nanoid(),
-        providerChatToken: nanoid(),
         sessionToken: nanoid(),
         userID: nanoid(),
       });
