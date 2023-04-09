@@ -11,9 +11,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     margin: '1.5em 0 3.5em',
-    '& div:not(:last-child)': {
-      marginRight: '1em',
-    },
     [theme.breakpoints.down('md')]: {
       margin: '1.5em 0 2em',
     },
@@ -36,7 +33,13 @@ interface RoomNameScreenProps {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
-export default function RoomNameScreen({ name, roomName, setName, setRoomName, handleSubmit }: RoomNameScreenProps) {
+export default function RoomNameScreen({
+  name,
+  roomName,
+  setName,
+  setRoomName,
+  handleSubmit,
+}: RoomNameScreenProps) {
   const { classes } = useStyles();
   const { user } = useAppState();
 
@@ -48,14 +51,14 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
     setRoomName(event.target.value);
   };
 
-  const hasUsername = !window.location.search.includes('customIdentity=true') && user?.displayName;
+  const hasUsername = typeof window !== 'undefined' && user?.displayName;
 
   return (
     <>
-      <Typography variant="h5" className={classes.gutterBottom}>
+      <Typography variant='h5' className={classes.gutterBottom}>
         Join a Room
       </Typography>
-      <Typography variant="body1">
+      <Typography variant='body1'>
         {hasUsername
           ? "Enter the name of a room you'd like to join."
           : "Enter your name and the name of a room you'd like to join"}
@@ -64,42 +67,41 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
         <div className={classes.inputContainer}>
           {!hasUsername && (
             <div className={classes.textFieldContainer}>
-              <InputLabel shrink htmlFor="input-user-name">
+              <InputLabel shrink htmlFor='input-user-name'>
                 Your Name
               </InputLabel>
               <TextField
-                id="input-user-name"
-                variant="outlined"
+                id='input-user-name'
+                variant='outlined'
                 fullWidth
-                size="small"
+                size='small'
                 value={name}
                 onChange={handleNameChange}
               />
             </div>
           )}
           <div className={classes.textFieldContainer}>
-            <InputLabel shrink htmlFor="input-room-name">
+            <InputLabel shrink htmlFor='input-room-name'>
               Room Name
             </InputLabel>
             <TextField
-              autoCapitalize="false"
-              id="input-room-name"
-              variant="outlined"
+              autoCapitalize='false'
+              id='input-room-name'
+              variant='outlined'
               fullWidth
-              size="small"
+              size='small'
               value={roomName}
               onChange={handleRoomNameChange}
             />
           </div>
         </div>
-        <Grid container justifyContent="flex-end">
+        <Grid container justifyContent='flex-end'>
           <Button
-            variant="contained"
-            type="submit"
-            color="primary"
+            variant='contained'
+            type='submit'
+            color='primary'
             disabled={!name || !roomName}
-            className={classes.continueButton}
-          >
+            className={classes.continueButton}>
             Continue
           </Button>
         </Grid>

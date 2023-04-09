@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -6,8 +7,10 @@ import { useRouter } from 'next/navigation';
 const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
 
 export function getPasscode() {
-  const match = window.location.search.match(/passcode=(.*)&?/);
-  const passcode = match ? match[1] : window.sessionStorage.getItem('passcode');
+  const match = typeof window !== 'undefined' && window.location.search.match(/passcode=([^&]+)/);
+  const passcode = match
+    ? match[1]
+    : typeof window !== 'undefined' && window.localStorage.getItem('passcode');
   return passcode;
 }
 
@@ -123,7 +126,7 @@ export default function usePasscodeAuth() {
         .then(verification => {
           if (verification?.isValid) {
             setUser({ passcode } as any);
-            window.sessionStorage.setItem('passcode', passcode);
+            typeof window !== 'undefined' && window.localStorage.setItem('passcode', passcode);
             navigate.push(window.location.pathname);
           }
         })
@@ -137,7 +140,7 @@ export default function usePasscodeAuth() {
     return verifyPasscode(passcode).then(verification => {
       if (verification?.isValid) {
         setUser({ passcode } as any);
-        window.sessionStorage.setItem('passcode', passcode);
+        typeof window !== 'undefined' && window.localStorage.setItem('passcode', passcode);
       } else {
         throw new Error(getErrorMessage(verification?.error));
       }
@@ -146,7 +149,7 @@ export default function usePasscodeAuth() {
 
   const signOut = useCallback(() => {
     setUser(null);
-    window.sessionStorage.removeItem('passcode');
+    typeof window !== 'undefined' && window.localStorage.removeItem('passcode');
     return Promise.resolve();
   }, []);
 

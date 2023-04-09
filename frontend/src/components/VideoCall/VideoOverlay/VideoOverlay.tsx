@@ -1,5 +1,7 @@
 /* eslint-disable */
+'use client';
 import { styled, Theme } from '@mui/material/styles';
+import { type } from 'os';
 import React, { useEffect, useRef, useState } from 'react';
 import { Room as TwilioRoom } from 'twilio-video';
 import useTownController from '../../../hooks/useTownController';
@@ -85,11 +87,11 @@ export default function VideoGrid(props: Props) {
   );
 
   useEffect(() => {
-    if (unloadRef && unloadRef.current) {
+    if (unloadRef && unloadRef.current && typeof window !== 'undefined') {
       window.addEventListener('beforeunload', unloadRef.current);
     }
     return () => {
-      if (unloadRef && unloadRef.current)
+      if (unloadRef && unloadRef.current && typeof window !== 'undefined')
         window.removeEventListener('beforeunload', unloadRef.current);
     };
   }, []);

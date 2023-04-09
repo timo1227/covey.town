@@ -1,10 +1,13 @@
-// import { VideoRoomMonitor } from '@twilio/video-room-monitor'; Uncomment when VideoRoomMonitor is updated
+'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Video, { ConnectOptions, LocalTrack, Room } from 'twilio-video';
 import { Callback } from '../../../types';
 import { isMobile } from '../../../utils';
 
-(window as any).TwilioVideo = Video;
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  (window as any).TwilioVideo = Video;
+}
 
 export default function useRoom(
   localTracks: LocalTrack[],
@@ -37,14 +40,18 @@ export default function useRoom(
           newRoom.once('disconnected', () => {
             // Reset the room only after all other `disconnected` listeners have been called.
             setTimeout(() => setRoom(null));
-            window.removeEventListener('beforeunload', disconnect);
+            if (typeof window !== 'undefined') {
+              window.removeEventListener('beforeunload', disconnect);
+            }
 
-            if (isMobile) {
+            if (isMobile && typeof window !== 'undefined') {
               window.removeEventListener('pagehide', disconnect);
             }
           });
 
-          (window as any).TwilioRoom = newRoom;
+          if (typeof window !== 'undefined') {
+            (window as any).TwilioRoom = newRoom;
+          }
 
           newRoom.localParticipant.videoTracks.forEach(publication =>
             // All video tracks are published with 'low' priority because the video track
@@ -56,9 +63,11 @@ export default function useRoom(
           setIsConnecting(false);
 
           // Add a listener to disconnect from the room when a user closes their browser
-          window.addEventListener('beforeunload', disconnect);
+          if (typeof window !== 'undefined') {
+            window.addEventListener('beforeunload', disconnect);
+          }
 
-          if (isMobile) {
+          if (isMobile && typeof window !== 'undefined') {
             // Add a listener to disconnect from the room when a mobile user closes their browser
             window.addEventListener('pagehide', disconnect);
           }
