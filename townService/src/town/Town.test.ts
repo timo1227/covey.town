@@ -463,7 +463,7 @@ describe('Town', () => {
       function disconnectPlayer(playerToLeave: MockedPlayer) {
         // Call the disconnect event handler
         const disconnectHandler = getEventListener(playerToLeave.socket, 'disconnect');
-        disconnectHandler('forced close');
+        disconnectHandler('unknown');
       }
       it("Invalidates the players's session token", async () => {
         const token = player.sessionToken;
