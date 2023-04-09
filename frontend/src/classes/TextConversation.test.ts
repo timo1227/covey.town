@@ -17,7 +17,7 @@ describe('TextConversation', () => {
   it('should send a message to the server', () => {
     const emitChatMessageSpy = jest.spyOn(townController, 'emitChatMessage');
     const message = 'hello world';
-    textConversation.sendGlobalMessage(message);
+    textConversation.sendMessage(message);
 
     expect(emitChatMessageSpy).toHaveBeenCalledWith(
       expect.objectContaining({
