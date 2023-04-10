@@ -12,7 +12,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
     height: '100%',
   },
   container: {
-    position: 'relative',
     flex: '1',
   },
   innerContainer: {
@@ -25,10 +24,8 @@ const useStyles = makeStyles()((theme: Theme) => ({
     borderRadius: '8px',
     border: '1px solid #ccc',
     overflow: 'hidden',
-    position: 'relative',
   },
   swooshContainer: {
-    position: 'relative',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -42,7 +39,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
     },
   },
   logoContainer: {
-    position: 'absolute',
     width: '210px',
     textAlign: 'center',
     [theme.breakpoints.down('md')]: {
@@ -54,12 +50,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
         height: '64px',
       },
     },
-  },
-  twilioLogo: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    margin: '20px',
   },
   content: {
     background: 'white',
@@ -88,7 +78,7 @@ const IntroContainer = (props: IntroContainerProps) => {
   const { classes } = useStyles();
 
   return (
-    <div className={classes.background}>
+    <div className={`h-[calc(100vh-5rem)] ${classes.background}`}>
       <div className={classes.container}>
         <div className={classes.innerContainer}>
           <div className={classes.content}>{props.children}</div>

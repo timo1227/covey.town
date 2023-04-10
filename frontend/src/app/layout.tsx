@@ -1,6 +1,7 @@
 import reportWebVitals from '../reportWebVitals';
 import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir';
 import './styles/globals.css';
+import './styles/VideoGrid.scss';
 
 export const metadata = {
   title: 'Covey Town',

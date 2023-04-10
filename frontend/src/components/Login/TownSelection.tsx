@@ -1,3 +1,4 @@
+'use client';
 import {
   Box,
   Button,
@@ -23,6 +24,17 @@ import TownController from '../../classes/TownController';
 import { Town } from '../../generated/client';
 import useLoginController from '../../hooks/useLoginController';
 import useVideoContext from '../VideoCall/VideoFrontend/hooks/useVideoContext/useVideoContext';
+
+// const getUserNameFromDb = async (townID: string): Promise<string> => {
+//   const response = await fetch(`/api/town/${townID}/userName`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   });
+//   const data = await response.json();
+//   return data.userName;
+// };
 
 export default function TownSelection(): JSX.Element {
   const [userName, setUserName] = useState<string>('');
@@ -165,27 +177,30 @@ export default function TownSelection(): JSX.Element {
     <>
       <form>
         <Stack>
-          <Box p='4' borderWidth='1px' borderRadius='lg'>
+          <Box p='4'>
             <Heading as='h2' size='lg'>
               Select a username
             </Heading>
 
             <FormControl>
-              <FormLabel htmlFor='name'>Name</FormLabel>
+              <FormLabel htmlFor='name' className='font-bold'>
+                Name
+              </FormLabel>
               <Input
                 autoFocus
                 name='name'
                 placeholder='Your name'
                 value={userName}
+                className='relative block w-full rounded border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                 onChange={event => setUserName(event.target.value)}
               />
             </FormControl>
           </Box>
-          <Box borderWidth='1px' borderRadius='lg'>
+          <Box>
             <Heading p='4' as='h2' size='lg'>
               Create a New Town
             </Heading>
-            <Flex p='4'>
+            <Flex p='4' className='items-center'>
               <Box flex='1'>
                 <FormControl>
                   <FormLabel htmlFor='townName'>New Town Name</FormLabel>
@@ -193,6 +208,7 @@ export default function TownSelection(): JSX.Element {
                     name='townName'
                     placeholder='New Town Name'
                     value={newTownName}
+                    className='relative block w-full rounded border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                     onChange={event => setNewTownName(event.target.value)}
                   />
                 </FormControl>
@@ -211,7 +227,10 @@ export default function TownSelection(): JSX.Element {
                 </FormControl>
               </Box>
               <Box>
-                <Button data-testid='newTownButton' onClick={handleCreate}>
+                <Button
+                  data-testid='newTownButton'
+                  className='group relative flex justify-center rounded-md bg-blue-600 py-2 px-3 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+                  onClick={handleCreate}>
                   Create
                 </Button>
               </Box>
@@ -221,22 +240,28 @@ export default function TownSelection(): JSX.Element {
             -or-
           </Heading>
 
-          <Box borderWidth='1px' borderRadius='lg'>
+          <Box>
             <Heading p='4' as='h2' size='lg'>
               Join an Existing Town
             </Heading>
-            <Box borderWidth='1px' borderRadius='lg'>
-              <Flex p='4'>
-                <FormControl>
-                  <FormLabel htmlFor='townIDToJoin'>Town ID</FormLabel>
+            <Box>
+              <Flex p='4' className='gap-4 items-center flex-wrap'>
+                <FormLabel className='w-full' htmlFor='townIDToJoin'>
+                  Town ID
+                </FormLabel>
+                <FormControl className='w-[80%] '>
                   <Input
                     name='townIDToJoin'
                     placeholder='ID of town to join, or select from list'
                     value={townIDToJoin}
+                    className='relative w-full block rounded border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                     onChange={event => setTownIDToJoin(event.target.value)}
                   />
                 </FormControl>
-                <Button data-testid='joinTownByIDButton' onClick={() => handleJoin(townIDToJoin)}>
+                <Button
+                  className='group relative flex justify-center rounded-md bg-blue-600 py-2 px-3 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+                  data-testid='joinTownByIDButton'
+                  onClick={() => handleJoin(townIDToJoin)}>
                   Connect
                 </Button>
               </Flex>

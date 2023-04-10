@@ -25,8 +25,8 @@ export default function Nav() {
             <Image
               className='h-8 w-auto'
               src={logo.src}
-              width={300}
-              height={500}
+              width={30}
+              height={50}
               alt='Covey Town Logo'
             />
           </Link>
@@ -64,8 +64,8 @@ export default function Nav() {
               <span className='sr-only'>Covey Town</span>
               <Image
                 className='h-8 w-auto'
-                width={300}
-                height={500}
+                width={30}
+                height={50}
                 src={logo.src}
                 alt='Covey Town Logo'
               />

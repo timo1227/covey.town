@@ -1,4 +1,3 @@
-'use client';
 import { Container, Grid, Link, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';

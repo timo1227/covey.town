@@ -9,7 +9,6 @@ import TownMap from '../../components/Town/TownMap';
 import { ChatProvider } from '../../components/VideoCall/VideoFrontend/components/ChatProvider';
 import ErrorDialog from '../../components/VideoCall/VideoFrontend/components/ErrorDialog/ErrorDialog';
 import PreJoinScreens from '../../components/VideoCall/VideoFrontend/components/PreJoinScreens/PreJoinScreens';
-import UnsupportedBrowserWarning from '../../components/VideoCall/VideoFrontend/components/UnsupportedBrowserWarning/UnsupportedBrowserWarning';
 import { VideoProvider } from '../../components/VideoCall/VideoFrontend/components/VideoProvider';
 import AppStateProvider, { useAppState } from '../../components/VideoCall/VideoFrontend/state';
 import theme from '../../components/VideoCall/VideoFrontend/theme';
@@ -18,6 +17,16 @@ import VideoOverlay from '../../components/VideoCall/VideoOverlay/VideoOverlay';
 import LoginControllerContext from '../../contexts/LoginControllerContext';
 import TownControllerContext from '../../contexts/TownControllerContext';
 import { TownsServiceClient } from '../../generated/client';
+import dynamic from 'next/dynamic';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const UnsupportedBrowserWarning = dynamic(
+  () =>
+    import(
+      '../../components/VideoCall/VideoFrontend/components/UnsupportedBrowserWarning/UnsupportedBrowserWarning'
+    ),
+  { ssr: false },
+);
 
 function JoinTown() {
   const [townController, setTownController] = useState<TownController | null>(null);
