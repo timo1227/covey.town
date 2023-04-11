@@ -78,7 +78,7 @@ const IntroContainer = (props: IntroContainerProps) => {
   const { classes } = useStyles();
 
   return (
-    <div className={`h-[calc(100vh-5rem)] ${classes.background}`}>
+    <div className={`min-h-[calc(100vh-5rem)] ${classes.background}`}>
       <div className={classes.container}>
         <div className={classes.innerContainer}>
           <div className={classes.content}>{props.children}</div>

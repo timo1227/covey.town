@@ -2,7 +2,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -19,22 +18,12 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import assert from 'assert';
+import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
 import TownController from '../../classes/TownController';
 import { Town } from '../../generated/client';
 import useLoginController from '../../hooks/useLoginController';
 import useVideoContext from '../VideoCall/VideoFrontend/hooks/useVideoContext/useVideoContext';
-
-// const getUserNameFromDb = async (townID: string): Promise<string> => {
-//   const response = await fetch(`/api/town/${townID}/userName`, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   });
-//   const data = await response.json();
-//   return data.userName;
-// };
 
 export default function TownSelection(): JSX.Element {
   const [userName, setUserName] = useState<string>('');
@@ -47,6 +36,17 @@ export default function TownSelection(): JSX.Element {
   const { connect: videoConnect } = useVideoContext();
 
   const toast = useToast();
+
+  // Get logged in username from session
+  const session = useSession();
+
+  const user = session.data?.user;
+
+  useEffect(() => {
+    if (user) {
+      setUserName(user.name || '');
+    }
+  }, [user]);
 
   const updateTownListings = useCallback(() => {
     townsService.listTowns().then(towns => {
@@ -178,32 +178,34 @@ export default function TownSelection(): JSX.Element {
       <form>
         <Stack>
           <Box p='4'>
-            <Heading as='h2' size='lg'>
+            <Heading as='h2' size='lg' className='font-semibold'>
               Select a username
             </Heading>
 
             <FormControl>
-              <FormLabel htmlFor='name' className='font-bold'>
+              <FormLabel htmlFor='name' className='font-bold hidden'>
                 Name
               </FormLabel>
               <Input
                 autoFocus
                 name='name'
-                placeholder='Your name'
-                value={userName}
+                placeholder='Enter Username'
+                value={user?.name || userName}
                 className='relative block w-full rounded border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                 onChange={event => setUserName(event.target.value)}
               />
             </FormControl>
           </Box>
           <Box>
-            <Heading p='4' as='h2' size='lg'>
+            <Heading p='4' as='h2' size='lg' className='font-semibold'>
               Create a New Town
             </Heading>
-            <Flex p='4' className='items-center'>
-              <Box flex='1'>
+            <Flex p='4' className='items-center flex-wrap gap-5'>
+              <FormLabel htmlFor='townName' className='w-full hidden'>
+                New Town Name
+              </FormLabel>
+              <Box className='w-full'>
                 <FormControl>
-                  <FormLabel htmlFor='townName'>New Town Name</FormLabel>
                   <Input
                     name='townName'
                     placeholder='New Town Name'
@@ -213,18 +215,18 @@ export default function TownSelection(): JSX.Element {
                   />
                 </FormControl>
               </Box>
-              <Box>
-                <FormControl>
-                  <FormLabel htmlFor='isPublic'>Publicly Listed</FormLabel>
-                  <Checkbox
-                    id='isPublic'
-                    name='isPublic'
-                    isChecked={newTownIsPublic}
-                    onChange={e => {
-                      setNewTownIsPublic(e.target.checked);
-                    }}
-                  />
-                </FormControl>
+              <Box className='flex items-center gap-3'>
+                <FormLabel htmlFor='isPublic'>List Publicly</FormLabel>
+                <input
+                  id='isPublic'
+                  name='isPublic'
+                  type='checkbox'
+                  checked={newTownIsPublic}
+                  className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'
+                  onChange={e => {
+                    setNewTownIsPublic(e.target.checked);
+                  }}
+                />
               </Box>
               <Box>
                 <Button
@@ -236,17 +238,17 @@ export default function TownSelection(): JSX.Element {
               </Box>
             </Flex>
           </Box>
-          <Heading p='4' as='h2' size='lg'>
+          <Heading p='4' as='h2' size='lg' className='font-extrabold'>
             -or-
           </Heading>
 
           <Box>
-            <Heading p='4' as='h2' size='lg'>
+            <Heading p='4' as='h2' size='lg' className='font-semibold'>
               Join an Existing Town
             </Heading>
             <Box>
               <Flex p='4' className='gap-4 items-center flex-wrap'>
-                <FormLabel className='w-full' htmlFor='townIDToJoin'>
+                <FormLabel className='w-full hidden' htmlFor='townIDToJoin'>
                   Town ID
                 </FormLabel>
                 <FormControl className='w-[80%] '>
@@ -271,10 +273,10 @@ export default function TownSelection(): JSX.Element {
               Select a public town to join
             </Heading>
             <Box maxH='500px' overflowY='scroll'>
-              <Table>
+              <Table className='w-full'>
                 <TableCaption placement='bottom'>Publicly Listed Towns</TableCaption>
                 <Thead>
-                  <Tr>
+                  <Tr className='w-full flex justify-between px-3'>
                     <Th>Town Name</Th>
                     <Th>Town ID</Th>
                     <Th>Activity</Th>

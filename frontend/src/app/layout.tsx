@@ -1,19 +1,19 @@
+'use client';
 import reportWebVitals from '../reportWebVitals';
-import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir';
+import { SessionProvider } from 'next-auth/react';
 import './styles/globals.css';
 import './styles/VideoGrid.scss';
 
-export const metadata = {
-  title: 'Covey Town',
-};
+interface RootLayoutProps {
+  children: React.ReactNode;
+  session: any;
+}
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children, session }: RootLayoutProps) {
   return (
     <html lang='en'>
       <body>
-        <NextAppDirEmotionCacheProvider options={{ key: 'tss' }}>
-          {children}
-        </NextAppDirEmotionCacheProvider>
+        <SessionProvider session={session}>{children}</SessionProvider>
       </body>
     </html>
   );
