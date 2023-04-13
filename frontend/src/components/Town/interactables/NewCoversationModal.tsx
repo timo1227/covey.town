@@ -12,7 +12,7 @@ import {
   ModalOverlay,
   useToast,
 } from '@chakra-ui/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useInteractable } from '../../../classes/TownController';
 import { ConversationArea } from '../../../generated/client';
 import useTownController from '../../../hooks/useTownController';

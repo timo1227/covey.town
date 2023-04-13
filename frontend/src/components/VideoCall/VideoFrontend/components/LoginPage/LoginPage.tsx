@@ -1,29 +1,29 @@
+'use client';
 import React, { ChangeEvent, useState, FormEvent } from 'react';
 import { useAppState } from '../../state';
-
-import Button from '@material-ui/core/Button';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import Grid from '@material-ui/core/Grid';
-import { ReactComponent as GoogleLogo } from './google-logo.svg';
-import { InputLabel, Theme } from '@material-ui/core';
+import Button from '@mui/material/Button';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import Grid from '@mui/material/Grid';
+import GoogleLogo from './google-logo.svg';
+import { InputLabel, Theme } from '@mui/material';
 import IntroContainer from '../IntroContainer/IntroContainer';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { useLocation, useHistory } from 'react-router-dom';
+import { makeStyles } from 'tss-react/mui';
+import { useRouter } from 'next/navigation';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   googleButton: {
-    background: 'white',
-    color: 'rgb(0, 94, 166)',
-    borderRadius: '4px',
-    border: '2px solid rgb(2, 122, 197)',
-    margin: '1.8em 0 0.7em',
-    textTransform: 'none',
-    boxShadow: 'none',
-    padding: '0.3em 1em',
-    [theme.breakpoints.down('sm')]: {
+    'background': 'white',
+    'color': 'rgb(0, 94, 166)',
+    'borderRadius': '4px',
+    'border': '2px solid rgb(2, 122, 197)',
+    'margin': '1.8em 0 0.7em',
+    'textTransform': 'none',
+    'boxShadow': 'none',
+    'padding': '0.3em 1em',
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
     '&:hover': {
@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   errorMessage: {
-    color: 'red',
-    display: 'flex',
-    alignItems: 'center',
-    margin: '1em 0 0.2em',
+    'color': 'red',
+    'display': 'flex',
+    'alignItems': 'center',
+    'margin': '1em 0 0.2em',
     '& svg': {
       marginRight: '0.4em',
     },
@@ -47,17 +47,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '120px',
   },
   submitButton: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
 }));
 
 export default function LoginPage() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const { signIn, user, isAuthReady } = useAppState();
-  const history = useHistory();
-  const location = useLocation<{ from: Location }>();
+  const navigate = useRouter();
   const [passcode, setPasscode] = useState('');
   const [authError, setAuthError] = useState<Error | null>(null);
 
@@ -67,7 +66,7 @@ export default function LoginPage() {
     setAuthError(null);
     signIn?.(passcode)
       .then(() => {
-        history.replace(location?.state?.from || { pathname: '/' });
+        navigate.push('/');
       })
       .catch(err => setAuthError(err));
   };
@@ -78,7 +77,7 @@ export default function LoginPage() {
   };
 
   if (user || !isAuthEnabled) {
-    history.replace('/');
+    navigate.push('/');
   }
 
   if (!isAuthReady) {
@@ -89,11 +88,15 @@ export default function LoginPage() {
     <IntroContainer>
       {process.env.REACT_APP_SET_AUTH === 'firebase' && (
         <>
-          <Typography variant="h5" className={classes.gutterBottom}>
+          <Typography variant='h5' className={classes.gutterBottom}>
             Sign in to join a room
           </Typography>
-          <Typography variant="body1">Sign in using your Twilio Google Account</Typography>
-          <Button variant="contained" className={classes.googleButton} onClick={login} startIcon={<GoogleLogo />}>
+          <Typography variant='body1'>Sign in using your Twilio Google Account</Typography>
+          <Button
+            variant='contained'
+            className={classes.googleButton}
+            onClick={login}
+            startIcon={<GoogleLogo />}>
             Sign in with Google
           </Button>
         </>
@@ -101,25 +104,25 @@ export default function LoginPage() {
 
       {process.env.REACT_APP_SET_AUTH === 'passcode' && (
         <>
-          <Typography variant="h5" className={classes.gutterBottom}>
+          <Typography variant='h5' className={classes.gutterBottom}>
             Enter passcode to join a room
           </Typography>
           <form onSubmit={handleSubmit}>
-            <Grid container justifyContent="space-between">
+            <Grid container justifyContent='space-between'>
               <div className={classes.passcodeContainer}>
-                <InputLabel shrink htmlFor="input-passcode">
+                <InputLabel shrink htmlFor='input-passcode'>
                   Passcode
                 </InputLabel>
                 <TextField
-                  id="input-passcode"
+                  id='input-passcode'
                   onChange={(e: ChangeEvent<HTMLInputElement>) => setPasscode(e.target.value)}
-                  type="password"
-                  variant="outlined"
-                  size="small"
+                  type='password'
+                  variant='outlined'
+                  size='small'
                 />
                 <div>
                   {authError && (
-                    <Typography variant="caption" className={classes.errorMessage}>
+                    <Typography variant='caption' className={classes.errorMessage}>
                       <ErrorOutlineIcon />
                       {authError.message}
                     </Typography>
@@ -127,14 +130,13 @@ export default function LoginPage() {
                 </div>
               </div>
             </Grid>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent='flex-end'>
               <Button
-                variant="contained"
-                color="primary"
-                type="submit"
+                variant='contained'
+                color='primary'
+                type='submit'
                 disabled={!passcode.length}
-                className={classes.submitButton}
-              >
+                className={classes.submitButton}>
                 Submit
               </Button>
             </Grid>

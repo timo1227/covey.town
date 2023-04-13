@@ -1,5 +1,5 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import clsx from 'clsx';
+import { makeStyles } from 'tss-react/mui';
+import { Theme } from '@mui/material/styles';
 import React from 'react';
 import { usePlayersInVideoCall } from '../../../../../classes/TownController';
 import ViewingAreaVideo from '../../../../Town/interactables/ViewingAreaVideo';
@@ -10,63 +10,66 @@ import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import Participant from '../Participant/Participant';
 import useSelectedParticipant from '../VideoProvider/useSelectedParticipant/useSelectedParticipant';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      overflowY: 'auto',
-      background: 'rgb(79, 83, 85)',
-      gridArea: '1 / 2 / 1 / 3',
-      zIndex: 5,
-      [theme.breakpoints.down('sm')]: {
-        gridArea: '2 / 1 / 3 / 3',
-        overflowY: 'initial',
-        overflowX: 'auto',
-        display: 'flex',
-      },
-    },
-    transparentBackground: {
-      background: 'transparent',
-    },
-    scrollContainer: {
+const useStyles = makeStyles()((theme: Theme) => ({
+  container: {
+    overflowY: 'auto',
+    background: 'rgb(79, 83, 85)',
+    gridArea: '1 / 2 / 1 / 3',
+    zIndex: 5,
+    [theme.breakpoints.down('md')]: {
+      gridArea: '2 / 1 / 3 / 3',
+      overflowY: 'initial',
+      overflowX: 'auto',
       display: 'flex',
-      justifyContent: 'center',
     },
-    innerScrollContainer: {
-      width: `calc(${theme.sidebarWidth}px - 3em)`,
-      padding: '1.5em 0',
-      [theme.breakpoints.down('sm')]: {
-        width: 'auto',
-        padding: `${theme.sidebarMobilePadding}px`,
-        display: 'flex',
-      },
+  },
+
+  transparentBackground: {
+    background: 'transparent',
+  },
+
+  scrollContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
+  innerScrollContainer: {
+    width: `calc(${theme.sidebarWidth}px - 3em)`,
+    padding: '1.5em 0',
+    [theme.breakpoints.down('md')]: {
+      width: 'auto',
+      padding: `${theme.sidebarMobilePadding}px`,
+      display: 'flex',
     },
-    gridContainer: {
-      gridArea: '1 / 1 / 1 / 3',
-      overflowX: 'hidden',
-      overflowY: 'auto',
-      [theme.breakpoints.down('sm')]: {
-        gridArea: '1 / 1 / 3 / 1',
-      },
+  },
+
+  gridContainer: {
+    gridArea: '1 / 1 / 1 / 3',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    [theme.breakpoints.down('md')]: {
+      gridArea: '1 / 1 / 3 / 1',
     },
-    gridInnerContainer: {
-      // display: 'flex',
-      // gridTemplateColumns: '1fr 1fr 1fr 1fr',
-      // gridAutoRows: '1fr',
-      // [theme.breakpoints.down('md')]: {
-      //   gridTemplateColumns: '1fr 1fr 1fr',
-      // },
-      // [theme.breakpoints.down('sm')]: {
-      //   gridTemplateColumns: '1fr 1fr',
-      // },
-      // [theme.breakpoints.down('xs')]: {
-      //   gridTemplateColumns: '1fr',
-      // },
-      width: '100%',
-      justifyContent: 'center',
-      alignContent: 'center'
-    },
-  })
-);
+  },
+
+  gridInnerContainer: {
+    // display: 'flex',
+    // gridTemplateColumns: '1fr 1fr 1fr 1fr',
+    // gridAutoRows: '1fr',
+    // [theme.breakpoints.down('md')]: {
+    //   gridTemplateColumns: '1fr 1fr 1fr',
+    // },
+    // [theme.breakpoints.down('sm')]: {
+    //   gridTemplateColumns: '1fr 1fr',
+    // },
+    // [theme.breakpoints.down('xs')]: {
+    //   gridTemplateColumns: '1fr',
+    // },
+    width: '100%',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+}));
 
 export default function ParticipantList() {
   // const classes = useStyles();
@@ -77,9 +80,8 @@ export default function ParticipantList() {
   const screenShareParticipant = useScreenShareParticipant();
   const mainParticipant = useMainParticipant();
   const nearbyPlayers = usePlayersInVideoCall();
-  const isRemoteParticipantScreenSharing = screenShareParticipant && screenShareParticipant !== localParticipant;
 
-  const classes = useStyles('fullwidth');
+  const { classes } = useStyles();
   // if (participants.length === 0) return null; // Don't render this component if there are no remote participants.
 
   // return (
@@ -120,26 +122,31 @@ export default function ParticipantList() {
         participant={localParticipant}
         isLocalParticipant
         insideGrid={true}
-                // highlight={highlightedProfiles?.includes(localUserProfile.id) ?? false}
+        // highlight={highlightedProfiles?.includes(localUserProfile.id) ?? false}
         slot={0}
       />
       <ViewingAreaVideo />
 
       {participants
-        .filter((p) => nearbyPlayers.find((player) => player.id == p.participant.identity))
-        .sort(participantSorter).map((participantWithSlot) => {
+        .filter(p => nearbyPlayers.find(player => player.id == p.participant.identity))
+        .sort(participantSorter)
+        .map(participantWithSlot => {
           const { participant } = participantWithSlot;
           const isSelected = participant === selectedParticipant;
-          const hideParticipant = participant === mainParticipant
-                    && participant !== screenShareParticipant
-                    && !isSelected
-                    && participants.length > 1;
-          const player = nearbyPlayers.find((p) => p.id == participantWithSlot.participant.identity);
-          const remoteProfile = { displayName: player ? player.userName : 'unknown', id: participantWithSlot.participant.identity };
+          const hideParticipant =
+            participant === mainParticipant &&
+            participant !== screenShareParticipant &&
+            !isSelected &&
+            participants.length > 1;
+          const player = nearbyPlayers.find(p => p.id == participantWithSlot.participant.identity);
+          const remoteProfile = {
+            displayName: player ? player.userName : 'unknown',
+            id: participantWithSlot.participant.identity,
+          };
           return (
             <Participant
               key={participant.sid}
-                        // highlight={highlightedProfiles?.includes(participant.identity) ?? false}
+              // highlight={highlightedProfiles?.includes(participant.identity) ?? false}
               participant={participant}
               profile={remoteProfile}
               isSelected={participant === selectedParticipant}
@@ -153,19 +160,21 @@ export default function ParticipantList() {
     </>
   );
 
-  return <main
-      // className={clsx(
-      //   classes.gridContainer,
-      //   {
-      //     [classes.transparentBackground]: true,
-      //   },
-      //   'participants-grid-container',
-      //   {
-      //     // "single-column": preferredMode === "sidebar" && props.gridView,
-      //     'single-column': false,
-      //   },
-      // )}
+  return (
+    <main
+    // className={clsx(
+    //   classes.gridContainer,
+    //   {
+    //     [classes.transparentBackground]: true,
+    //   },
+    //   'participants-grid-container',
+    //   {
+    //     // "single-column": preferredMode === "sidebar" && props.gridView,
+    //     'single-column': false,
+    //   },
+    // )}
     >
       <div className={classes.gridInnerContainer}>{participantsEl}</div>
     </main>
+  );
 }

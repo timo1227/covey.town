@@ -1,15 +1,7 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Person from '@material-ui/icons/Person';
+import Avatar from '@mui/material/Avatar';
+import Person from '@mui/icons-material/Person';
 import { StateContextType } from '../../../../state';
-
-const useStyles = makeStyles({
-  red: {
-    color: 'white',
-    backgroundColor: '#F22F46',
-  },
-});
 
 export function getInitials(name: string) {
   return name
@@ -20,13 +12,12 @@ export function getInitials(name: string) {
 }
 
 export default function UserAvatar({ user }: { user: StateContextType['user'] }) {
-  const classes = useStyles();
   const displayName = user?.displayName;
   const photoURL = user?.photoURL;
 
   return photoURL ? (
     <Avatar src={photoURL} />
   ) : (
-    <Avatar className={classes.red}>{displayName ? getInitials(displayName) : <Person />}</Avatar>
+    <Avatar>{displayName ? getInitials(displayName) : <Person />}</Avatar>
   );
 }

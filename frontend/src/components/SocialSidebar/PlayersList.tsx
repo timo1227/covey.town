@@ -1,5 +1,4 @@
 import { Box, Heading, ListItem, OrderedList, Tooltip } from '@chakra-ui/react';
-import React from 'react';
 import { usePlayers } from '../../classes/TownController';
 import useTownController from '../../hooks/useTownController';
 import PlayerName from './PlayerName';

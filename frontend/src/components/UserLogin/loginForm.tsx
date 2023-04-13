@@ -1,24 +1,81 @@
-import React from 'react';
-import logo from '../../public/logo.png';
+'use client';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
+import Link from 'next/link';
+import logo from '../../public/logo.png';
+import Image from 'next/image';
+import { FiGithub } from 'react-icons/fi';
+import { useSession, signIn, getProviders } from 'next-auth/react';
+import { useState } from 'react';
 
-export default function LoginForm() {
+export default async function LoginForm() {
+  const { data: session } = useSession();
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const providers = await getProviders();
+
+  const ProvidersButtons = () => {
+    return (
+      <>
+        {providers &&
+          Object.values(providers).map(
+            (provider: any) =>
+              provider.name !== 'Credentials' &&
+              // Check if provider is Google
+              (provider.name === 'Google' ? (
+                <div key={provider.name} className='max-w-fit'>
+                  <button
+                    className={`w-[250px] h-[60px] bg-cover overflow-visible bg-[url('../../public/google_signin_buttons/web/2x/btn_google_signin_light_normal_web@2x.png')] hover:bg-[url('../../public/google_signin_buttons/web/2x/btn_google_signin_light_pressed_web@2x.png')] active:bg-[url('../../public/google_signin_buttons/web/2x/btn_google_signin_light_pressed_web@2x.png')]`}
+                    onClick={() => signIn(provider.id, { callbackUrl: `/` })}></button>
+                </div>
+              ) : // Check if provider is GitHub
+              provider.name === 'GitHub' ? (
+                <div key={provider.name}>
+                  <button
+                    onClick={() => signIn(provider.id, { callbackUrl: `/` })}
+                    className='w-[246px] h-[45px] items-center flex gap-5 text-xl pl-3 pr-2 border border-transparent rounded-md shadow-sm text-white bg-gray-950 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white-500'>
+                    <FiGithub className='mr-1 text-2xl text-white' />
+                    Sign in with {provider.name}
+                  </button>
+                </div>
+              ) : (
+                // Return default button for all other providers
+                <div key={provider.name}>
+                  <button
+                    onClick={() => signIn(provider.id, { callbackUrl: `/` })}
+                    className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+                    Sign in with {provider.name}
+                  </button>
+                </div>
+              )),
+          )}
+      </>
+    );
+  };
+
   return (
     <>
-      <div className='flex h-[calc(100vh-11rem)] items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='flex h-[calc(100vh-11rem)] items-center justify-center py-12 px-4 sm:px-6 lg:px-8 mt-10'>
         <div className='w-full max-w-md space-y-8'>
           <div>
-            <a href='/'>
-              <img className='mx-auto h-12 w-auto' src={logo} alt='Covey Town Logo' />
-            </a>
+            <Link href='/'>
+              <Image
+                className='mx-auto h-12 w-auto'
+                width={300}
+                height={500}
+                src={logo.src}
+                alt='Covey Town Logo'
+              />
+            </Link>
             <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
               Sign in to your account
             </h2>
             <p className='mt-2 text-center text-sm text-gray-600'>
               Or{' '}
-              <a href='/Register' className='font-medium text-indigo-600 hover:text-indigo-500'>
+              <Link href='/Register' className='font-medium text-indigo-600 hover:text-indigo-500'>
                 Create your Account today
-              </a>
+              </Link>
             </p>
           </div>
           <form className='mt-8 space-y-6' action='#' method='POST'>
@@ -34,7 +91,7 @@ export default function LoginForm() {
                   type='email'
                   autoComplete='email'
                   required
-                  className='relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className='relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                   placeholder='Email address'
                 />
               </div>
@@ -48,7 +105,7 @@ export default function LoginForm() {
                   type='password'
                   autoComplete='current-password'
                   required
-                  className='relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                  className='relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                   placeholder='Password'
                 />
               </div>
@@ -68,9 +125,9 @@ export default function LoginForm() {
               </div>
 
               <div className='text-sm'>
-                <a href='#' className='font-medium text-indigo-600 hover:text-indigo-500'>
+                <Link href='#' className='font-medium text-indigo-600 hover:text-indigo-500'>
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -88,6 +145,9 @@ export default function LoginForm() {
               </button>
             </div>
           </form>
+          <div className='flex flex-col justify-center py-3 items-center'>
+            <ProvidersButtons />
+          </div>
         </div>
       </div>
     </>
