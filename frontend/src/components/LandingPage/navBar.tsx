@@ -5,31 +5,65 @@ import { useState } from 'react';
 import logo from '../../public/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const NAVIGATION = [
   { name: 'Home', href: '/' },
   { name: 'Town', href: '/Town' },
-  { name: 'Features', href: '/#Features' },
-  { name: 'About', href: '/#About' },
+  { name: 'Features', href: '#Features' },
+  { name: 'About', href: '#About' },
 ];
 
 export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
+
+  function SessionLink() {
+    if (session) {
+      return (
+        <Link
+          href='/Login'
+          className='text-sm font-semibold leading-6 text-gray-900'
+          onClick={() => signOut()}>
+          Log out
+        </Link>
+      );
+    } else {
+      if (mobileMenuOpen) {
+        return (
+          <Link
+            href='/Login'
+            className='-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
+            onClick={() => signIn()}>
+            Log in
+          </Link>
+        );
+      }
+      return (
+        <Link
+          href='/'
+          className='text-sm font-semibold leading-6 text-gray-900'
+          onClick={() => signIn()}>
+          Log in <span aria-hidden='true'>&rarr;</span>
+        </Link>
+      );
+    }
+  }
 
   return (
-    <header className='sticky'>
+    <header className='absolute inset-x-0 top-0 z-50'>
       <nav className='flex items-center justify-between p-6 lg:px-8' aria-label='Global'>
         <div className='flex lg:flex-1'>
-          <Link href='/' className='-m-1.5 p-1.5'>
+          <a href='/' className='-m-1.5 p-1.5'>
             <span className='sr-only'>Your Company</span>
             <Image
               className='h-8 w-auto'
-              src={logo.src}
               width={30}
               height={50}
+              src={logo.src}
               alt='Covey Town Logo'
             />
-          </Link>
+          </a>
         </div>
         <div className='flex lg:hidden'>
           <button
@@ -51,9 +85,7 @@ export default function Nav() {
           ))}
         </div>
         <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-          <Link href='/Login' className='text-sm font-semibold leading-6 text-gray-900'>
-            Log in <span aria-hidden='true'>&rarr;</span>
-          </Link>
+          <SessionLink />
         </div>
       </nav>
       <Dialog as='div' className='lg:hidden' open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -64,9 +96,9 @@ export default function Nav() {
               <span className='sr-only'>Covey Town</span>
               <Image
                 className='h-8 w-auto'
+                src={logo.src}
                 width={30}
                 height={50}
-                src={logo.src}
                 alt='Covey Town Logo'
               />
             </Link>
@@ -79,7 +111,7 @@ export default function Nav() {
             </button>
           </div>
           <div className='mt-6 flow-root'>
-            <div className='-my-6 divide-y divide-gray-500/10'>
+            <div className='-my-6 divide-y divide-gray-50/10'>
               <div className='space-y-2 py-6'>
                 {NAVIGATION.map(item => (
                   <Link
@@ -91,11 +123,7 @@ export default function Nav() {
                 ))}
               </div>
               <div className='py-6'>
-                <Link
-                  href='/Login'
-                  className='-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'>
-                  Log in
-                </Link>
+                <SessionLink />
               </div>
             </div>
           </div>

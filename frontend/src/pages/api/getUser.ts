@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
-import { User } from '../../../types/User';
+import { User } from '../../types/User';
 
 export default async function getUser(req: NextApiRequest, res: NextApiResponse<User | null>) {
   // const session = await getSession({ req });

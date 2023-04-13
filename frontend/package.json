@@ -11,6 +11,7 @@
     "@heroicons/react": "^2.0.17",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.16",
+    "@next-auth/mongodb-adapter": "^1.1.1",
     "@tailwindcss/forms": "^0.5.3",
     "@testing-library/dom": ">=7.21.4",
     "@testing-library/jest-dom": "^5.16.5",

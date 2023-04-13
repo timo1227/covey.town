@@ -47,6 +47,11 @@ module.exports = {
       },
       {
         selector: 'variable',
+        modifiers: ['const'],
+        format: ['camelCase', 'PascalCase'],
+      },
+      {
+        selector: 'variable',
         modifiers: ['global', 'const'],
         types: ['boolean', 'number', 'string', 'array'],
         format: ['UPPER_CASE'],

@@ -8,7 +8,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: 'rgb(40, 42, 43)',
     height: '100%',
   },
   container: {
@@ -78,7 +77,7 @@ const IntroContainer = (props: IntroContainerProps) => {
   const { classes } = useStyles();
 
   return (
-    <div className={`min-h-[calc(100vh-5rem)] ${classes.background}`}>
+    <div className={`min-h-[100vh] ${classes.background}`}>
       <div className={classes.container}>
         <div className={classes.innerContainer}>
           <div className={classes.content}>{props.children}</div>
