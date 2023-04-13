@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, MenuItem, Typography, Select } from '@material-ui/core';
+import { FormControl, MenuItem, Typography, Select } from '@mui/material';
 import { useAppState } from '../../../state';
 import useDevices from '../../../hooks/useDevices/useDevices';
 
@@ -11,7 +11,7 @@ export default function AudioOutputList() {
   return (
     <div className="inputSelect">
       {audioOutputDevices.length > 1 ? (
-        <FormControl fullWidth>
+        <FormControl variant="standard" fullWidth>
           <Typography variant="subtitle2" gutterBottom>
             Audio Output
           </Typography>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles(() =>
-  createStyles({
+const useStyles = makeStyles()(() =>
+  ({
     messageInfoContainer: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -10,9 +10,8 @@ const useStyles = makeStyles(() =>
       padding: '1.425em 0 0.083em',
       fontSize: '12px',
       color: '#606B85',
-    },
-  })
-);
+    }
+  }));
 
 interface MessageInfoProps {
   author: string;
@@ -21,7 +20,7 @@ interface MessageInfoProps {
 }
 
 export default function MessageInfo({ author, dateCreated, isLocalParticipant }: MessageInfoProps) {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   return (
     <div className={classes.messageInfoContainer}>

@@ -1,12 +1,8 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-	  "types": ["jest"],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,13 +17,22 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "jsx": "react-jsx",
-    "rootDirs": ["./src/", "./generated/"],
+    "jsx": "preserve",
+    // "rootDirs": ["./src/", "./generated/"],
     "alwaysStrict": true /* Parse in strict mode and emit "use strict" for each source file. */,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": [
-    "src",
-    "generated"
+  "include": ["src", "generated", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "references": [
+    {
+      "path": "../shared/",
+      "@/*": ["./src/*"]
+    }
   ],
-  "references": [{"path": "../shared/"}]
+  "exclude": ["node_modules ", ".next", ".github", ".vscode"]
 }

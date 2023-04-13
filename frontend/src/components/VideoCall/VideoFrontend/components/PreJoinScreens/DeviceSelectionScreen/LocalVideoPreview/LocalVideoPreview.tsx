@@ -1,12 +1,13 @@
 import React from 'react';
 import AvatarIcon from '../../../../icons/AvatarIcon';
-import { makeStyles, Theme, Typography } from '@material-ui/core';
+import { makeStyles } from 'tss-react/mui';
+import { Theme, Typography } from '@mui/material';
 import LocalAudioLevelIndicator from '../../../LocalAudioLevelIndicator/LocalAudioLevelIndicator';
 import { LocalVideoTrack } from 'twilio-video';
 import VideoTrack from '../../../VideoTrack/VideoTrack';
 import useVideoContext from '../../../../hooks/useVideoContext/useVideoContext';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   container: {
     position: 'relative',
     height: 0,
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     bottom: 0,
     left: 0,
     zIndex: 1,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       '& svg': {
         transform: 'scale(0.7)',
       },
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export default function LocalVideoPreview({ identity }: { identity: string }) {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const { localTracks } = useVideoContext();
 
   const videoTrack = localTracks.find(

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Snackbar from '../../Snackbar/Snackbar';
+import { useState } from 'react';
 import useDevices from '../../../hooks/useDevices/useDevices';
 import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
+import Snackbar from '../../Snackbar/Snackbar';
 
 export function getSnackbarContent(hasAudio: boolean, hasVideo: boolean, error?: Error) {
   let headline = '';
@@ -25,7 +25,7 @@ export function getSnackbarContent(hasAudio: boolean, hasVideo: boolean, error?:
     case error?.name === 'NotAllowedError':
       headline = 'Unable to Access Media:';
 
-      if (error!.message === 'Permission denied by system') {
+      if (error?.message === 'Permission denied by system') {
         // Chrome only
         message =
           'The operating system has blocked the browser from accessing the microphone or camera. Please check your operating system settings.';
@@ -47,7 +47,7 @@ export function getSnackbarContent(hasAudio: boolean, hasVideo: boolean, error?:
     // the system's error message directly to the user.
     case Boolean(error):
       headline = 'Error Acquiring Media:';
-      message = `${error!.name} ${error!.message}`;
+      message = `${error?.name} ${error?.message}`;
       break;
 
     case !hasAudio && !hasVideo:
@@ -83,7 +83,11 @@ export default function MediaErrorSnackbar({ error }: { error?: Error }) {
     !isAcquiringLocalTracks &&
     (Boolean(error) || !hasAudioInputDevices || !hasVideoInputDevices);
 
-  const { headline, message } = getSnackbarContent(hasAudioInputDevices, hasVideoInputDevices, error);
+  const { headline, message } = getSnackbarContent(
+    hasAudioInputDevices,
+    hasVideoInputDevices,
+    error,
+  );
 
   return (
     <Snackbar
@@ -91,7 +95,7 @@ export default function MediaErrorSnackbar({ error }: { error?: Error }) {
       handleClose={() => setIsSnackbarDismissed(true)}
       headline={headline}
       message={message}
-      variant="warning"
+      variant='warning'
     />
   );
 }

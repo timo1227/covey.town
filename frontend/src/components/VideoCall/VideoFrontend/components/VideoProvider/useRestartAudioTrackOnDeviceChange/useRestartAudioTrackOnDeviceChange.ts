@@ -1,3 +1,4 @@
+'use client';
 import { LocalAudioTrack, LocalVideoTrack } from 'twilio-video';
 import { useEffect } from 'react';
 
@@ -10,7 +11,9 @@ import { useEffect } from 'react';
  * default audio device when it detects that the published audio device has been disconnected.
  */
 
-export default function useRestartAudioTrackOnDeviceChange(localTracks: (LocalAudioTrack | LocalVideoTrack)[]) {
+export default function useRestartAudioTrackOnDeviceChange(
+  localTracks: (LocalAudioTrack | LocalVideoTrack)[],
+) {
   const audioTrack = localTracks.find(track => track.kind === 'audio');
 
   useEffect(() => {
@@ -20,10 +23,16 @@ export default function useRestartAudioTrackOnDeviceChange(localTracks: (LocalAu
       }
     };
 
+    if (typeof navigator === 'undefined' || !navigator.mediaDevices) {
+      return;
+    }
+
     navigator.mediaDevices.addEventListener('devicechange', handleDeviceChange);
 
     return () => {
-      navigator.mediaDevices.removeEventListener('devicechange', handleDeviceChange);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      typeof navigator !== 'undefined' &&
+        navigator.mediaDevices.removeEventListener('devicechange', handleDeviceChange);
     };
   }, [audioTrack]);
 }

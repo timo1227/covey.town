@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import React, { useState, useRef, useCallback } from 'react';
-import { makeStyles, Typography, Button, MenuItem, Link } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { makeStyles } from 'tss-react/mui';
+import { Typography, Button, MenuItem, Link } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppState } from '../../../state';
 import UserAvatar from './UserAvatar/UserAvatar';
-import Menu from '@material-ui/core/Menu';
+import Menu from '@mui/material/Menu';
 import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles()({
   userContainer: {
     position: 'absolute',
     top: 0,
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
 });
 
 const UserMenu: React.FC = () => {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const { user, signOut } = useAppState();
   const { localTracks } = useVideoContext();
 
@@ -41,7 +43,7 @@ const UserMenu: React.FC = () => {
   if (process.env.REACT_APP_SET_AUTH === 'passcode') {
     return (
       <div className={classes.userContainer}>
-        <Link onClick={handleSignOut} className={classes.logoutLink}>
+        <Link onClick={handleSignOut} className={classes.logoutLink} underline='hover'>
           Logout
         </Link>
       </div>
@@ -52,15 +54,18 @@ const UserMenu: React.FC = () => {
     return (
       <div className={classes.userContainer}>
         <UserAvatar user={user} />
-        <Button onClick={() => setMenuOpen(isOpen => !isOpen)} ref={anchorRef} className={classes.userButton}>
-          {user!.displayName}
+        <Button
+          onClick={() => setMenuOpen(isOpen => !isOpen)}
+          ref={anchorRef}
+          className={classes.userButton}>
+          {user?.displayName}
           <ExpandMoreIcon />
         </Button>
         <Menu
           open={menuOpen}
           onClose={() => setMenuOpen(isOpen => !isOpen)}
           anchorEl={anchorRef.current}
-          getContentAnchorEl={null}
+          // getContentAnchorEl={null} Not a valid prop for Menu
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
@@ -68,10 +73,9 @@ const UserMenu: React.FC = () => {
           transformOrigin={{
             vertical: 'top',
             horizontal: 'center',
-          }}
-        >
+          }}>
           <MenuItem onClick={handleSignOut}>
-            <Typography variant="body1">Logout</Typography>
+            <Typography variant='body1'>Logout</Typography>
           </MenuItem>
         </Menu>
       </div>

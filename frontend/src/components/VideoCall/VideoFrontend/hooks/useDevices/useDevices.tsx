@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect } from 'react';
 import { getDeviceInfo } from '../../utils';
 
@@ -15,11 +16,15 @@ export default function useDevices() {
 
   useEffect(() => {
     const getDevices = () => getDeviceInfo().then(devices => setDeviceInfo(devices));
+    // Check if navigator is undefined
+    if (typeof navigator === 'undefined') return;
     navigator.mediaDevices.addEventListener('devicechange', getDevices);
     getDevices();
 
     return () => {
-      navigator.mediaDevices.removeEventListener('devicechange', getDevices);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      typeof navigator !== 'undefined' &&
+        navigator.mediaDevices.removeEventListener('devicechange', getDevices);
     };
   }, []);
 

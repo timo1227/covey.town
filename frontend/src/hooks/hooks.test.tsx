@@ -1,6 +1,7 @@
 import { cleanup, render, RenderResult } from '@testing-library/react';
 import { MockProxy } from 'jest-mock-extended';
 import { nanoid } from 'nanoid';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import ConversationAreaController, {

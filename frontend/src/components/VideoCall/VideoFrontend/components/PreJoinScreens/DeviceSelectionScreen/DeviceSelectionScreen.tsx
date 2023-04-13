@@ -1,16 +1,13 @@
-import React from 'react';
-import { makeStyles, Typography, Grid, Button, Theme, Hidden } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LocalVideoPreview from './LocalVideoPreview/LocalVideoPreview';
-import SettingsMenu from './SettingsMenu/SettingsMenu';
-import { Steps } from '../PreJoinScreens';
+import { Grid, Hidden, Theme } from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
+import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
+import { useAppState } from '../../../state';
 import ToggleAudioButton from '../../Buttons/ToggleAudioButton/ToggleAudioButton';
 import ToggleVideoButton from '../../Buttons/ToggleVideoButton/ToggleVideoButton';
-import { useAppState } from '../../../state';
-import useChatContext from '../../../hooks/useChatContext/useChatContext';
-import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
+import LocalVideoPreview from './LocalVideoPreview/LocalVideoPreview';
+import SettingsMenu from './SettingsMenu/SettingsMenu';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   gutterBottom: {
     marginBottom: '1em',
   },
@@ -24,23 +21,23 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   localPreviewContainer: {
     paddingRight: '2em',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '0 2.5em',
     },
   },
   joinButtons: {
     display: 'flex',
     justifyContent: 'space-between',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column-reverse',
-      width: '100%',
+    [theme.breakpoints.down('md')]: {
+      'flexDirection': 'column-reverse',
+      'width': '100%',
       '& button': {
         margin: '0.5em 0',
       },
     },
   },
   mobileButtonBar: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex',
       justifyContent: 'space-between',
       margin: '1.5em 0 1em',
@@ -52,22 +49,22 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface DeviceSelectionScreenProps {
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface DeviceSelectionScreenProps {}
 
-export default function DeviceSelectionScreen({ }: DeviceSelectionScreenProps) {
-  const classes = useStyles();
+// eslint-disable-next-line no-empty-pattern
+export default function DeviceSelectionScreen({}: DeviceSelectionScreenProps) {
+  const { classes } = useStyles();
   const { getToken, isFetching } = useAppState();
   const { connect: videoConnect, isAcquiringLocalTracks, isConnecting } = useVideoContext();
   const disableButtons = isFetching || isAcquiringLocalTracks || isConnecting;
 
-
   return (
     <>
-      <Grid container justifyContent="center">
+      <Grid container justifyContent='center'>
         <Grid item md={7} sm={12} xs={12}>
           <div className={classes.localPreviewContainer}>
-            <LocalVideoPreview identity="You" />
+            <LocalVideoPreview identity='You' />
           </div>
           <div className={classes.mobileButtonBar}>
             <Hidden mdUp>
@@ -78,9 +75,13 @@ export default function DeviceSelectionScreen({ }: DeviceSelectionScreenProps) {
           </div>
         </Grid>
         <Grid item md={5} sm={12} xs={12}>
-          <Grid container direction="column" justifyContent="space-between" style={{ height: '100%' }}>
+          <Grid
+            container
+            direction='column'
+            justifyContent='space-between'
+            style={{ height: '100%' }}>
             <div>
-              <Hidden smDown>
+              <Hidden mdDown>
                 <ToggleAudioButton className={classes.deviceButton} disabled={disableButtons} />
                 <ToggleVideoButton className={classes.deviceButton} disabled={disableButtons} />
               </Hidden>

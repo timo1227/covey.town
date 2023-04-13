@@ -1,4 +1,8 @@
-import { DEFAULT_VIDEO_CONSTRAINTS, SELECTED_AUDIO_INPUT_KEY, SELECTED_VIDEO_INPUT_KEY } from '../../../constants';
+import {
+  DEFAULT_VIDEO_CONSTRAINTS,
+  SELECTED_AUDIO_INPUT_KEY,
+  SELECTED_VIDEO_INPUT_KEY,
+} from '../../../constants';
 import { getDeviceInfo, isPermissionDenied } from '../../../utils';
 import { useCallback, useState } from 'react';
 import Video, { LocalVideoTrack, LocalAudioTrack, CreateLocalTrackOptions } from 'twilio-video';
@@ -22,17 +26,20 @@ export default function useLocalTracks() {
   }, []);
 
   const getLocalVideoTrack = useCallback(async () => {
-    const selectedVideoDeviceId = window.localStorage.getItem(SELECTED_VIDEO_INPUT_KEY);
+    const selectedVideoDeviceId =
+      typeof window !== 'undefined' ? window.localStorage.getItem(SELECTED_VIDEO_INPUT_KEY) : null;
 
     const { videoInputDevices } = await getDeviceInfo();
 
     const hasSelectedVideoDevice = videoInputDevices.some(
-      device => selectedVideoDeviceId && device.deviceId === selectedVideoDeviceId
+      device => selectedVideoDeviceId && device.deviceId === selectedVideoDeviceId,
     );
 
     const options: CreateLocalTrackOptions = {
+      // eslint-disable-next-line @typescript-eslint/ban-types
       ...(DEFAULT_VIDEO_CONSTRAINTS as {}),
       name: `camera-${Date.now()}`,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ...(hasSelectedVideoDevice && { deviceId: { exact: selectedVideoDeviceId! } }),
     };
 
@@ -57,21 +64,24 @@ export default function useLocalTracks() {
   }, [videoTrack]);
 
   const getAudioAndVideoTracks = useCallback(async () => {
-    const { audioInputDevices, videoInputDevices, hasAudioInputDevices, hasVideoInputDevices } = await getDeviceInfo();
+    const { audioInputDevices, videoInputDevices, hasAudioInputDevices, hasVideoInputDevices } =
+      await getDeviceInfo();
 
     if (!hasAudioInputDevices && !hasVideoInputDevices) return Promise.resolve();
     if (isAcquiringLocalTracks || audioTrack || videoTrack) return Promise.resolve();
 
     setIsAcquiringLocalTracks(true);
 
-    const selectedAudioDeviceId = window.localStorage.getItem(SELECTED_AUDIO_INPUT_KEY);
-    const selectedVideoDeviceId = window.localStorage.getItem(SELECTED_VIDEO_INPUT_KEY);
+    const selectedAudioDeviceId =
+      typeof window !== 'undefined' ? window.localStorage.getItem(SELECTED_AUDIO_INPUT_KEY) : null;
+    const selectedVideoDeviceId =
+      typeof window !== 'undefined' ? window.localStorage.getItem(SELECTED_VIDEO_INPUT_KEY) : null;
 
     const hasSelectedAudioDevice = audioInputDevices.some(
-      device => selectedAudioDeviceId && device.deviceId === selectedAudioDeviceId
+      device => selectedAudioDeviceId && device.deviceId === selectedAudioDeviceId,
     );
     const hasSelectedVideoDevice = videoInputDevices.some(
-      device => selectedVideoDeviceId && device.deviceId === selectedVideoDeviceId
+      device => selectedVideoDeviceId && device.deviceId === selectedVideoDeviceId,
     );
 
     // In Chrome, it is possible to deny permissions to only audio or only video.
@@ -84,13 +94,16 @@ export default function useLocalTracks() {
 
     const localTrackConstraints = {
       video: shouldAcquireVideo && {
+        // eslint-disable-next-line @typescript-eslint/ban-types
         ...(DEFAULT_VIDEO_CONSTRAINTS as {}),
         name: `camera-${Date.now()}`,
         ...(hasSelectedVideoDevice && { deviceId: { exact: selectedVideoDeviceId! } }),
       },
       audio:
         shouldAcquireAudio &&
-        (hasSelectedAudioDevice ? { deviceId: { exact: selectedAudioDeviceId! } } : hasAudioInputDevices),
+        (hasSelectedAudioDevice
+          ? { deviceId: { exact: selectedAudioDeviceId! } }
+          : hasAudioInputDevices),
     };
 
     return Video.createLocalTracks(localTrackConstraints)
@@ -101,10 +114,12 @@ export default function useLocalTracks() {
           setVideoTrack(newVideoTrack);
           // Save the deviceId so it can be picked up by the VideoInputList component. This only matters
           // in cases where the user's video is disabled.
-          window.localStorage.setItem(
-            SELECTED_VIDEO_INPUT_KEY,
-            newVideoTrack.mediaStreamTrack.getSettings().deviceId ?? ''
-          );
+          if (typeof window !== 'undefined') {
+            window.localStorage.setItem(
+              SELECTED_VIDEO_INPUT_KEY,
+              newVideoTrack.mediaStreamTrack.getSettings().deviceId ?? '',
+            );
+          }
         }
         if (newAudioTrack) {
           setAudioTrack(newAudioTrack);

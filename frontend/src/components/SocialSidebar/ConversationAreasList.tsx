@@ -1,5 +1,4 @@
 import { Box, Heading, ListItem, UnorderedList } from '@chakra-ui/react';
-import React from 'react';
 import ConversationAreaController, {
   useConversationAreaOccupants,
   useConversationAreaTopic,

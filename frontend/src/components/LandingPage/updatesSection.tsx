@@ -1,5 +1,5 @@
-import React from 'react';
-import Image from '../../public/SplashImage.png';
+import img from '../../public/SplashImage.png';
+import Image from 'next/image';
 import { LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid';
 import { BsWechat } from 'react-icons/bs';
 
@@ -53,10 +53,12 @@ export default function UpdateSection() {
           </div>
         </div>
         <div className='-mt-12 -ml-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden'>
-          <img
+          <Image
             className='w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]'
-            src={Image}
+            src={img.src}
             alt=''
+            width={300}
+            height={500}
           />
         </div>
         <div className='lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8'>
@@ -70,7 +72,7 @@ export default function UpdateSection() {
                 vitae sed turpis id.
               </p>
               <ul role='list' className='mt-8 space-y-8 text-gray-600'>
-                <li className='flex gap-x-3'>
+                <li key='DM' className='flex gap-x-3'>
                   <BsWechat className='mt-1 h-5 w-5 flex-none text-indigo-600' aria-hidden='true' />
                   <span>
                     <strong className='font-semibold text-gray-900'>Direct Message</strong> Lorem
@@ -78,7 +80,7 @@ export default function UpdateSection() {
                     suscipit eaque, iste dolor cupiditate blanditiis ratione.
                   </span>
                 </li>
-                <li className='flex gap-x-3'>
+                <li key='SSl' className='flex gap-x-3'>
                   <LockClosedIcon
                     className='mt-1 h-5 w-5 flex-none text-indigo-600'
                     aria-hidden='true'
@@ -89,7 +91,7 @@ export default function UpdateSection() {
                     commodo.
                   </span>
                 </li>
-                <li className='flex gap-x-3'>
+                <li key='DB' className='flex gap-x-3'>
                   <ServerIcon
                     className='mt-1 h-5 w-5 flex-none text-indigo-600'
                     aria-hidden='true'
