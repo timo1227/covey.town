@@ -39,3 +39,10 @@ jobs:
         uses: github/codeql-action/analyze@v2
         with:
           category: "/language:${{ matrix.language }}"
+          
+      - name: filter-sarif
+        uses: advanced-security/filter-sarif@v1
+        with:
+        # filter out all test files unless they contain a sql-injection vulnerability
+          patterns: |
+            -frontend/public/virtualbackground/*
