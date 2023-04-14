@@ -1,4 +1,3 @@
-import Nav from '../../components/LandingPage/navBar';
 import AppStateWrapper from '../../components/Town/Town';
 
 export const metadata = {
@@ -8,7 +7,6 @@ export const metadata = {
 export default function Town() {
   return (
     <>
-      <Nav />
       <AppStateWrapper />
     </>
   );

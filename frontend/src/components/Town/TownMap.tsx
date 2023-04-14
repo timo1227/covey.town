@@ -1,11 +1,12 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useTownController from '../../hooks/useTownController';
 import SocialSidebar from '../SocialSidebar/SocialSidebar';
 import NewConversationModal from './interactables/NewCoversationModal';
 
 export default function TownMap(): JSX.Element {
   const coveyTownController = useTownController();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function initPhaser() {
@@ -49,15 +50,40 @@ export default function TownMap(): JSX.Element {
       };
     }
     initPhaser();
-  });
 
-  return (
-    <div id='app-container' className='flex item-center justify-center pt-20 min-h-[100vh]'>
-      <NewConversationModal />
-      <div id='map-container' />
-      <div id='social-container' className='flex flex-col bg-white'>
-        <SocialSidebar />
+    // Wait for the 2000ms delay to ensure the map container is rendered
+    setTimeout(() => setLoading(false), 2000);
+  }, []);
+
+  if (loading) {
+    return (
+      <>
+        <div
+          id='app-container'
+          className='flex flex-nowrap hidden justify-center pt-20 min-h-[100vh]'>
+          <NewConversationModal />
+          <div id='map-container' />
+          <div id='social-container' className='flex flex-col bg-white'>
+            <SocialSidebar />
+          </div>
+        </div>
+        <div className='min-h-screen w-full bg-white absolute z-50 flex justify-center items-center'>
+          <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900' />
+        </div>
+      </>
+
+    );
+  } else {
+    return (
+      <div
+        id='app-container'
+        className='flex flex-nowrap item-center justify-center pt-20 min-h-[100vh]'>
+        <NewConversationModal />
+        <div id='map-container' />
+        <div id='social-container' className='flex flex-col bg-white'>
+          <SocialSidebar />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
