@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 import assert from 'assert';
 import { useSession } from 'next-auth/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import TownController from '../../classes/TownController';
 import { Town } from '../../generated/client';
 import useLoginController from '../../hooks/useLoginController';
@@ -34,19 +34,26 @@ export default function TownSelection(): JSX.Element {
   const loginController = useLoginController();
   const { setTownController, townsService } = loginController;
   const { connect: videoConnect } = useVideoContext();
+  // Set Ref for username input
+  const userNameInputRef = useRef<HTMLInputElement>(null);
 
   const toast = useToast();
 
   // Get logged in username from session
   const session = useSession();
-
-  const user = session.data?.user;
-
+  // Set the value of the userNameRef to the username from the session
   useEffect(() => {
-    if (user) {
-      setUserName(user.name || '');
+    if (session.data?.user?.name) {
+      userNameInputRef.current?.setAttribute('value', session.data.user.name);
+      setUserName(session.data.user.name);
     }
-  }, [user]);
+  }, [session.data?.user?.name]);
+  // Handle change of username input
+  const handleChange = () => {
+    if (userNameInputRef.current) {
+      setUserName(userNameInputRef.current.value);
+    }
+  };
 
   const updateTownListings = useCallback(() => {
     townsService.listTowns().then(towns => {
@@ -190,9 +197,9 @@ export default function TownSelection(): JSX.Element {
                 autoFocus
                 name='name'
                 placeholder='Enter Username'
-                value={user?.name || userName}
+                ref={userNameInputRef}
                 className='relative block w-full rounded border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
-                onChange={event => setUserName(event.target.value)}
+                onChange={handleChange}
               />
             </FormControl>
           </Box>

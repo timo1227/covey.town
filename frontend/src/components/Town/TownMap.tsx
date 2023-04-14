@@ -21,7 +21,7 @@ export default function TownMap(): JSX.Element {
         render: { pixelArt: true, powerPreference: 'high-performance' },
         scale: {
           expandParent: false,
-          mode: Phaser.Scale.ScaleModes.WIDTH_CONTROLS_HEIGHT,
+          mode: Phaser.Scale.ScaleModes.HEIGHT_CONTROLS_WIDTH,
           autoRound: true,
         },
         width: 800,
@@ -49,13 +49,13 @@ export default function TownMap(): JSX.Element {
       };
     }
     initPhaser();
-  }, [coveyTownController]);
+  });
 
   return (
-    <div id='app-container'>
+    <div id='app-container' className='flex item-center justify-center pt-20 min-h-[100vh]'>
       <NewConversationModal />
       <div id='map-container' />
-      <div id='social-container'>
+      <div id='social-container' className='flex flex-col bg-white'>
         <SocialSidebar />
       </div>
     </div>
