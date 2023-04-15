@@ -8,7 +8,8 @@ if (
   !process.env.GOOGLE_CLIENT_ID ||
   !process.env.GOOGLE_CLIENT_SECRET ||
   !process.env.GITHUB_CLIENT_ID ||
-  !process.env.GITHUB_CLIENT_SECRET
+  !process.env.GITHUB_CLIENT_SECRET ||
+  !process.env.NEXTAUTH_SECRET
 ) {
   throw new Error('Google Secrets and Github Secrets must be defined');
 }
@@ -32,4 +33,5 @@ export default NextAuth({
     strategy: 'jwt',
   },
   adapter: MongoDBAdapter(clientPromise),
+  secret: process.env.NEXTAUTH_SECRET,
 });
