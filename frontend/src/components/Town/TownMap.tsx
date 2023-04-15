@@ -43,6 +43,7 @@ export default function TownMap(): JSX.Element {
       const unPauseListener = newGameScene.resume.bind(newGameScene);
       coveyTownController.addListener('pause', pauseListener);
       coveyTownController.addListener('unPause', unPauseListener);
+      setLoading(false);
       return () => {
         coveyTownController.removeListener('pause', pauseListener);
         coveyTownController.removeListener('unPause', unPauseListener);
@@ -50,40 +51,28 @@ export default function TownMap(): JSX.Element {
       };
     }
     initPhaser();
-
-    // Wait for the 2000ms delay to ensure the map container is rendered
-    setTimeout(() => setLoading(false), 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) {
-    return (
-      <>
-        <div
-          id='app-container'
-          className='flex flex-nowrap hidden justify-center pt-20 min-h-[100vh]'>
-          <NewConversationModal />
-          <div id='map-container' />
-          <div id='social-container' className='flex flex-col bg-white'>
-            <SocialSidebar />
-          </div>
-        </div>
-        <div className='min-h-screen w-full bg-white absolute z-50 flex justify-center items-center'>
-          <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900' />
-        </div>
-      </>
-
-    );
-  } else {
-    return (
+  return (
+    <>
       <div
-        id='app-container'
-        className='flex flex-nowrap item-center justify-center pt-20 min-h-[100vh]'>
+        id='app-container overflow-hidden'
+        className='flex flex-nowrap item-center justify-center pt-20 min-h-[calc(100vh-2rem)]'>
         <NewConversationModal />
         <div id='map-container' />
         <div id='social-container' className='flex flex-col bg-white'>
           <SocialSidebar />
         </div>
+        <div
+          className={
+            loading
+              ? 'min-h-screen w-full bg-white absolute z-50 flex justify-center items-center'
+              : 'hidden'
+          }>
+          <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900' />
+        </div>
       </div>
-    );
-  }
+    </>
+  );
 }

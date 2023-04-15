@@ -9,6 +9,7 @@ import useScreenShareParticipant from '../../hooks/useScreenShareParticipant/use
 import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import Participant from '../Participant/Participant';
 import useSelectedParticipant from '../VideoProvider/useSelectedParticipant/useSelectedParticipant';
+import { clsx } from 'clsx';
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
@@ -162,18 +163,17 @@ export default function ParticipantList() {
 
   return (
     <main
-    // className={clsx(
-    //   classes.gridContainer,
-    //   {
-    //     [classes.transparentBackground]: true,
-    //   },
-    //   'participants-grid-container',
-    //   {
-    //     // "single-column": preferredMode === "sidebar" && props.gridView,
-    //     'single-column': false,
-    //   },
-    // )}
-    >
+      className={clsx(
+        classes.gridContainer,
+        {
+          [classes.transparentBackground]: true,
+        },
+        'participants-grid-container',
+        {
+          // "single-column": preferredMode === "sidebar" && props.gridView,
+          'single-column': false,
+        },
+      )}>
       <div className={classes.gridInnerContainer}>{participantsEl}</div>
     </main>
   );

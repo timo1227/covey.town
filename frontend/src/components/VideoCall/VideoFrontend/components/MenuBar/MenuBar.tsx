@@ -18,10 +18,10 @@ import TownSettings from '../../../../Login/TownSettings';
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
     backgroundColor: theme.palette.background.default,
-    bottom: 20,
+    bottom: 0,
     left: 0,
     right: 0,
-    height: `${theme.footerHeight}px`,
+    height: `3rem`,
     position: 'absolute',
     display: 'flex',
     padding: '0 1.43em',
@@ -83,7 +83,7 @@ export default function MenuBar() {
           <Button onClick={() => toggleScreenShare()}>Stop Sharing</Button>
         </Grid>
       )}
-      <footer className={classes.container}>
+      <footer className={`justify-center ${classes.container}`}>
         <Grid container justifyContent='space-around' alignItems='center'>
           <Grid item>
             <Grid container justifyContent='center'>

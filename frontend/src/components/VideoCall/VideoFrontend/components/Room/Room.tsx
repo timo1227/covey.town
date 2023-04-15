@@ -37,9 +37,9 @@ export default function Room() {
   const { isBackgroundSelectionOpen } = useVideoContext();
   return (
     <div
-      className={cx(classes.container, {
+      className={`${cx(classes.container, {
         [classes.rightDrawerOpen]: isChatWindowOpen || isBackgroundSelectionOpen,
-      })}>
+      })} h-screen hidden`}>
       <ParticipantList />
       <ChatWindow />
       <BackgroundSelectionDialog />

@@ -23,7 +23,7 @@ const Container = styled('div')({
 
 const Main = styled('main')(({ theme: _theme }: { theme: Theme }) => ({
   overflow: 'hidden',
-  position: 'relative',
+  // position: 'relative',
 }));
 
 interface Props {
@@ -112,17 +112,16 @@ export default function VideoGrid(props: Props) {
   return (
     <>
       {/* <Prompt when={roomState !== 'disconnected'} message="Are you sure you want to leave the video room?" /> */}
-      <Container style={{ height: '100%' }}>
+      <Container className='absolute h-screen top-0 w-full'>
         {roomState === 'disconnected' ? (
           <div>Connecting...</div>
         ) : (
-          <Main style={{ paddingBottom: '90px' }}>
+          <Main>
             <ReconnectingNotification />
             <MobileTopMenuBar />
             {/* To-do: Edit the VideoChat container to move above town */}
-            <Container className='videochat-container'>
-              <Room />
-            </Container>
+            {/* <Container className='videochat-container max-h-[20%]'></Container> */}
+            <Room />
             <MenuBar />
           </Main>
         )}
