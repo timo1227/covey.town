@@ -16,6 +16,7 @@ import {
   TownSettingsUpdate,
   ViewingArea as ViewingAreaModel,
 } from '../types/CoveyTownSocket';
+// import { Message, Conversation, Participant, Client, ConnectionState } from '@twilio/conversations';
 import { isConversationArea, isViewingArea } from '../types/TypeUtils';
 import ConversationAreaController from './ConversationAreaController';
 import PlayerController from './PlayerController';
@@ -178,6 +179,12 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
   private _providerVideoToken?: string;
 
   /**
+   * A secret token that is provided by the townsService, and can be used to connect
+   * to a third-party chat service.
+   */
+  private _providerChatToken?: string;
+
+  /**
    * A flag indicating whether the current 2D game is paused, or not. Pausing the game will prevent it from updating,
    * and will also release any key bindings, allowing all keys to be used for text entry or other purposes.
    */
@@ -231,6 +238,12 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
 
   public get providerVideoToken() {
     const token = this._providerVideoToken;
+    assert(token);
+    return token;
+  }
+
+  public get providerChatToken() {
+    const token = this._providerChatToken;
     assert(token);
     return token;
   }

@@ -17,6 +17,7 @@ import LoginControllerContext from '../../contexts/LoginControllerContext';
 import TownControllerContext from '../../contexts/TownControllerContext';
 import { TownsServiceClient } from '../../generated/client';
 import dynamic from 'next/dynamic';
+import Nav from './TownNav';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const UnsupportedBrowserWarning = dynamic(
@@ -62,6 +63,7 @@ function JoinTown() {
         <UnsupportedBrowserWarning>
           <VideoProvider options={connectionOptions} onError={setError} onDisconnect={onDisconnect}>
             <ErrorDialog dismissError={() => setError(null)} error={error} />
+            <Nav />
             {page}
           </VideoProvider>
         </UnsupportedBrowserWarning>

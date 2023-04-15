@@ -37,9 +37,9 @@ export default function Room() {
   const { isBackgroundSelectionOpen } = useVideoContext();
   return (
     <div
-      className={cx(classes.container, {
+      className={`${cx(classes.container, {
         [classes.rightDrawerOpen]: isChatWindowOpen || isBackgroundSelectionOpen,
-      })}>
+      })} top-[7rem] max-w-[20rem] left-[42.5%]`}>
       <ParticipantList />
       <ChatWindow />
       <BackgroundSelectionDialog />

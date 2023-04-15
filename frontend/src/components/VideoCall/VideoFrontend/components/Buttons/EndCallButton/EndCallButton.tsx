@@ -1,26 +1,22 @@
-import { Theme } from '@mui/material/styles';
 import { Button } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
 
-const useStyles = makeStyles()((theme: Theme) => ({
+const useStyles = makeStyles()(() => ({
   button: {
-    'background': theme.brand,
-    'color': 'white',
-    '&:hover': {
-      background: '#600101',
-    },
+    background: '#E22525',
+    color: 'white',
   },
 }));
 
 export default function EndCallButton(props: { className?: string }) {
-  const { classes, cx } = useStyles();
+  const { cx } = useStyles();
   const { room } = useVideoContext();
 
   return (
     <Button
-      onClick={() => room!.disconnect()}
-      className={cx(classes.button, props.className)}
+      onClick={() => room?.disconnect()}
+      className={'text-white bg-red-500 hover:bg-red-900' + cx(props.className)}
       data-cy-disconnect>
       Disconnect
     </Button>

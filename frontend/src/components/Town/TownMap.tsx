@@ -1,11 +1,12 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useTownController from '../../hooks/useTownController';
 import SocialSidebar from '../SocialSidebar/SocialSidebar';
 import NewConversationModal from './interactables/NewCoversationModal';
 
 export default function TownMap(): JSX.Element {
   const coveyTownController = useTownController();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function initPhaser() {
@@ -21,7 +22,7 @@ export default function TownMap(): JSX.Element {
         render: { pixelArt: true, powerPreference: 'high-performance' },
         scale: {
           expandParent: false,
-          mode: Phaser.Scale.ScaleModes.WIDTH_CONTROLS_HEIGHT,
+          mode: Phaser.Scale.ScaleModes.HEIGHT_CONTROLS_WIDTH,
           autoRound: true,
         },
         width: 800,
@@ -42,6 +43,7 @@ export default function TownMap(): JSX.Element {
       const unPauseListener = newGameScene.resume.bind(newGameScene);
       coveyTownController.addListener('pause', pauseListener);
       coveyTownController.addListener('unPause', unPauseListener);
+      setLoading(false);
       return () => {
         coveyTownController.removeListener('pause', pauseListener);
         coveyTownController.removeListener('unPause', unPauseListener);
@@ -49,15 +51,28 @@ export default function TownMap(): JSX.Element {
       };
     }
     initPhaser();
-  }, [coveyTownController]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div id='app-container'>
-      <NewConversationModal />
-      <div id='map-container' />
-      <div id='social-container'>
-        <SocialSidebar />
+    <>
+      <div
+        id='app-container overflow-hidden'
+        className='flex flex-nowrap item-center justify-center pt-20 min-h-[calc(100vh-2rem)]'>
+        <NewConversationModal />
+        <div id='map-container' />
+        <div id='social-container' className='flex flex-col bg-white'>
+          <SocialSidebar />
+        </div>
+        <div
+          className={
+            loading
+              ? 'min-h-screen w-full bg-white absolute z-50 flex justify-center items-center'
+              : 'hidden'
+          }>
+          <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900' />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
