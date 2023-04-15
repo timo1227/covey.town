@@ -39,7 +39,7 @@ export default function Room() {
     <div
       className={`${cx(classes.container, {
         [classes.rightDrawerOpen]: isChatWindowOpen || isBackgroundSelectionOpen,
-      })} h-screen hidden`}>
+      })} top-[7rem] max-w-[20rem] left-[42.5%]`}>
       <ParticipantList />
       <ChatWindow />
       <BackgroundSelectionDialog />

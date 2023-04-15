@@ -116,7 +116,7 @@ export default function VideoGrid(props: Props) {
         {roomState === 'disconnected' ? (
           <div>Connecting...</div>
         ) : (
-          <Main>
+          <Main className='min-h-screen'>
             <ReconnectingNotification />
             <MobileTopMenuBar />
             {/* To-do: Edit the VideoChat container to move above town */}
