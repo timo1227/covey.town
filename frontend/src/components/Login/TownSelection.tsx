@@ -188,7 +188,6 @@ export default function TownSelection(): JSX.Element {
             <Heading as='h2' size='lg' className='font-semibold'>
               Select a username
             </Heading>
-
             <FormControl>
               <FormLabel htmlFor='name' className='font-bold hidden'>
                 Name
@@ -196,7 +195,7 @@ export default function TownSelection(): JSX.Element {
               <Input
                 autoFocus
                 name='name'
-                placeholder='Enter Username'
+                placeholder='Your name'
                 ref={userNameInputRef}
                 className='relative block w-full rounded border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2'
                 onChange={handleChange}
@@ -227,6 +226,7 @@ export default function TownSelection(): JSX.Element {
                 <input
                   id='isPublic'
                   name='isPublic'
+                  data-testid='isPublic'
                   type='checkbox'
                   checked={newTownIsPublic}
                   className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'

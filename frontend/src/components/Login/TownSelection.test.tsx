@@ -12,6 +12,7 @@ import { CancelablePromise, Town, TownsService } from '../../generated/client';
 import * as useLoginController from '../../hooks/useLoginController';
 import { mockTownController } from '../../TestUtils';
 import TownSelection from './TownSelection';
+import { SessionProvider } from 'next-auth/react';
 
 const mockConnect = jest.fn(() => Promise.resolve());
 
@@ -83,9 +84,11 @@ const listTowns = (suffix: string) =>
 
 export function wrappedTownSelection() {
   return (
-    <ChakraProvider>
-      <TownSelection />
-    </ChakraProvider>
+    <SessionProvider>
+      <ChakraProvider>
+        <TownSelection />
+      </ChakraProvider>
+    </SessionProvider>
   );
 }
 
@@ -312,7 +315,7 @@ describe('Town Selection', () => {
       ) as HTMLInputElement;
       userNameField = renderData.getByPlaceholderText('Your name') as HTMLInputElement;
       joinTownByIDButton = renderData.getByTestId('joinTownByIDButton');
-      newTownIsPublicCheckbox = renderData.getByLabelText('Publicly Listed') as HTMLInputElement;
+      newTownIsPublicCheckbox = renderData.getByTestId('isPublic') as HTMLInputElement;
       newTownNameField = renderData.getByPlaceholderText('New Town Name') as HTMLInputElement;
       newTownButton = renderData.getByTestId('newTownButton');
     });
