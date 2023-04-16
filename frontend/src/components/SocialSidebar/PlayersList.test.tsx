@@ -22,9 +22,7 @@ describe('PlayersInTownList', () => {
   });
   const wrappedPlayersListComponent = () => (
     <ChakraProvider>
-      <React.StrictMode>
-        <PlayersList />
-      </React.StrictMode>
+      <PlayersList />
     </ChakraProvider>
   );
   const renderPlayersList = () => render(wrappedPlayersListComponent());
