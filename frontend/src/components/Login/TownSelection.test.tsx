@@ -16,6 +16,21 @@ import { SessionProvider } from 'next-auth/react';
 
 const mockConnect = jest.fn(() => Promise.resolve());
 
+const mockSession = jest.fn();
+interface Props {
+  children: React.ReactNode;
+}
+
+jest.mock('next-auth/react', () => {
+  return {
+    __esModule: true,
+    SessionProvider: ({ children }: Props) => {
+      return <div>{children}</div>;
+    },
+    useSession: () => [mockSession, false],
+  };
+});
+
 const mockToast = jest.fn();
 jest.mock('../VideoCall/VideoFrontend/hooks/useVideoContext/useVideoContext.ts', () => ({
   __esModule: true, // this property makes it work
