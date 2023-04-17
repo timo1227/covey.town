@@ -70,7 +70,6 @@ export default class ConversationArea extends InteractableArea {
       this.topic = undefined;
       if (this.conversation !== undefined) removeConversation(this.conversation);
       this.conversation?.on('removed', this._emitAreaChanged);
-      this.conversation = undefined;
       this._emitAreaChanged();
     }
   }
@@ -103,6 +102,8 @@ export default class ConversationArea extends InteractableArea {
   public toModel(): ConversationAreaModel {
     return {
       id: this.id,
+      chatToken: this._chatToken,
+      conversationSID: this.conversation?.sid,
       occupantsByID: this.occupantsByID,
       topic: this.topic,
     };

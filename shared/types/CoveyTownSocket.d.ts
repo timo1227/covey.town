@@ -55,6 +55,8 @@ export type ChatMessage = {
 
 export interface ConversationArea {
   id: string;
+  chatToken?: string;
+  conversationSID?: string;
   topic?: string;
   occupantsByID: string[];
 };
