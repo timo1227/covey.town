@@ -11,4 +11,11 @@ module.exports = {
   testEnvironment: 'jsdom',
   transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
-};
+  globals: {
+    'ts-jest': {
+      tsconfig: {
+        jsx: 'react-jsx',
+      },
+    },
+  },
+}; 
