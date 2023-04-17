@@ -1,9 +1,9 @@
 import React from 'react';
-import clsx from 'clsx';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '../../icons/ErrorIcon';
-import { IconButton, makeStyles, Theme, Typography } from '@material-ui/core';
-import MUISnackbar from '@material-ui/core/Snackbar';
+import { makeStyles } from 'tss-react/mui';
+import { IconButton, Theme, Typography } from '@mui/material';
+import MUISnackbar from '@mui/material/Snackbar';
 import WarningIcon from '../../icons/WarningIcon';
 import InfoIcon from '../../icons/InfoIcon';
 
@@ -15,7 +15,7 @@ interface SnackbarProps {
   handleClose?: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   container: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '1em',
     borderRadius: '3px',
     boxShadow: '0 12px 24px 4px rgba(40,42,43,0.2)',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
@@ -53,9 +53,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export default function Snackbar({ headline, message, variant, open, handleClose }: SnackbarProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
-  const handleOnClose = (_: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+  const handleOnClose = (_: any, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -71,15 +71,13 @@ export default function Snackbar({ headline, message, variant, open, handleClose
       }}
       open={open}
       onClose={handleOnClose}
-      autoHideDuration={10000}
-    >
+      autoHideDuration={10000}>
       <div
-        className={clsx(classes.container, {
+        className={cx(classes.container, {
           [classes.error]: variant === 'error',
           [classes.warning]: variant === 'warning',
           [classes.info]: variant === 'info',
-        })}
-      >
+        })}>
         <div className={classes.contentContainer}>
           <div className={classes.iconContainer}>
             {variant === 'warning' && <WarningIcon />}
@@ -87,10 +85,10 @@ export default function Snackbar({ headline, message, variant, open, handleClose
             {variant === 'info' && <InfoIcon />}
           </div>
           <div>
-            <Typography variant="body1" className={classes.headline} component="span">
+            <Typography variant='body1' className={classes.headline} component='span'>
               {headline}
             </Typography>
-            <Typography variant="body1" component="span">
+            <Typography variant='body1' component='span'>
               {' '}
               {message}
             </Typography>
@@ -98,8 +96,8 @@ export default function Snackbar({ headline, message, variant, open, handleClose
         </div>
         <div>
           {handleClose && (
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
+            <IconButton size='small' aria-label='close' color='inherit' onClick={handleClose}>
+              <CloseIcon fontSize='small' />
             </IconButton>
           )}
         </div>

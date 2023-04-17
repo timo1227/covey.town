@@ -1,5 +1,6 @@
-import {isPlainObject} from 'is-plain-object';
+import { isPlainObject } from 'is-plain-object';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const isMobile = (() => {
   if (typeof navigator === 'undefined' || typeof navigator.userAgent !== 'string') {
     return false;
@@ -24,7 +25,8 @@ export function removeUndefineds<T>(obj: T): T {
 }
 
 export async function getDeviceInfo() {
-  const devices = await navigator.mediaDevices.enumerateDevices();
+  const devices =
+    typeof navigator === 'undefined' ? [] : await navigator.mediaDevices.enumerateDevices();
 
   return {
     audioInputDevices: devices.filter(device => device.kind === 'audioinput'),
@@ -39,7 +41,7 @@ export async function getDeviceInfo() {
 // If the API doesn't exist, or the query function returns an error, 'false' will be returned.
 export async function isPermissionDenied(name: 'camera' | 'microphone') {
   const permissionName = name as PermissionName; // workaround for https://github.com/microsoft/TypeScript/issues/33923
-  if (navigator.permissions) {
+  if (typeof navigator !== 'undefined' && navigator.permissions) {
     try {
       const result = await navigator.permissions.query({ name: permissionName });
       return result.state === 'denied';

@@ -7,6 +7,9 @@ export type TownJoinResponse = {
   /** Secret token that this player should use to authenticate
    * in future requests to the video service * */
   providerVideoToken: string;
+  /** Secret token that this player should use to authenticate
+   * in future requests to the chat service * */
+  providerChatToken: string;
   /** List of players currently in this town * */
   currentPlayers: Player[];
   /** Friendly name of this town * */
@@ -52,6 +55,8 @@ export type ChatMessage = {
 
 export interface ConversationArea {
   id: string;
+  chatToken?: string;
+  conversationSID?: string;
   topic?: string;
   occupantsByID: string[];
 };

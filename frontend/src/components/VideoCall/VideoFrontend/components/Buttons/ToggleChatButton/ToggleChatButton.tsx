@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import ChatIcon from '../../../icons/ChatIcon';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from 'tss-react/mui';
 import useChatContext from '../../../hooks/useChatContext/useChatContext';
 import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
 
 export const ANIMATION_DURATION = 700;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles()({
   iconContainer: {
     position: 'relative',
     display: 'flex',
@@ -57,7 +56,7 @@ const useStyles = makeStyles({
 });
 
 export default function ToggleChatButton() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { isChatWindowOpen, setIsChatWindowOpen, conversation, hasUnreadMessages } = useChatContext();
   const { setIsBackgroundSelectionOpen } = useVideoContext();
@@ -91,8 +90,8 @@ export default function ToggleChatButton() {
       startIcon={
         <div className={classes.iconContainer}>
           <ChatIcon />
-          <div className={clsx(classes.ring, { [classes.animateRing]: shouldAnimate })} />
-          <div className={clsx(classes.circle, { [classes.hasUnreadMessages]: hasUnreadMessages })} />
+          <div className={cx(classes.ring, { [classes.animateRing]: shouldAnimate })} />
+          <div className={cx(classes.circle, { [classes.hasUnreadMessages]: hasUnreadMessages })} />
         </div>
       }
     >

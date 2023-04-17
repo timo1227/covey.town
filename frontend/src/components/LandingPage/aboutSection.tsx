@@ -1,6 +1,5 @@
-import React from 'react';
+import { FiLock, FiMonitor } from 'react-icons/fi';
 import { RxSpeakerLoud } from 'react-icons/rx';
-import { FiMonitor, FiLock } from 'react-icons/fi';
 
 interface CardProps {
   icon: string;
@@ -32,7 +31,9 @@ export default function AboutSection() {
 
   function aboutCards({ icon, title, description }: CardProps) {
     return (
-      <div className='max-w-sm rounded-md overflow-hidden shadow-lg border-gray-700 border bg-gray-700 bg-opacity-25 backdrop-blur-sm pb-5 flex-1'>
+      <div
+        key={title}
+        className='max-w-sm rounded-md overflow-hidden shadow-lg border-gray-700 border bg-gray-700 bg-opacity-25 backdrop-blur-sm pb-5 flex-1'>
         <div className='header flex items-center gap-2 px-3 mt-5'>
           {icon === 'FiMonitor' && <FiMonitor className='text-indigo-500 sm:text-l text-md' />}
           {icon === 'RxSpeakerLoud' && (

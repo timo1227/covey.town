@@ -1,48 +1,14 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* istanbul ignore file */
-import React from 'react';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import Button from '@material-ui/core/Button';
-import clsx from 'clsx';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import Button from '@mui/material/Button';
 import throttle from 'lodash.throttle';
-import { withStyles, WithStyles, createStyles } from '@material-ui/core/styles';
+import React from 'react';
 import { ChatMessage } from '../../../../../../../types/CoveyTownSocket';
 
-const styles = createStyles({
-  outerContainer: {
-    minHeight: 0,
-    flex: 1,
-    position: 'relative',
-  },
-  innerScrollContainer: {
-    height: '100%',
-    overflowY: 'auto',
-    padding: '0 1.2em 0',
-  },
-  messageListContainer: {
-    overflowY: 'auto',
-    flex: '1',
-    paddingBottom: '1em',
-  },
-  button: {
-    position: 'absolute',
-    bottom: '14px',
-    right: '2em',
-    zIndex: 100,
-    padding: '0.5em 0.9em',
-    visibility: 'hidden',
-    opacity: 0,
-    boxShadow: '0px 4px 16px rgba(18, 28, 45, 0.2)',
-    transition: 'all 0.5s ease',
-  },
-  showButton: {
-    visibility: 'visible',
-    opacity: 1,
-    bottom: '24px',
-  },
-});
-
-interface MessageListScrollContainerProps extends WithStyles<typeof styles> {
+interface MessageListScrollContainerProps {
   messages: ChatMessage[];
+  children: React.ReactNode;
 }
 
 interface MessageListScrollContainerState {
@@ -81,7 +47,10 @@ export class MessageListScrollContainer extends React.Component<
   }
 
   // This component updates as users send new messages:
-  componentDidUpdate(prevProps: MessageListScrollContainerProps, prevState: MessageListScrollContainerState) {
+  componentDidUpdate(
+    prevProps: MessageListScrollContainerProps,
+    prevState: MessageListScrollContainerState,
+  ) {
     const hasNewMessages = this.props.messages.length !== prevProps.messages.length;
 
     if (prevState.isScrolledToBottom && hasNewMessages) {
@@ -113,7 +82,9 @@ export class MessageListScrollContainer extends React.Component<
     // "isScrolledToBottom" calculation.
     const isScrolledToBottom =
       Math.abs(
-        innerScrollContainerEl.clientHeight + innerScrollContainerEl.scrollTop - innerScrollContainerEl!.scrollHeight
+        innerScrollContainerEl.clientHeight +
+          innerScrollContainerEl.scrollTop -
+          innerScrollContainerEl!.scrollHeight,
       ) < 1;
 
     this.setState(prevState => ({
@@ -125,7 +96,10 @@ export class MessageListScrollContainer extends React.Component<
   handleClick = () => {
     const innerScrollContainerEl = this.chatThreadRef.current!;
 
-    innerScrollContainerEl.scrollTo({ top: innerScrollContainerEl.scrollHeight, behavior: 'smooth' });
+    innerScrollContainerEl.scrollTo({
+      top: innerScrollContainerEl.scrollHeight,
+      behavior: 'smooth',
+    });
 
     this.setState({ showButton: false });
   };
@@ -137,21 +111,21 @@ export class MessageListScrollContainer extends React.Component<
   }
 
   render() {
-    const { classes } = this.props;
-
     return (
-      <div className={classes.outerContainer}>
-        <div className={classes.innerScrollContainer} ref={this.chatThreadRef} data-cy-message-list-inner-scroll>
-          <div className={classes.messageListContainer}>
+      <div className='min-h-0 flex-1 relative'>
+        <div
+          className='h-full overflow-y-auto p-0.5 sm:p-1.2'
+          ref={this.chatThreadRef}
+          data-cy-message-list-inner-scroll>
+          <div className='overflow-y-auto flex-1 pb-1'>
             {this.props.children}
             <Button
-              className={clsx(classes.button, { [classes.showButton]: this.state.showButton })}
+              className='absolute bottom-14 right-2 z-10 p-0.5 sm:p-0.9 hidden sm:block'
               onClick={this.handleClick}
               startIcon={<ArrowDownwardIcon />}
-              color="primary"
-              variant="contained"
-              data-cy-new-message-button
-            >
+              color='primary'
+              variant='contained'
+              data-cy-new-message-button>
               {this.state.messageNotificationCount} new message
               {this.state.messageNotificationCount > 1 && 's'}
             </Button>
@@ -162,4 +136,4 @@ export class MessageListScrollContainer extends React.Component<
   }
 }
 
-export default withStyles(styles)(MessageListScrollContainer);
+export default MessageListScrollContainer;

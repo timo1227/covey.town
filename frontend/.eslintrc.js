@@ -12,6 +12,7 @@ module.exports = {
     'airbnb-typescript',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@next/next/recommended',
     'prettier',
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
@@ -32,6 +33,8 @@ module.exports = {
     'no-underscore-dangle': 0,
     'no-param-reassign': 0,
     'no-restricted-syntax': 0,
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/naming-convention': [
       'error',
       {
@@ -41,6 +44,11 @@ module.exports = {
       {
         selector: 'typeLike',
         format: ['PascalCase'],
+      },
+      {
+        selector: 'variable',
+        modifiers: ['const'],
+        format: ['camelCase', 'PascalCase'],
       },
       {
         selector: 'variable',
@@ -58,7 +66,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.test.tsx', '**/TestUtils.ts'],
+      files: ['*.test.tsx', '**/TestUtils.ts', '*.tsx', '*.ts'],
       rules: {
         'no-await-in-loop': 0,
         '@typescript-eslint/no-explicit-any': 0,

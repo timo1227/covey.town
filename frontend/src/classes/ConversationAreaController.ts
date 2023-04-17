@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import TypedEmitter from 'typed-emitter';
 import { ConversationArea as ConversationAreaModel } from '../types/CoveyTownSocket';
 import PlayerController from './PlayerController';
+import { Conversation } from '@twilio/conversations';
 
 /**
  * The events that the ConversationAreaController emits to subscribers. These events
  * are only ever emitted to local components (not to the townService).
  */
 export type ConversationAreaEvents = {
+  conversationChange: (newConversation: string | undefined) => void;
   topicChange: (newTopic: string | undefined) => void;
   occupantsChange: (newOccupants: PlayerController[]) => void;
 };
@@ -28,15 +30,25 @@ export default class ConversationAreaController extends (EventEmitter as new () 
 
   private _topic?: string;
 
+  private _chatToken?: string;
+
+  private _conversationSID?: string;
+
+  private _conversation?: Conversation;
+
   /**
    * Create a new ConversationAreaController
    * @param id
    * @param topic
+   * @param chatToken
+   * @param conversationSID
    */
-  constructor(id: string, topic?: string) {
+  constructor(id: string, topic?: string, chatToken?: string, conversationSID?: string) {
     super();
     this._id = id;
     this._topic = topic;
+    this._chatToken = chatToken;
+    this._conversationSID = conversationSID;
   }
 
   /**
@@ -80,6 +92,28 @@ export default class ConversationAreaController extends (EventEmitter as new () 
     return this._topic;
   }
 
+  set conversationSID(newConversationSID: string | undefined) {
+    if (this._conversationSID !== newConversationSID) {
+      this.emit('conversationChange', newConversationSID);
+    }
+    this._conversationSID = newConversationSID;
+  }
+
+  get conversationSID(): string | undefined {
+    return this._conversationSID;
+  }
+
+  set conversation(newConversation: Conversation | undefined) {
+    if (this._conversation?.sid !== newConversation?.sid) {
+      this.emit('conversationChange', newConversation?.sid);
+    }
+    this._conversation = newConversation;
+  }
+
+  get conversation(): Conversation | undefined {
+    return this._conversation;
+  }
+
   /**
    * A conversation area is empty if there are no occupants in it, or the topic is undefined.
    */
@@ -94,6 +128,7 @@ export default class ConversationAreaController extends (EventEmitter as new () 
   toConversationAreaModel(): ConversationAreaModel {
     return {
       id: this.id,
+      chatToken: this._chatToken,
       occupantsByID: this.occupants.map(player => player.id),
       topic: this.topic,
     };

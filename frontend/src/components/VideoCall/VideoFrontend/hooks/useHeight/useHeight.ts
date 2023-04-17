@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 
 export default function useHeight() {
-  const [height, setHeight] = useState(window.innerHeight * (window.visualViewport?.scale || 1));
+  const [height, setHeight] =
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    typeof window !== 'undefined' ? useState(window.innerHeight) : useState(1);
 
   useEffect(() => {
     const onResize = () => {
-      setHeight(window.innerHeight * (window.visualViewport?.scale || 1));
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      typeof window !== 'undefined' && setHeight(window.innerHeight);
     };
 
     window.addEventListener('resize', onResize);

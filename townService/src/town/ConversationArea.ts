@@ -1,4 +1,5 @@
 import { ITiledMapObject } from '@jonbell/tiled-map-type-guard';
+import { Conversation } from '@twilio/conversations';
 import Player from '../lib/Player';
 import {
   BoundingBox,
@@ -6,10 +7,19 @@ import {
   TownEmitter,
 } from '../types/CoveyTownSocket';
 import InteractableArea from './InteractableArea';
+import { addChatParticipant, removeChatParticipant, removeConversation } from '../lib/TwilioChat';
 
 export default class ConversationArea extends InteractableArea {
   /* The topic of the conversation area, or undefined if it is not set */
   public topic?: string;
+
+  /* Conversation area Twilio conversation */
+  public conversation?: Conversation;
+
+  /**
+   * The chat token of the conversation area, allows us to create or destroy conversations
+   * as players leave/join or topic changes */
+  private _chatToken?: string;
 
   /** The conversation area is "active" when there are players inside of it  */
   public get isActive(): boolean {
@@ -33,19 +43,56 @@ export default class ConversationArea extends InteractableArea {
   }
 
   /**
+   * Adds a new player to this conversation area.
+   *
+   * Extends the base behavior of InteractableArea to add the player to the Twilio Conversation
+   * of this ConversationArea.
+   *
+   * @param player Player to add
+   */
+  public add(player: Player): void {
+    super.add(player);
+    if (this.conversation !== undefined) addChatParticipant(player.id, this.conversation);
+  }
+
+  /**
    * Removes a player from this conversation area.
    *
    * Extends the base behavior of InteractableArea to set the topic of this ConversationArea to undefined and
-   * emit an update to other players in the town when the last player leaves.
+   * emit an update to other players in the town, delete the Twilio conversation and set conversation to undefined when the last player leaves.
    *
    * @param player
    */
   public remove(player: Player) {
+    if (this.conversation !== undefined) removeChatParticipant(player.id, this.conversation);
     super.remove(player);
     if (this._occupants.length === 0) {
       this.topic = undefined;
+      if (this.conversation !== undefined) removeConversation(this.conversation);
+      this.conversation?.on('removed', this._emitAreaChanged);
       this._emitAreaChanged();
     }
+  }
+
+  set chatToken(value: string | undefined) {
+    this._chatToken = value;
+  }
+
+  get chatToken() {
+    return this._chatToken;
+  }
+
+  /**
+   * Given a list of players, adds all of the players that are within this interactable area
+   *
+   * @param allPlayers list of players to examine and potentially add to this interactable area
+   */
+  public addPlayersWithinBounds(allPlayers: Player[]) {
+    allPlayers
+      .filter(eachPlayer => this.contains(eachPlayer.location))
+      .forEach(eachContainedPlayer => {
+        this.add(eachContainedPlayer);
+      });
   }
 
   /**
@@ -55,6 +102,8 @@ export default class ConversationArea extends InteractableArea {
   public toModel(): ConversationAreaModel {
     return {
       id: this.id,
+      chatToken: this._chatToken,
+      conversationSID: this.conversation?.sid,
       occupantsByID: this.occupantsByID,
       topic: this.topic,
     };

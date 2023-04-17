@@ -20,6 +20,7 @@ import { isConversationArea, isViewingArea } from '../types/TypeUtils';
 import ConversationAreaController from './ConversationAreaController';
 import PlayerController from './PlayerController';
 import ViewingAreaController from './ViewingAreaController';
+import { getConversationFromSID } from './TwilioChat';
 
 const CALCULATE_NEARBY_PLAYERS_DELAY = 300;
 
@@ -178,6 +179,12 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
   private _providerVideoToken?: string;
 
   /**
+   * A secret token that is provided by the townsService, and can be used to connect
+   * to a third-party chat service.
+   */
+  private _providerChatToken?: string;
+
+  /**
    * A flag indicating whether the current 2D game is paused, or not. Pausing the game will prevent it from updating,
    * and will also release any key bindings, allowing all keys to be used for text entry or other purposes.
    */
@@ -203,7 +210,7 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
         */
     this.setMaxListeners(30);
 
-    const url = process.env.REACT_APP_TOWNS_SERVICE_URL;
+    const url = process.env.NEXT_PUBLIC_TOWNS_SERVICE_URL;
     assert(url);
     this._socket = io(url, { auth: { userName, townID } });
     this._townsService = new TownsServiceClient({ BASE: url }).towns;
@@ -231,6 +238,12 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
 
   public get providerVideoToken() {
     const token = this._providerVideoToken;
+    assert(token);
+    return token;
+  }
+
+  public get providerChatToken() {
+    const token = this._providerChatToken;
     assert(token);
     return token;
   }
@@ -325,6 +338,19 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
     this._interactableEmitter.emit('endInteraction', objectNoLongerInteracting);
   }
 
+  async updateConversationAreaChat(
+    conversationArea: ConversationAreaController,
+    chatToken: string | undefined,
+    newConversationSID: string | undefined,
+  ) {
+    if (chatToken === undefined || newConversationSID === undefined) {
+      return;
+    }
+
+    const newConversation = await getConversationFromSID(chatToken, newConversationSID);
+    conversationArea.conversation = newConversation;
+  }
+
   /**
    * Registers listeners for the events that can come from the server to our socket
    */
@@ -416,6 +442,11 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
         if (updatedConversationArea) {
           const emptyNow = updatedConversationArea.isEmpty();
           updatedConversationArea.topic = interactable.topic;
+          this.updateConversationAreaChat(
+            updatedConversationArea,
+            interactable.chatToken,
+            interactable.conversationSID,
+          );
           updatedConversationArea.occupants = this._playersByIDs(interactable.occupantsByID);
           const emptyAfterChange = updatedConversationArea.isEmpty();
           if (emptyNow !== emptyAfterChange) {
@@ -531,6 +562,7 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
       this._socket.connect();
       this._socket.on('initialize', initialData => {
         this._providerVideoToken = initialData.providerVideoToken;
+        this._providerChatToken = initialData.providerChatToken;
         this._friendlyNameInternal = initialData.friendlyName;
         this._townIsPubliclyListedInternal = initialData.isPubliclyListed;
         this._sessionToken = initialData.sessionToken;

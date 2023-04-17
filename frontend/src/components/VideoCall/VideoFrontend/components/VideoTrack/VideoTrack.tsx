@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { IVideoTrack } from '../../types';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import { Track } from 'twilio-video';
 import useMediaStreamTrack from '../../hooks/useMediaStreamTrack/useMediaStreamTrack';
 import useVideoTrackDimensions from '../../hooks/useVideoTrackDimensions/useVideoTrackDimensions';
@@ -47,7 +47,8 @@ export default function VideoTrack({ track, isLocal, priority }: VideoTrackProps
   const isFrontFacing = mediaStreamTrack?.getSettings().facingMode !== 'environment';
   const style = {
     transform: isLocal && isFrontFacing ? 'rotateY(180deg)' : '',
-    objectFit: isPortrait || track.name.includes('screen') ? ('contain' as const) : ('cover' as const),
+    objectFit:
+      isPortrait || track.name.includes('screen') ? ('contain' as const) : ('cover' as const),
   };
 
   return <Video ref={ref} style={style} />;

@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 import CloseIcon from '../../../icons/CloseIcon';
 
 import useChatContext from '../../../hooks/useChatContext/useChatContext';
 
-const useStyles = makeStyles(() =>
-  createStyles({
+const useStyles = makeStyles()(() =>
+  ({
     container: {
       height: '56px',
       background: '#F4F4F6',
@@ -15,21 +15,22 @@ const useStyles = makeStyles(() =>
       alignItems: 'center',
       padding: '0 1em',
     },
+
     text: {
       fontWeight: 'bold',
     },
+
     closeChatWindow: {
       cursor: 'pointer',
       display: 'flex',
       background: 'transparent',
       border: '0',
       padding: '0.4em',
-    },
-  })
-);
+    }
+  }));
 
 export default function ChatWindowHeader() {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const { setIsChatWindowOpen } = useChatContext();
 
   return (
