@@ -42,7 +42,6 @@ import PatioThumb from '../../../images/thumb/Patio.jpg';
 import PlantThumb from '../../../images/thumb/Plant.jpg';
 import SanFranciscoThumb from '../../../images/thumb/SanFrancisco.jpg';
 import { Thumbnail } from '../../BackgroundSelectionDialog/BackgroundThumbnail/BackgroundThumbnail';
-import { ppid } from 'process';
 
 export interface BackgroundSettings {
   type: Thumbnail;
