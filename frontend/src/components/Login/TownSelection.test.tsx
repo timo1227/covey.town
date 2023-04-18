@@ -1,7 +1,6 @@
 /* eslint-disable no-await-in-loop,@typescript-eslint/no-loop-func,no-restricted-syntax */
 import { ChakraProvider } from '@chakra-ui/react';
 import '@testing-library/jest-dom';
-import React from 'react';
 import { fireEvent, render, RenderResult, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mock, mockClear, MockProxy, mockReset } from 'jest-mock-extended';
@@ -13,8 +12,24 @@ import { CancelablePromise, Town, TownsService } from '../../generated/client';
 import * as useLoginController from '../../hooks/useLoginController';
 import { mockTownController } from '../../TestUtils';
 import TownSelection from './TownSelection';
+import { SessionProvider } from 'next-auth/react';
 
 const mockConnect = jest.fn(() => Promise.resolve());
+
+const mockSession = jest.fn();
+interface Props {
+  children: React.ReactNode;
+}
+
+jest.mock('next-auth/react', () => {
+  return {
+    __esModule: true,
+    SessionProvider: ({ children }: Props) => {
+      return <div>{children}</div>;
+    },
+    useSession: () => [mockSession, false],
+  };
+});
 
 const mockToast = jest.fn();
 jest.mock('../VideoCall/VideoFrontend/hooks/useVideoContext/useVideoContext.ts', () => ({
@@ -84,9 +99,11 @@ const listTowns = (suffix: string) =>
 
 export function wrappedTownSelection() {
   return (
-    <ChakraProvider>
-      <TownSelection />
-    </ChakraProvider>
+    <SessionProvider>
+      <ChakraProvider>
+        <TownSelection />
+      </ChakraProvider>
+    </SessionProvider>
   );
 }
 
@@ -313,7 +330,7 @@ describe('Town Selection', () => {
       ) as HTMLInputElement;
       userNameField = renderData.getByPlaceholderText('Your name') as HTMLInputElement;
       joinTownByIDButton = renderData.getByTestId('joinTownByIDButton');
-      newTownIsPublicCheckbox = renderData.getByLabelText('Publicly Listed') as HTMLInputElement;
+      newTownIsPublicCheckbox = renderData.getByTestId('isPublic') as HTMLInputElement;
       newTownNameField = renderData.getByPlaceholderText('New Town Name') as HTMLInputElement;
       newTownButton = renderData.getByTestId('newTownButton');
     });

@@ -1,29 +1,23 @@
-import React from 'react';
-import clsx from 'clsx';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-
-import { Button } from '@material-ui/core';
-
+import { Button } from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
 import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      background: theme.brand,
-      color: 'white',
-      '&:hover': {
-        background: '#600101',
-      },
-    },
-  })
-);
+const useStyles = makeStyles()(() => ({
+  button: {
+    background: '#E22525',
+    color: 'white',
+  },
+}));
 
 export default function EndCallButton(props: { className?: string }) {
-  const classes = useStyles();
+  const { cx } = useStyles();
   const { room } = useVideoContext();
 
   return (
-    <Button onClick={() => room!.disconnect()} className={clsx(classes.button, props.className)} data-cy-disconnect>
+    <Button
+      onClick={() => room?.disconnect()}
+      className={'text-white bg-red-500 hover:bg-red-900' + cx(props.className)}
+      data-cy-disconnect>
       Disconnect
     </Button>
   );

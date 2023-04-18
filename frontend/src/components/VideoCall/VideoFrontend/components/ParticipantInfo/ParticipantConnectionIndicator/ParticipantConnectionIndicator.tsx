@@ -1,11 +1,10 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 import { Participant } from 'twilio-video';
 import useParticipantIsReconnecting from '../../../hooks/useParticipantIsReconnecting/useParticipantIsReconnecting';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles()({
   indicator: {
     width: '10px',
     height: '10px',
@@ -21,10 +20,10 @@ const useStyles = makeStyles({
 
 export default function ParticipantConnectionIndicator({ participant }: { participant: Participant }) {
   const isReconnecting = useParticipantIsReconnecting(participant);
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   return (
     <Tooltip title={isReconnecting ? 'Participant is reconnecting' : 'Participant is connected'}>
-      <span className={clsx(classes.indicator, { [classes.isReconnecting]: isReconnecting })}></span>
+      <span className={cx(classes.indicator, { [classes.isReconnecting]: isReconnecting })}></span>
     </Tooltip>
   );
 }

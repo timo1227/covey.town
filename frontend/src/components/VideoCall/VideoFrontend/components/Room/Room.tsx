@@ -1,29 +1,30 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme } from '@material-ui/core';
+import { makeStyles } from 'tss-react/mui';
+import { Theme } from '@mui/material';
 import ChatWindow from '../ChatWindow/ChatWindow';
 import ParticipantList from '../ParticipantList/ParticipantList';
 import BackgroundSelectionDialog from '../BackgroundSelectionDialog/BackgroundSelectionDialog';
 import useChatContext from '../../hooks/useChatContext/useChatContext';
 import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 
-const useStyles = makeStyles((theme: Theme) => {
+// TODO jss-to-tss-react codemod: Unable to handle style definition reliably. Unsupported arrow function syntax.
+// Arrow function has parameter type of Identifier instead of ObjectPattern (e.g. `(props) => ({...})` instead of `({color}) => ({...})`).
+const useStyles = makeStyles()((theme: Theme) => {
   const totalMobileSidebarHeight = `${
-    theme.sidebarMobileHeight + theme.sidebarMobilePadding * 2 + theme.participantBorderWidth
+    theme.sidebarMobileHeight + theme.sidebarMobilePadding * 2 + 2
   }px`;
   return {
-    container: props => ({
+    container: {
       position: 'relative',
       height: '100%',
       display: 'grid',
       gridTemplateColumns: `1fr ${theme.sidebarWidth}px`,
       gridTemplateRows: '100%',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         gridTemplateColumns: '100%',
         gridTemplateRows: `calc(100% - ${totalMobileSidebarHeight}) ${totalMobileSidebarHeight}`,
         overflow: 'auto',
       },
-    }),
+    },
     rightDrawerOpen: {
       gridTemplateColumns: `1fr ${theme.sidebarWidth}px ${theme.rightDrawerWidth}px`,
     },
@@ -31,14 +32,14 @@ const useStyles = makeStyles((theme: Theme) => {
 });
 
 export default function Room() {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const { isChatWindowOpen } = useChatContext();
   const { isBackgroundSelectionOpen } = useVideoContext();
   return (
     <div
-      className={clsx(classes.container, {
+      className={`${cx(classes.container, {
         [classes.rightDrawerOpen]: isChatWindowOpen || isBackgroundSelectionOpen,
-      })}>
+      })} top-[7rem] max-w-[20rem] left-[42.5%]`}>
       <ParticipantList />
       <ChatWindow />
       <BackgroundSelectionDialog />

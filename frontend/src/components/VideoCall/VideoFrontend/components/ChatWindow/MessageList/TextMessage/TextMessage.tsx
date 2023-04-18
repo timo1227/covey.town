@@ -1,10 +1,9 @@
 import React from 'react';
-import clsx from 'clsx';
-import { Link } from '@material-ui/core';
+import { Link } from '@mui/material';
 import linkify from 'linkify-it';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles()({
   messageContainer: {
     borderRadius: '16px',
     display: 'inline-flex',
@@ -36,7 +35,12 @@ function addLinks(text: string) {
   matches.forEach((match, i) => {
     results.push(text.slice(lastIndex, match.index));
     results.push(
-      <Link target="_blank" rel="noreferrer" href={match.url} key={i}>
+      <Link
+        target="_blank"
+        rel="noreferrer"
+        href={match.url}
+        key={i}
+        underline="hover">
         {match.text}
       </Link>
     );
@@ -49,12 +53,12 @@ function addLinks(text: string) {
 }
 
 export default function TextMessage({ body, isLocalParticipant }: TextMessageProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
 
   return (
     <div>
       <div
-        className={clsx(classes.messageContainer, {
+        className={cx(classes.messageContainer, {
           [classes.isLocalParticipant]: isLocalParticipant,
         })}
       >

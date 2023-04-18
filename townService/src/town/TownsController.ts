@@ -183,10 +183,12 @@ export class TownsController extends Controller {
 
     const newPlayer = await town.addPlayer(userName, socket);
     assert(newPlayer.videoToken);
+    assert(newPlayer.chatToken);
     socket.emit('initialize', {
       userID: newPlayer.id,
       sessionToken: newPlayer.sessionToken,
       providerVideoToken: newPlayer.videoToken,
+      providerChatToken: newPlayer.chatToken,
       currentPlayers: town.players.map(eachPlayer => eachPlayer.toPlayerModel()),
       friendlyName: town.friendlyName,
       isPubliclyListed: town.isPubliclyListed,

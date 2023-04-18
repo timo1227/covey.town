@@ -25,12 +25,13 @@ To create an account and configure your local environment:
 2. Create an API key and secret (select "API Keys" on the left under "Settings")
 3. Create a `.env` file in the `townService` directory, setting the values as follows:
 
-| Config Value            | Description                               |
-| ----------------------- | ----------------------------------------- |
-| `TWILIO_ACCOUNT_SID`    | Visible on your twilio account dashboard. |
-| `TWILIO_API_KEY_SID`    | The SID of the new API key you created.   |
-| `TWILIO_API_KEY_SECRET` | The secret for the API key you created.   |
-| `TWILIO_API_AUTH_TOKEN` | Visible on your twilio account dashboard. |
+| Config Value              | Description                               |
+| ------------------------- | ----------------------------------------- |
+| `TWILIO_ACCOUNT_SID`      | Visible on your twilio account dashboard. |
+| `TWILIO_API_KEY_SID`      | The SID of the new API key you created.   |
+| `TWILIO_API_KEY_SECRET`   | The secret for the API key you created.   |
+| `TWILIO_API_AUTH_TOKEN`   | Visible on your twilio account dashboard. |
+| `TWILIO_CHAT_SERVICE_SID` | Visible on your twilio account dashboard. |
 
 ### Starting the backend
 
@@ -39,9 +40,9 @@ The backend will automatically restart if you change any of the files in the `to
 
 ### Configuring the frontend
 
-Create a `.env` file in the `frontend` directory, with the line: `REACT_APP_TOWNS_SERVICE_URL=http://localhost:8081` (if you deploy the towns service to another location, put that location here instead)
+Create a `.env` file in the `frontend` directory, with the line: `NEXT_PUBLIC_TOWNS_SERVICE_URL=http://localhost:8081` (if you deploy the towns service to another location, put that location here instead)
 
 ### Running the frontend
 
-In the `frontend` directory, run `npm start` (again, you'll need to run `npm install` the very first time). After several moments (or minutes, depending on the speed of your machine), a browser will open with the frontend running locally.
+In the `frontend` directory, run `npm run dev` (again, you'll need to run `yarn install or npm install` the very first time). After several moments (or minutes, depending on the speed of your machine), a browser will open with the frontend running locally.
 The frontend will automatically re-compile and reload in your browser if you change any files in the `frontend/src` directory.

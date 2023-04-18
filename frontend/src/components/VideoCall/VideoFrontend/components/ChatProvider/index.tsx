@@ -1,3 +1,4 @@
+'use client';
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import TextConversation from '../../../../../classes/TextConversation';
 import useTownController from '../../../../../hooks/useTownController';
@@ -11,9 +12,15 @@ type ChatContextType = {
   conversation: TextConversation | null;
 };
 
+type ChatProviderProps = {
+  children: React.ReactNode;
+};
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const ChatContext = createContext<ChatContextType>(null!);
 
-export const ChatProvider: React.FC = ({ children }) => {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
   const coveyTownController = useTownController();
   const isChatWindowOpenRef = useRef(false);
   const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);

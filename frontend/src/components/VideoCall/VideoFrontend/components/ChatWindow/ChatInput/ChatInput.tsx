@@ -1,17 +1,18 @@
-import { makeStyles } from '@material-ui/core';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import clsx from 'clsx';
+import { makeStyles } from 'tss-react/mui';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 import React, { useEffect, useRef, useState } from 'react';
 import TextConversation from '../../../../../../classes/TextConversation';
 import useTownController from '../../../../../../hooks/useTownController';
 import { isMobile } from '../../../utils';
 import Snackbar from '../../Snackbar/Snackbar';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles()(theme => ({
   chatInputContainer: {
     borderTop: '1px solid #e4e7e9',
     borderBottom: '1px solid #e4e7e9',
     padding: '1em 1.2em 1em',
+    position: 'relative',
+    bottom: 0,
   },
   textArea: {
     width: '100%',
@@ -22,10 +23,10 @@ const useStyles = makeStyles(theme => ({
     outline: 'none',
   },
   button: {
-    padding: '0.56em',
-    minWidth: 'auto',
+    'padding': '0.56em',
+    'minWidth': 'auto',
     '&:disabled': {
-      background: 'none',
+      'background': 'none',
       '& path': {
         fill: '#d8d8d8',
       },
@@ -67,7 +68,7 @@ const ALLOWED_FILE_TYPES =
   'audio/*, image/*, text/*, video/*, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document .xslx, .ppt, .pdf, .key, .svg, .csv';
 
 export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputProps) {
-  const classes = useStyles();
+  const { classes, cx } = useStyles();
   const [messageBody, setMessageBody] = useState('');
   const [isSendingFile, setIsSendingFile] = useState(false);
   const [fileSendError, setFileSendError] = useState<string | null>(null);
@@ -78,9 +79,9 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
   const coveyTownController = useTownController();
 
   useEffect(() => {
-    if(isTextareaFocused){
+    if (isTextareaFocused) {
       coveyTownController.pause();
-    }else{
+    } else {
       coveyTownController.unPause();
     }
   }, [isTextareaFocused, coveyTownController]);
@@ -98,7 +99,7 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
 
   const handleSendMessage = (message: string) => {
     if (isValidMessage) {
-      conversation.sendMessage(message.trim());
+      conversation.sendGlobalMessage(message.trim());
       setMessageBody('');
     }
   };
@@ -115,12 +116,15 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
     <div className={classes.chatInputContainer}>
       <Snackbar
         open={Boolean(fileSendError)}
-        headline="Error"
+        headline='Error'
         message={fileSendError || ''}
-        variant="error"
+        variant='error'
         handleClose={() => setFileSendError(null)}
       />
-      <div className={clsx(classes.textAreaContainer, { [classes.isTextareaFocused]: isTextareaFocused })}>
+      <div
+        className={cx(classes.textAreaContainer, {
+          [classes.isTextareaFocused]: isTextareaFocused,
+        })}>
         {/* 
         Here we add the "isTextareaFocused" class when the user is focused on the TextareaAutosize component.
         This helps to ensure a consistent appearance across all browsers. Adding padding to the TextareaAutosize
@@ -130,8 +134,8 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
           minRows={1}
           maxRows={3}
           className={classes.textArea}
-          aria-label="chat input"
-          placeholder="Write a message..."
+          aria-label='chat input'
+          placeholder='Write a message...'
           onKeyPress={handleReturnKeyPress}
           onChange={handleChange}
           value={messageBody}

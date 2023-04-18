@@ -45,7 +45,7 @@ function createConversationForTesting(params?: {
   return area;
 }
 
-process.env.REACT_APP_TOWNS_SERVICE_URL = 'testing';
+process.env.NEXT_PUBLIC_TOWNS_SERVICE_URL = 'testing';
 
 describe('ConversationAreasList', () => {
   /**
@@ -172,6 +172,7 @@ describe('ConversationAreasList', () => {
         friendlyName: nanoid(),
         isPubliclyListed: true,
         providerVideoToken: nanoid(),
+        providerChatToken: nanoid(),
         sessionToken: nanoid(),
         userID: nanoid(),
       });

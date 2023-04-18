@@ -1,3 +1,4 @@
+'use client';
 import { useState, useCallback, useRef } from 'react';
 import { LogLevels, Track, Room } from 'twilio-video';
 import { ErrorCallback } from '../../../types';
@@ -10,9 +11,11 @@ interface MediaStreamTrackPublishOptions {
 
 export default function useScreenShareToggle(room: Room | null, onError: ErrorCallback) {
   const [isSharing, setIsSharing] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const stopScreenShareRef = useRef<() => void>(null!);
 
   const shareScreen = useCallback(() => {
+    if (typeof navigator === 'undefined') return;
     navigator.mediaDevices
       .getDisplayMedia({
         audio: false,
@@ -28,16 +31,16 @@ export default function useScreenShareToggle(room: Room | null, onError: ErrorCa
         // All video tracks are published with 'low' priority. This works because the video
         // track that is displayed in the 'MainParticipant' component will have it's priority
         // set to 'high' via track.setPriority()
-        room!.localParticipant
+        room?.localParticipant
           .publishTrack(track, {
             name: 'screen', // Tracks can be named to easily find them later
             priority: 'low', // Priority is set to high by the subscriber when the video track is rendered
           } as MediaStreamTrackPublishOptions)
           .then(trackPublication => {
             stopScreenShareRef.current = () => {
-              room!.localParticipant.unpublishTrack(track);
+              room?.localParticipant.unpublishTrack(track);
               // TODO: remove this if the SDK is updated to emit this event
-              room!.localParticipant.emit('trackUnpublished', trackPublication);
+              room?.localParticipant.emit('trackUnpublished', trackPublication);
               track.stop();
               setIsSharing(false);
             };
@@ -57,6 +60,7 @@ export default function useScreenShareToggle(room: Room | null, onError: ErrorCa
 
   const toggleScreenShare = useCallback(() => {
     if (room) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       !isSharing ? shareScreen() : stopScreenShareRef.current();
     }
   }, [isSharing, shareScreen, room]);

@@ -157,6 +157,7 @@ export async function mockTownControllerConnection(
       friendlyName: nanoid(),
       isPubliclyListed: true,
       providerVideoToken: nanoid(),
+      providerChatToken: nanoid(),
       sessionToken: nanoid(),
       userID: ourUserID,
     };

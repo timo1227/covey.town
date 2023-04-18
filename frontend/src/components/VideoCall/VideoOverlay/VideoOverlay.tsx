@@ -1,21 +1,20 @@
 /* eslint-disable */
+'use client';
+import { styled, Theme } from '@mui/material/styles';
+import { type } from 'os';
 import React, { useEffect, useRef, useState } from 'react';
-import { styled, Theme } from '@material-ui/core/styles';
-
 import { Room as TwilioRoom } from 'twilio-video';
-
-import { Prompt } from 'react-router-dom';
-import Room from '../VideoFrontend/components/Room/Room';
+import useTownController from '../../../hooks/useTownController';
 import MenuBar from '../VideoFrontend/components/MenuBar/MenuBar';
 import MobileTopMenuBar from '../VideoFrontend/components/MobileTopMenuBar/MobileTopMenuBar';
-import ReconnectingNotification from '../VideoFrontend/components/ReconnectingNotification/ReconnectingNotification';
-import useRoomState from '../VideoFrontend/hooks/useRoomState/useRoomState';
-import useLocalAudioToggle from '../VideoFrontend/hooks/useLocalAudioToggle/useLocalAudioToggle';
-import useVideoContext from '../VideoFrontend/hooks/useVideoContext/useVideoContext';
-import useLocalVideoToggle from '../VideoFrontend/hooks/useLocalVideoToggle/useLocalVideoToggle';
-import './VideoGrid.scss';
 import MediaErrorSnackbar from '../VideoFrontend/components/PreJoinScreens/MediaErrorSnackbar/MediaErrorSnackbar';
-import useTownController from '../../../hooks/useTownController';
+import ReconnectingNotification from '../VideoFrontend/components/ReconnectingNotification/ReconnectingNotification';
+// import { Prompt } from 'react-router-dom';
+import Room from '../VideoFrontend/components/Room/Room';
+import useLocalAudioToggle from '../VideoFrontend/hooks/useLocalAudioToggle/useLocalAudioToggle';
+import useLocalVideoToggle from '../VideoFrontend/hooks/useLocalVideoToggle/useLocalVideoToggle';
+import useRoomState from '../VideoFrontend/hooks/useRoomState/useRoomState';
+import useVideoContext from '../VideoFrontend/hooks/useVideoContext/useVideoContext';
 
 const Container = styled('div')({
   // display: 'grid',
@@ -24,11 +23,7 @@ const Container = styled('div')({
 
 const Main = styled('main')(({ theme: _theme }: { theme: Theme }) => ({
   overflow: 'hidden',
-  position: 'relative',
-  paddingBottom: `${_theme.footerHeight}px`, // Leave some space for the footer
-  [_theme.breakpoints.down('sm')]: {
-    paddingBottom: `${_theme.mobileFooterHeight + _theme.mobileTopBarHeight}px`, // Leave some space for the mobile header and footer
-  },
+  // position: 'relative',
 }));
 
 interface Props {
@@ -55,13 +50,13 @@ export default function VideoGrid(props: Props) {
   useEffect(() => {
     function stop() {
       try {
-        if(isAudioEnabled){
+        if (isAudioEnabled) {
           toggleAudioEnabled();
         }
       } catch {}
 
       try {
-        if(isVideoEnabled){
+        if (isVideoEnabled) {
           toggleVideoEnabled();
         }
       } catch {}
@@ -76,32 +71,36 @@ export default function VideoGrid(props: Props) {
     unmountRef.current = () => {
       stop();
     };
-    unloadRef.current = (ev) => {
+    unloadRef.current = ev => {
       ev.preventDefault();
       stop();
     };
   }, [room, roomState, isVideoEnabled, isAudioEnabled, toggleAudioEnabled, toggleVideoEnabled]);
 
-  useEffect(() => () => {
-    if (unmountRef && unmountRef.current) {
-      unmountRef.current();
-    }
-  }, []);
+  useEffect(
+    () => () => {
+      if (unmountRef && unmountRef.current) {
+        unmountRef.current();
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
-    if (unloadRef && unloadRef.current) {
+    if (unloadRef && unloadRef.current && typeof window !== 'undefined') {
       window.addEventListener('beforeunload', unloadRef.current);
     }
     return () => {
-      if (unloadRef && unloadRef.current) window.removeEventListener('beforeunload', unloadRef.current);
+      if (unloadRef && unloadRef.current && typeof window !== 'undefined')
+        window.removeEventListener('beforeunload', unloadRef.current);
     };
   }, []);
 
   const sid = room?.sid;
   useEffect(() => {
     if (
-      existingRoomRef.current 
-            && (sid !== existingRoomRef.current.sid || coveyRoom !== existingRoomRef.current.sid)
+      existingRoomRef.current &&
+      (sid !== existingRoomRef.current.sid || coveyRoom !== existingRoomRef.current.sid)
     ) {
       if (existingRoomRef.current.state === 'connected') {
         existingRoomRef.current.disconnect();
@@ -112,18 +111,17 @@ export default function VideoGrid(props: Props) {
 
   return (
     <>
-      <Prompt when={roomState !== 'disconnected'} message="Are you sure you want to leave the video room?" />
-      <Container style={{ height: '100%' }}>
+      {/* <Prompt when={roomState !== 'disconnected'} message="Are you sure you want to leave the video room?" /> */}
+      <Container className='absolute h-screen top-0 w-full'>
         {roomState === 'disconnected' ? (
           <div>Connecting...</div>
         ) : (
-          <Main style={{ paddingBottom: '90px' }}>
+          <Main className='min-h-screen'>
             <ReconnectingNotification />
             <MobileTopMenuBar />
             {/* To-do: Edit the VideoChat container to move above town */}
-            <Container className="videochat-container"> 
-              <Room />
-            </Container>
+            {/* <Container className='videochat-container max-h-[20%]'></Container> */}
+            <Room />
             <MenuBar />
           </Main>
         )}
