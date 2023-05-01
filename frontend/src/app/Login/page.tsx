@@ -9,7 +9,6 @@ export default function Login() {
   return (
     <>
       <NavBar />
-      {/* @ts-expect-error Server Component */}
       <LoginForm />
     </>
   );
