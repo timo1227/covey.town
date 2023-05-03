@@ -85,6 +85,25 @@ export async function newClient(chatToken: string): Promise<Client | undefined> 
   return undefined;
 }
 
+export async function addConversation(name: string | undefined, client: Client) {
+  if (client === undefined) {
+    return undefined;
+  }
+  if (name === undefined || name.length === 0) {
+    return undefined;
+  }
+
+  try {
+    const conversation = await client.createConversation({
+      friendlyName: name,
+    });
+
+    return conversation;
+  } catch {
+    return undefined;
+  }
+}
+
 export async function getConversationFromSID(
   chatToken: string | undefined,
   conversationSID: string | undefined,

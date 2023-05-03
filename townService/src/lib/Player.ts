@@ -81,6 +81,7 @@ export default class Player {
   toPlayerModel(): PlayerModel {
     return {
       id: this._id,
+      chatToken: this._chatToken,
       location: this.location,
       userName: this._userName,
     };
