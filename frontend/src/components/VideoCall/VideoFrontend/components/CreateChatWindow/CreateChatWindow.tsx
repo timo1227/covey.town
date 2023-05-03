@@ -62,7 +62,7 @@ export default function CreateChatWindow() {
     } else {
       console.log('townController is null');
     }
-  }, [coveyRoom, playersList, townController.players, townController.userID]);
+  }, [coveyRoom, townController.players, townController.userID]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
