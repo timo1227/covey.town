@@ -125,6 +125,7 @@ export async function addChatParticipant(identity: string, conversation?: Conver
     return result;
   } catch {
     logError('Unable to add participant.');
+    return;
   }
 }
 
