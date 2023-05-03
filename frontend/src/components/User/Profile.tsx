@@ -26,6 +26,7 @@ export default function Profile() {
     passwordConfirm: '',
   });
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     if (status === 'authenticated' && session?.user?.name && session?.user?.email) {
@@ -49,11 +50,11 @@ export default function Profile() {
       },
     });
     const result = await res.json();
-
     if (result.error) {
       console.log(result.error);
       setError(result.error);
     }
+    setSuccess(result.Success);
   };
 
   const handleDelete = async () => {
@@ -75,7 +76,7 @@ export default function Profile() {
   };
 
   return (
-    <main className='flex justify-center items-center w-full h-screen'>
+    <main className='flex flex-col justify-center items-center w-full h-screen'>
       {error && (
         <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'>
           <strong className='font-bold'>Error!</strong>
@@ -87,6 +88,27 @@ export default function Profile() {
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 20 20'
               onClick={() => setError('')}>
+              <title>Close</title>
+              <path
+                fillRule='evenodd'
+                d='M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z'
+                clipRule='evenodd'
+              />
+            </svg>
+          </span>
+        </div>
+      )}
+      {success && (
+        <div className='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative'>
+          <strong className='font-bold'>Success</strong>
+          <span className='block sm:inline'> {success}</span>
+          <span className='absolute top-0 bottom-0 right-0 px-4 py-3'>
+            <svg
+              className='fill-current h-6 w-6 text-green-500'
+              role='button'
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              onClick={() => setSuccess('')}>
               <title>Close</title>
               <path
                 fillRule='evenodd'

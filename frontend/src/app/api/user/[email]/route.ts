@@ -22,10 +22,10 @@ export async function PUT(req: Request, { params }: ParamsType) {
     console.log(' name: ', name);
     console.log(' email: ', email);
 
-    return new Response(JSON.stringify({ error: 'User updated' }));
+    return new Response(JSON.stringify({ Success: 'User updated' }));
   } catch (error) {
     console.log('dbConnect error: ', error);
-    return Response.error();
+    return new Response(JSON.stringify({ error: 'User not found' }), { status: 404 });
   }
 }
 
