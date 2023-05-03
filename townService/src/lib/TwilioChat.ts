@@ -122,10 +122,10 @@ export async function addChatParticipant(identity: string, conversation?: Conver
 
   try {
     const result = await conversation.add(identity);
-    return;
+    // return result;
   } catch {
     logError('Unable to add participant.');
-    return;
+    // return;
   }
 }
 
