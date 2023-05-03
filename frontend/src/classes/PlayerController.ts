@@ -16,16 +16,21 @@ export default class PlayerController extends (EventEmitter as new () => TypedEm
 
   private readonly _id: string;
 
-  private readonly _chatToken: string | undefined
+  private readonly _chatToken: string | undefined;
 
   private readonly _userName: string;
 
   public gameObjects?: PlayerGameObjects;
 
-  constructor(id: string, chatToken: string | undefined, userName: string, location: PlayerLocation) {
+  constructor(
+    id: string,
+    chatToken: string | undefined,
+    userName: string,
+    location: PlayerLocation,
+  ) {
     super();
     this._id = id;
-    this._chatToken = chatToken
+    this._chatToken = chatToken;
     this._userName = userName;
     this._location = location;
   }
@@ -53,7 +58,12 @@ export default class PlayerController extends (EventEmitter as new () => TypedEm
   }
 
   toPlayerModel(): PlayerModel {
-    return { id: this.id, chatToken: this.chatToken, userName: this.userName, location: this.location };
+    return {
+      id: this.id,
+      chatToken: this.chatToken,
+      userName: this.userName,
+      location: this.location,
+    };
   }
 
   private _updateGameComponentLocation() {
@@ -74,6 +84,11 @@ export default class PlayerController extends (EventEmitter as new () => TypedEm
   }
 
   static fromPlayerModel(modelPlayer: PlayerModel): PlayerController {
-    return new PlayerController(modelPlayer.id, modelPlayer.chatToken, modelPlayer.userName, modelPlayer.location);
+    return new PlayerController(
+      modelPlayer.id,
+      modelPlayer.chatToken,
+      modelPlayer.userName,
+      modelPlayer.location,
+    );
   }
 }

@@ -72,6 +72,7 @@ describe('PlayersInTownList', () => {
       players.push(
         new PlayerController(
           `testingPlayerID${i}-${nanoid()}`,
+          `testingPlayerChatToken${i}-${nanoid()}`,
           `testingPlayerUser${i}-${nanoid()}}`,
           randomLocation(),
         ),
@@ -133,6 +134,7 @@ describe('PlayersInTownList', () => {
       const newPlayers = players.concat([
         new PlayerController(
           `testingPlayerID-${i}.new`,
+          `testingPlayerChatToken${i}.new`,
           `testingPlayerUser${i}.new`,
           randomLocation(),
         ),
