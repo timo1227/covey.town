@@ -5,6 +5,7 @@ import ParticipantList from '../ParticipantList/ParticipantList';
 import BackgroundSelectionDialog from '../BackgroundSelectionDialog/BackgroundSelectionDialog';
 import useChatContext from '../../hooks/useChatContext/useChatContext';
 import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
+import CreateChatWindow from '../CreateChatWindow/CreateChatWindow';
 
 // TODO jss-to-tss-react codemod: Unable to handle style definition reliably. Unsupported arrow function syntax.
 // Arrow function has parameter type of Identifier instead of ObjectPattern (e.g. `(props) => ({...})` instead of `({color}) => ({...})`).
@@ -42,6 +43,7 @@ export default function Room() {
       })} top-[7rem] max-w-[20rem] left-[42.5%]`}>
       <ParticipantList />
       <ChatWindow />
+      <CreateChatWindow />
       <BackgroundSelectionDialog />
     </div>
   );

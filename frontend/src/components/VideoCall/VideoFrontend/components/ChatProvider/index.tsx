@@ -7,6 +7,8 @@ import { ChatMessage } from '../../../../../types/CoveyTownSocket';
 type ChatContextType = {
   isChatWindowOpen: boolean;
   setIsChatWindowOpen: (isChatWindowOpen: boolean) => void;
+  isCreateChatWindowOpen: boolean;
+  setCreateChatWindowOpen: (isCreateChatWindowOpen: boolean) => void;
   hasUnreadMessages: boolean;
   messages: ChatMessage[];
   conversation: TextConversation | null;
@@ -24,6 +26,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
   const coveyTownController = useTownController();
   const isChatWindowOpenRef = useRef(false);
   const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
+  const [isCreateChatWindowOpen, setCreateChatWindowOpen] = useState(false);
   const [conversation, setConversation] = useState<TextConversation | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
@@ -66,6 +69,8 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
       value={{
         isChatWindowOpen,
         setIsChatWindowOpen,
+        isCreateChatWindowOpen,
+        setCreateChatWindowOpen,
         hasUnreadMessages,
         messages,
         conversation,

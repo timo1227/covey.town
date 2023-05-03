@@ -133,6 +133,7 @@ describe('ConversationAreasList', () => {
         playersInThisArea.push(
           new PlayerController(
             `area${areaID}.${playerNum}playerID:${nanoid()}`,
+            `area${areaID}.${playerNum}chatToken:${nanoid()}`,
             `area${areaID}.${playerNum}userName:${nanoid()}`,
             {
               x: 0,
