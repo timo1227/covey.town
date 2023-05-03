@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid';
-import axios from "axios";
 import { ChatMessage } from '../types/CoveyTownSocket';
 import TownController from './TownController';
 import { Conversation, Client } from '@twilio/conversations';

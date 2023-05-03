@@ -9,9 +9,9 @@ import Snackbar from '../../Snackbar/Snackbar';
 const useStyles = makeStyles()(theme => ({
   chatInputContainer: {
     borderTop: '1px solid #e4e7e9',
-    borderBottom: '1px solid #e4e7e9',
     padding: '1em 1.2em 1em',
     position: 'relative',
+    width: '20rem',
     bottom: 0,
   },
   textArea: {
