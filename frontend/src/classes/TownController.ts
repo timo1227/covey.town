@@ -20,7 +20,7 @@ import { isConversationArea, isViewingArea } from '../types/TypeUtils';
 import ConversationAreaController from './ConversationAreaController';
 import PlayerController from './PlayerController';
 import ViewingAreaController from './ViewingAreaController';
-import { getConversationFromSID } from './TwilioChat';
+import { getConversationFromSID } from './TextConversation';
 
 const CALCULATE_NEARBY_PLAYERS_DELAY = 300;
 

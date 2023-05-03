@@ -121,8 +121,8 @@ export async function addChatParticipant(identity: string, conversation?: Conver
   }
 
   try {
-    await conversation.add(identity);
-    return;
+    const result = await conversation.add(identity);
+    return result;
   } catch {
     logError('Unable to add participant.');
   }
