@@ -1,4 +1,4 @@
-import LoginForm from '../../components/UserLogin/loginForm';
+import LoginForm from '../../components/User/loginForm';
 import NavBar from '../../components/LandingPage/navBar';
 
 export const metadata = {

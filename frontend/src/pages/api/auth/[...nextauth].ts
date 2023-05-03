@@ -50,7 +50,7 @@ export default NextAuth({
 
         // Email not found
         if (!user) {
-          throw new Error('No user found');
+          throw new Error('Email not found');
         }
 
         // Check the hashed password against the plain text password
