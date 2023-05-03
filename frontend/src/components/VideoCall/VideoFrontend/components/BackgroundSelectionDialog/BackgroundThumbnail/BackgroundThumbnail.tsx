@@ -15,7 +15,7 @@ interface BackgroundThumbnailProps {
   index?: number;
 }
 
-const useStyles = makeStyles<void, 'thumbOverlay'>()((theme: Theme, _params, classes) => ({
+const useStyles = makeStyles<void, 'thumbOverlay'>()((theme: Theme) => ({
   thumbContainer: {
     margin: '5px',
     width: 'calc(50% - 10px)',
@@ -97,9 +97,11 @@ export default function BackgroundThumbnail({
         </div>
       ) : (
         <Image
-          className={cx(classes.thumbImage, { selected: thumbnailSelected })}
+          // className={cx(classes.thumbImage, { selected: thumbnailSelected })}
           src={imagePath}
           alt={name}
+          width={300}
+          height={200}
         />
       )}
       <div className={classes.thumbOverlay}>{name}</div>

@@ -2,6 +2,7 @@ import {
   GaussianBlurBackgroundProcessor,
   ImageFit,
   isSupported,
+  Pipeline,
   VirtualBackgroundProcessor,
 } from '@twilio/video-processors';
 import { StaticImageData } from 'next/image';
@@ -69,42 +70,42 @@ const imageNames: string[] = [
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const images = [
-  AbstractThumb,
-  BohoHomeThumb,
-  BookshelfThumb,
-  CoffeeShopThumb,
-  ContemporaryThumb,
-  CozyHomeThumb,
-  DesertThumb,
-  FishingThumb,
-  FlowerThumb,
-  KitchenThumb,
-  ModernHomeThumb,
-  NatureThumb,
-  OceanThumb,
-  PatioThumb,
-  PlantThumb,
-  SanFranciscoThumb,
+  AbstractThumb.src,
+  BohoHomeThumb.src,
+  BookshelfThumb.src,
+  CoffeeShopThumb.src,
+  ContemporaryThumb.src,
+  CozyHomeThumb.src,
+  DesertThumb.src,
+  FishingThumb.src,
+  FlowerThumb.src,
+  KitchenThumb.src,
+  ModernHomeThumb.src,
+  NatureThumb.src,
+  OceanThumb.src,
+  PatioThumb.src,
+  PlantThumb.src,
+  SanFranciscoThumb.src,
 ];
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const rawImagePaths = [
-  Abstract,
-  BohoHome,
-  Bookshelf,
-  CoffeeShop,
-  Contemporary,
-  CozyHome,
-  Desert,
-  Fishing,
-  Flower,
-  Kitchen,
-  ModernHome,
-  Nature,
-  Ocean,
-  Patio,
-  Plant,
-  SanFrancisco,
+  Abstract.src,
+  BohoHome.src,
+  Bookshelf.src,
+  CoffeeShop.src,
+  Contemporary.src,
+  CozyHome.src,
+  Desert.src,
+  Fishing.src,
+  Flower.src,
+  Kitchen.src,
+  ModernHome.src,
+  Nature.src,
+  Ocean.src,
+  Patio.src,
+  Plant.src,
+  SanFrancisco.src,
 ];
 
 const imageElements = new Map();
@@ -176,6 +177,9 @@ export default function useBackgroundSettings(
       if (!blurProcessor) {
         blurProcessor = new GaussianBlurBackgroundProcessor({
           assetsPath: virtualBackgroundAssets,
+          pipeline: Pipeline.Canvas2D,
+          maskBlurRadius: 3,
+          blurFilterRadius: 10,
         });
         await blurProcessor.loadModel();
       }
@@ -184,6 +188,8 @@ export default function useBackgroundSettings(
           assetsPath: virtualBackgroundAssets,
           backgroundImage: await getImage(0),
           fitType: ImageFit.Cover,
+          pipeline: Pipeline.Canvas2D,
+          maskBlurRadius: 5,
         });
         await virtualBackgroundProcessor.loadModel();
       }
