@@ -43,14 +43,13 @@ export default function CreateChatWindow() {
   const { isCreateChatWindowOpen, setCreateChatWindowOpen } = useChatContext();
   const townController = useTownController();
   const [playersList, setPlayersList] = useState<TownController['players']>([]);
-  const [chatName, setChatName] = useState<string>('');
+  const [playerChatToken, setplayerChatToken] = useState<string>('');
 
   let coveyRoom = townController?.townID;
   if (!coveyRoom) coveyRoom = 'Disconnected';
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setChatName(event.target.value);
-    console.log(chatName);
+    setplayerChatToken(event.target.value);
   };
 
   useEffect(() => {
@@ -67,6 +66,7 @@ export default function CreateChatWindow() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // CREATE CHAT FROM SID AND NAME
+    console.log(playerChatToken);
   };
 
   return (
@@ -82,8 +82,9 @@ export default function CreateChatWindow() {
         <label className='mr-2'>
           User:
           <select onChange={handleChange} className='ml-2 p-2 border rounded-md'>
+            <option value=''>Select a user</option>
             {playersList.map(player => (
-              <option key={player.id} value={player.userName}>
+              <option key={player.id} value={player.chatToken}>
                 {player.userName}
               </option>
             ))}
