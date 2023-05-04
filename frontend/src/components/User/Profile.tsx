@@ -129,7 +129,9 @@ export default function Profile() {
       )}
       <form
         onSubmit={handleSubmit}
-        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 min-w-[35%]'>
+        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 min-w-[35%]'
+        id='profile-form'
+        data-testid='profile-form'>
         <div className='mb-5 lg:mb-10'>
           <label htmlFor='name' className='block text-gray-700 font-bold mb-2'>
             User Name
@@ -201,12 +203,14 @@ export default function Profile() {
             </button>
             <button
               type='submit'
+              name='update'
               className='group relative rounded-sm bg-indigo-600 py-2 px-3 text-sm font-semibold min-w-[50%] text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
               Update
             </button>
           </div>
           <button
             type='button'
+            name='delete'
             onClick={handleDelete}
             className='group relative rounded-sm bg-white py-2 px-3 text-sm font-semibold text-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600'>
             Delete Account
