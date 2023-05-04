@@ -42,7 +42,7 @@ export default function Profile() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const res = await fetch(`/api/user/${userData.email}`, {
+    const res = await fetch(`/api/user/${session?.user?.email}`, {
       method: 'PUT',
       body: JSON.stringify(userData),
       headers: {
