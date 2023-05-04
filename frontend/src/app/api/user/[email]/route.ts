@@ -1,5 +1,6 @@
 import dbConnect from '../../../../utils/dbConnect';
 import User from '../../../../models/User';
+import bcrypt from 'bcrypt';
 
 interface ParamsType {
   params: {
@@ -7,20 +8,48 @@ interface ParamsType {
   };
 }
 
-interface UserData {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-}
+const validatePassword = (password: string, passwordConfirm: string) => {
+  if (password !== passwordConfirm) {
+    return { error: 'Passwords do not match' };
+  }
+};
 
 export async function PUT(req: Request, { params }: ParamsType) {
   try {
-    // await dbConnect();
+    await dbConnect();
     const { name, email, password, passwordConfirm } = await req.json();
 
-    console.log(' name: ', name);
-    console.log(' email: ', email);
+    if (password || passwordConfirm) {
+      const error = validatePassword(password, passwordConfirm);
+
+      if (error) {
+        return new Response(JSON.stringify(error), { status: 400 });
+      }
+
+      // hash password
+      const hashedPassword = await bcrypt.hash(password, 12);
+
+      // Update user on MongoDB with hashed password
+      const updatedUser = await User.findOneAndUpdate(
+        { email: params.email },
+        { name, email, hashedPassword },
+        { new: true },
+      );
+      if (!updatedUser) {
+        return new Response(JSON.stringify({ error: 'User not found' }), { status: 404 });
+      }
+      return new Response(JSON.stringify({ Success: 'User updated' }));
+    }
+
+    // Update user on MongoDB
+    const updatedUser = await User.findOneAndUpdate(
+      { email: params.email },
+      { name, email },
+      { new: true },
+    );
+    if (!updatedUser) {
+      return new Response(JSON.stringify({ error: 'User not found' }), { status: 404 });
+    }
 
     return new Response(JSON.stringify({ Success: 'User updated' }));
   } catch (error) {

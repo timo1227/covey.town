@@ -6,7 +6,7 @@ import logo from '../../public/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { BsPersonCircle } from 'react-icons/bs';
+import { IoPersonSharp } from 'react-icons/io5';
 
 const NAVIGATION = [
   { name: 'Home', href: '/' },
@@ -43,7 +43,7 @@ export default function Nav() {
               aria-haspopup='true'
               onClick={() => setProfileMenuOpen(!profileMenuOpen)}>
               <span className='sr-only'>Open user menu</span>
-              <BsPersonCircle className='h-6 w-6' aria-hidden='true' />
+              <IoPersonSharp className='h-6 w-6' aria-hidden='true' />
             </button>
             {/* // Profile dropdown panel, show/hide based on dropdown state. */}
             <div

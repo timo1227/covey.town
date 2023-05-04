@@ -55,6 +55,11 @@ export default function Profile() {
       setError(result.error);
     }
     setSuccess(result.Success);
+    // Wait 2 seconds before redirecting to login page
+    setTimeout(() => {
+      signOut();
+      router.push('/Login');
+    }, 2000);
   };
 
   const handleDelete = async () => {
@@ -76,7 +81,10 @@ export default function Profile() {
   };
 
   return (
-    <main className='flex flex-col justify-center items-center w-full h-screen'>
+    <main className='flex flex-col items-center w-full h-screen justify-center'>
+      <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
+        Edit Profile
+      </h2>
       {error && (
         <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'>
           <strong className='font-bold'>Error!</strong>
@@ -99,7 +107,7 @@ export default function Profile() {
         </div>
       )}
       {success && (
-        <div className='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative'>
+        <div className='bg-green-100 border border-green-400 text-green-700 px-4 py-3 pr-16 rounded relative'>
           <strong className='font-bold'>Success</strong>
           <span className='block sm:inline'> {success}</span>
           <span className='absolute top-0 bottom-0 right-0 px-4 py-3'>
@@ -119,10 +127,12 @@ export default function Profile() {
           </span>
         </div>
       )}
-      <form onSubmit={handleSubmit} className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
-        <div className='mb-4'>
+      <form
+        onSubmit={handleSubmit}
+        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 min-w-[35%]'>
+        <div className='mb-5 lg:mb-10'>
           <label htmlFor='name' className='block text-gray-700 font-bold mb-2'>
-            Name
+            User Name
           </label>
           <input
             id='name'
@@ -133,7 +143,7 @@ export default function Profile() {
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
         </div>
-        <div className='mb-4'>
+        <div className='mb-5 lg:mb-10'>
           <label htmlFor='email' className='block text-gray-700 font-bold mb-2'>
             Email
           </label>
@@ -146,19 +156,29 @@ export default function Profile() {
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
         </div>
-        <div className='mb-4'>
+        <div className='relative'>
+          <div className='absolute inset-0 flex items-center'>
+            <div className='w-full border-t border-gray-300' />
+          </div>
+          <div className='relative flex justify-center text-sm'>
+            <span className='px-2 bg-white text-gray-500'>Change Password</span>
+          </div>
+        </div>
+        <div className='mb-5 lg:mb-10'>
           <label htmlFor='password' className='block text-gray-700 font-bold mb-2'>
-            Password
+            New Password
           </label>
           <input
             id='password'
             name='password'
             type='password'
+            autoComplete='new-password'
             onChange={handleChange}
+            placeholder='Leave blank to keep the same'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
         </div>
-        <div className='mb-4'>
+        <div className='mb-5 lg:mb-10'>
           <label htmlFor='passwordConfirm' className='block text-gray-700 font-bold mb-2'>
             Confirm Password
           </label>
@@ -166,20 +186,29 @@ export default function Profile() {
             id='passwordConfirm'
             name='passwordConfirm'
             type='password'
+            autoComplete='new-password'
             onChange={handleChange}
+            placeholder='Leave blank to keep the same'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           />
         </div>
-        <div className='flex items-center justify-between'>
-          <button
-            type='submit'
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
-            Update
-          </button>
+        <div className='flex gap-5 items-center justify-between'>
+          <div className='flex gap-5 items-center min-w-[50%]'>
+            <button
+              type='submit'
+              className='group relative rounded-sm border-2 border-indigo-400 bg-white py-2 px-3 text-sm font-semibold min-w-[50%] text-indigo-500 hover:bg-indigo-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'>
+              Cancel
+            </button>
+            <button
+              type='submit'
+              className='group relative rounded-sm bg-indigo-600 py-2 px-3 text-sm font-semibold min-w-[50%] text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
+              Update
+            </button>
+          </div>
           <button
             type='button'
             onClick={handleDelete}
-            className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
+            className='group relative rounded-sm bg-white py-2 px-3 text-sm font-semibold text-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600'>
             Delete Account
           </button>
         </div>
