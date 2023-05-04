@@ -119,8 +119,6 @@ export default function VideoGrid(props: Props) {
           <Main className='min-h-screen'>
             <ReconnectingNotification />
             <MobileTopMenuBar />
-            {/* To-do: Edit the VideoChat container to move above town */}
-            {/* <Container className='videochat-container max-h-[20%]'></Container> */}
             <Room />
             <MenuBar />
           </Main>

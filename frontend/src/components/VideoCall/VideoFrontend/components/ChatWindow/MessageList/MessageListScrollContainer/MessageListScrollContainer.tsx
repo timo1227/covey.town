@@ -119,16 +119,16 @@ export class MessageListScrollContainer extends React.Component<
           data-cy-message-list-inner-scroll>
           <div className='overflow-y-auto flex-1 pb-1'>
             {this.props.children}
-            <Button
+            {/* <Button
               className='absolute bottom-14 right-2 z-10 p-0.5 sm:p-0.9 hidden sm:block'
               onClick={this.handleClick}
               startIcon={<ArrowDownwardIcon />}
               color='primary'
               variant='contained'
               data-cy-new-message-button>
-              {this.state.messageNotificationCount} new message
+              {this.state.messageNotificationCount} New message
               {this.state.messageNotificationCount > 1 && 's'}
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import { Typography, Grid, Hidden } from '@mui/material';
 import ToggleAudioButton from '../Buttons/ToggleAudioButton/ToggleAudioButton';
 import ToggleChatButton from '../Buttons/ToggleChatButton/ToggleChatButton';
+import CreateChatButton from '../Buttons/CreateChatButton/CreateChatButton';
 import ToggleVideoButton from '../Buttons/ToggleVideoButton/ToggleVideoButton';
 import ToggleScreenShareButton from '../Buttons/ToogleScreenShareButton/ToggleScreenShareButton';
 import TownSettings from '../../../../Login/TownSettings';
@@ -88,7 +89,10 @@ export default function MenuBar() {
           <Grid item>
             <Grid container justifyContent='center'>
               {process.env.REACT_APP_DISABLE_TWILIO_CONVERSATIONS !== 'true' && (
-                <ToggleChatButton />
+                <>
+                  <ToggleChatButton />
+                  <CreateChatButton />
+                </>
               )}
               <ToggleAudioButton disabled={isReconnecting} />
               <ToggleVideoButton disabled={isReconnecting} />

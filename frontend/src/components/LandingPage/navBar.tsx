@@ -6,6 +6,7 @@ import logo from '../../public/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { IoPersonSharp } from 'react-icons/io5';
 
 const NAVIGATION = [
   { name: 'Home', href: '/' },
@@ -16,17 +17,58 @@ const NAVIGATION = [
 
 export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const { data: session } = useSession();
 
   function SessionLink() {
     if (session) {
+      if (mobileMenuOpen) {
+        return (
+          <Link
+            href='/Login'
+            className='text-sm font-semibold leading-6 text-gray-900'
+            onClick={() => signOut()}>
+            Log out
+          </Link>
+        );
+      }
       return (
-        <Link
-          href='/Login'
-          className='text-sm font-semibold leading-6 text-gray-900'
-          onClick={() => signOut()}>
-          Log out
-        </Link>
+        <div className='relative inline-block text-left'>
+          <div>
+            <button
+              type='button'
+              className='flex items-center text-sm font-medium text-black hover:text-gray-700 hover:underline focus:outline-none'
+              id='options-menu'
+              aria-expanded='true'
+              aria-haspopup='true'
+              onClick={() => setProfileMenuOpen(!profileMenuOpen)}>
+              <span className='sr-only'>Open user menu</span>
+              <IoPersonSharp className='h-6 w-6' aria-hidden='true' />
+            </button>
+            {/* // Profile dropdown panel, show/hide based on dropdown state. */}
+            <div
+              className={`${
+                profileMenuOpen ? 'block' : 'hidden'
+              } origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
+              role='menu'
+              aria-orientation='vertical'
+              aria-labelledby='options-menu'>
+              <Link
+                href='/Profile'
+                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                role='menuitem'>
+                Your Profile
+              </Link>
+              <Link
+                href='/Login'
+                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                role='menuitem'
+                onClick={() => signOut()}>
+                Log out
+              </Link>
+            </div>
+          </div>
+        </div>
       );
     } else {
       if (mobileMenuOpen) {
