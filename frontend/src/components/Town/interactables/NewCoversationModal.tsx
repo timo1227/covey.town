@@ -81,32 +81,38 @@ export default function NewConversationModal(): JSX.Element {
         closeModal();
         coveyTownController.unPause();
       }}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Create a conversation in {newConversation?.name} </ModalHeader>
-        <ModalCloseButton />
+      <ModalOverlay className='fixed inset-0 bg-gray-800 bg-opacity-80' />
+      <ModalContent className='relative m-auto w-96 bg-white rounded-md shadow-lg px-10 border-2 border-gray-400 '>
+        <ModalHeader className='text-lg font-medium py-4 text-center'>
+          Create a conversation in {newConversation?.name}
+        </ModalHeader>
+        <ModalCloseButton className='absolute top-4 right-4 rounded-full p-1' />
         <form
           onSubmit={ev => {
             ev.preventDefault();
             createConversation();
           }}>
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel htmlFor='topic'>Topic of Conversation</FormLabel>
+          <ModalBody pb={6} className='px-8'>
+            <FormControl className='mb-4'>
+              <FormLabel htmlFor='topic' className='font-medium mb-3 text-center'>
+                Topic of Conversation
+              </FormLabel>
               <Input
                 id='topic'
-                placeholder='Share the topic of your conversation'
+                placeholder='Enter Conversation Topic'
                 name='topic'
                 value={topic}
                 onChange={e => setTopic(e.target.value)}
+                className='border-gray-300 rounded-md px-3 py-2 w-full focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none'
               />
             </FormControl>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={createConversation}>
-              Create
+          <ModalFooter className='px-8 py-6 '>
+            <Button
+              type='submit'
+              className='w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-md py-2'>
+              Create Conversation
             </Button>
-            <Button onClick={closeModal}>Cancel</Button>
           </ModalFooter>
         </form>
       </ModalContent>

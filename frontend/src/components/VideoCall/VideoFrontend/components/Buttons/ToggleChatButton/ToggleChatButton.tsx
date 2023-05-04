@@ -8,11 +8,11 @@ import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
 export const ANIMATION_DURATION = 700;
 
 const useStyles = makeStyles()({
-  iconContainer: {
+  'iconContainer': {
     position: 'relative',
     display: 'flex',
   },
-  circle: {
+  'circle': {
     width: '10px',
     height: '10px',
     backgroundColor: '#5BB75B',
@@ -23,10 +23,10 @@ const useStyles = makeStyles()({
     opacity: 0,
     transition: `opacity ${ANIMATION_DURATION * 0.5}ms ease-in`,
   },
-  hasUnreadMessages: {
+  'hasUnreadMessages': {
     opacity: 1,
   },
-  ring: {
+  'ring': {
     border: '3px solid #5BB75B',
     borderRadius: '30px',
     height: '14px',
@@ -36,7 +36,7 @@ const useStyles = makeStyles()({
     top: '-5px',
     opacity: 0,
   },
-  animateRing: {
+  'animateRing': {
     animation: `$expand ${ANIMATION_DURATION}ms ease-out`,
     animationIterationCount: 1,
   },
@@ -58,11 +58,18 @@ const useStyles = makeStyles()({
 export default function ToggleChatButton() {
   const { classes, cx } = useStyles();
   const [shouldAnimate, setShouldAnimate] = useState(false);
-  const { isChatWindowOpen, setIsChatWindowOpen, conversation, hasUnreadMessages } = useChatContext();
+  const {
+    isChatWindowOpen,
+    setIsChatWindowOpen,
+    conversation,
+    hasUnreadMessages,
+    setCreateChatWindowOpen,
+  } = useChatContext();
   const { setIsBackgroundSelectionOpen } = useVideoContext();
 
   const toggleChatWindow = () => {
     setIsChatWindowOpen(!isChatWindowOpen);
+    setCreateChatWindowOpen(false);
     setIsBackgroundSelectionOpen(false);
   };
 
@@ -93,8 +100,7 @@ export default function ToggleChatButton() {
           <div className={cx(classes.ring, { [classes.animateRing]: shouldAnimate })} />
           <div className={cx(classes.circle, { [classes.hasUnreadMessages]: hasUnreadMessages })} />
         </div>
-      }
-    >
+      }>
       Chat
     </Button>
   );

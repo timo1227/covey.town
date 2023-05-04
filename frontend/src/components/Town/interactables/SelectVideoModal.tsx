@@ -87,31 +87,43 @@ export default function SelectVideoModal({
         closeModal();
         coveyTownController.unPause();
       }}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Pick a video to watch in {viewingAreaController?.id} </ModalHeader>
-        <ModalCloseButton />
+      <ModalOverlay className='fixed inset-0 bg-gray-800 bg-opacity-80' />
+      <ModalContent className='relative m-auto w-96 bg-white rounded-md shadow-lg px-10 border-2 border-gray-400'>
+        <ModalHeader className='p-4 text-lg font-bold text-gray-700'>
+          Pick a video to watch in {viewingAreaController?.id}
+        </ModalHeader>
+        <ModalCloseButton className='absolute top-0 right-0 m-3 text-gray-700' />
         <form
           onSubmit={ev => {
             ev.preventDefault();
             createViewingArea();
-          }}>
+          }}
+          className='px-4 py-2'>
           <ModalBody pb={6}>
             <FormControl>
-              <FormLabel htmlFor='video'>Video URL</FormLabel>
+              <FormLabel htmlFor='video' className='text-gray-700 font-semibold mb-1'>
+                Video URL
+              </FormLabel>
               <Input
                 id='video'
                 name='video'
                 value={video}
                 onChange={e => setVideo(e.target.value)}
+                className='w-full border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
             </FormControl>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={createViewingArea}>
+          <ModalFooter className='p-4 gap-3'>
+            <Button
+              onClick={createViewingArea}
+              className='w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-md py-2'>
               Set video
             </Button>
-            <Button onClick={closeModal}>Cancel</Button>
+            <Button
+              onClick={closeModal}
+              className='w-full bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-md py-2'>
+              Cancel
+            </Button>
           </ModalFooter>
         </form>
       </ModalContent>

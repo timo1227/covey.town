@@ -59,7 +59,6 @@ export default function CreateChatButton() {
   const { classes, cx } = useStyles();
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const {
-    isChatWindowOpen,
     setIsChatWindowOpen,
     conversation,
     hasUnreadMessages,
@@ -70,6 +69,8 @@ export default function CreateChatButton() {
 
   const createChatWindow = () => {
     setCreateChatWindowOpen(!isCreateChatWindowOpen);
+    setIsBackgroundSelectionOpen(false);
+    setIsChatWindowOpen(false);
   };
 
   useEffect(() => {

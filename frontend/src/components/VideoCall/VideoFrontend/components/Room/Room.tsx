@@ -34,12 +34,13 @@ const useStyles = makeStyles()((theme: Theme) => {
 
 export default function Room() {
   const { classes, cx } = useStyles();
-  const { isChatWindowOpen } = useChatContext();
+  const { isChatWindowOpen, isCreateChatWindowOpen } = useChatContext();
   const { isBackgroundSelectionOpen } = useVideoContext();
   return (
     <div
       className={`${cx(classes.container, {
-        [classes.rightDrawerOpen]: isChatWindowOpen || isBackgroundSelectionOpen,
+        [classes.rightDrawerOpen]:
+          isChatWindowOpen || isBackgroundSelectionOpen || isCreateChatWindowOpen,
       })} top-[7rem] max-w-[20rem] left-[42.5%]`}>
       <ParticipantList />
       <ChatWindow />
