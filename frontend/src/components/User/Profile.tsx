@@ -197,7 +197,7 @@ export default function Profile() {
         <div className='flex gap-5 items-center justify-between'>
           <div className='flex gap-5 items-center min-w-[50%]'>
             <button
-              type='submit'
+              onClick={router.back}
               className='group relative rounded-sm border-2 border-indigo-400 bg-white py-2 px-3 text-sm font-semibold min-w-[50%] text-indigo-500 hover:bg-indigo-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'>
               Cancel
             </button>
