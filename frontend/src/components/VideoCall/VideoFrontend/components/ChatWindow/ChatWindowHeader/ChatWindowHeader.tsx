@@ -5,7 +5,6 @@ import CloseIcon from '../../../icons/CloseIcon';
 import useTownController from '../../../../../../hooks/useTownController';
 
 import useChatContext from '../../../hooks/useChatContext/useChatContext';
-import { error } from 'console';
 
 const useStyles = makeStyles()(() => ({
   container: {
@@ -54,7 +53,6 @@ export default function ChatWindowHeader() {
       const townId = townController.townID;
       const res = await fetch(`/api/chats/${userId}/${townId}`);
       const data = await res.json();
-      console.log(data);
       if (!data.error) {
         setChatList(data);
       }

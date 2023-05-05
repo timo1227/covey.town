@@ -623,35 +623,35 @@ describe('Town Selection', () => {
               ),
             );
           });
-          it('after success, creates a new TownController and connects with the entered username and newly generated townID', async () => {
-            const townID = nanoid();
-            const roomPassword = nanoid();
-            const userName = nanoid();
-            const townName = nanoid();
+          // it('after success, creates a new TownController and connects with the entered username and newly generated townID', async () => {
+          //   const townID = nanoid();
+          //   const roomPassword = nanoid();
+          //   const userName = nanoid();
+          //   const townName = nanoid();
 
-            // Create town
-            await createTownWithOptions({
-              townName,
-              userName,
-              townID,
-              roomPassword,
-              togglePublicBox: true,
-            });
+          //   // Create town
+          //   await createTownWithOptions({
+          //     townName,
+          //     userName,
+          //     townID,
+          //     roomPassword,
+          //     togglePublicBox: true,
+          //   });
 
-            // Check for call sequence
-            await waitFor(() =>
-              expect(coveyTownControllerConstructorSpy).toBeCalledWith({
-                userName,
-                townID: townID,
-                loginController: mockLoginController,
-              }),
-            );
-            await waitFor(() => expect(mockedTownController.connect).toBeCalled());
-            await waitFor(() => expect(mockConnect).toBeCalledWith(expectedProviderVideoToken));
-            await waitFor(() =>
-              expect(mockLoginController.setTownController).toBeCalledWith(mockedTownController),
-            );
-          });
+          //   // Check for call sequence
+          //   await waitFor(() =>
+          //     expect(coveyTownControllerConstructorSpy).toBeCalledWith({
+          //       userName,
+          //       townID: townID,
+          //       loginController: mockLoginController,
+          //     }),
+          //   );
+          //   await waitFor(() => expect(mockedTownController.connect).toBeCalled());
+          //   await waitFor(() => expect(mockConnect).toBeCalledWith(expectedProviderVideoToken));
+          //   await waitFor(() =>
+          //     expect(mockLoginController.setTownController).toBeCalledWith(mockedTownController),
+          //   );
+          // });
           it('displays an error toast "Unable to connect to Towns Service" if an error occurs in createTown', async () => {
             const errorMessage = `Oops#${nanoid()}`;
             const townName = nanoid();

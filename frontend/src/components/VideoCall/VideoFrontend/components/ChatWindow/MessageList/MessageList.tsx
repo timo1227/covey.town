@@ -45,7 +45,6 @@ export default function MessageList({
       const userID = coveyTownController.userID;
       const res = await fetch(`/api/message/${directMessageUsername}/${townID}/${userID}`);
       const data = await res.json();
-      console.log(data);
       if (!data.error) {
         setDirectMessages(data.dmMessages);
       }
