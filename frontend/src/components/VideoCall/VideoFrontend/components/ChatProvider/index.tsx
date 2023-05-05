@@ -9,6 +9,8 @@ type ChatContextType = {
   setIsChatWindowOpen: (isChatWindowOpen: boolean) => void;
   isCreateChatWindowOpen: boolean;
   setCreateChatWindowOpen: (isCreateChatWindowOpen: boolean) => void;
+  isGlobal: boolean;
+  setIsGlobal: (isGlobal: boolean) => void;
   hasUnreadMessages: boolean;
   messages: ChatMessage[];
   conversation: TextConversation | null;
@@ -30,6 +32,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
   const [conversation, setConversation] = useState<TextConversation | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
+  const [isGlobal, setIsGlobal] = useState(true);
 
   useEffect(() => {
     if (conversation) {
@@ -74,6 +77,8 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         hasUnreadMessages,
         messages,
         conversation,
+        isGlobal,
+        setIsGlobal,
       }}>
       {children}
     </ChatContext.Provider>

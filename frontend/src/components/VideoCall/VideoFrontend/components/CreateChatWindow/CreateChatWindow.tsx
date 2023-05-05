@@ -56,7 +56,6 @@ export default function CreateChatWindow() {
     if (coveyRoom) {
       const User = townController.userID;
       const players = townController.players || [];
-      console.log('players', players);
       const filteredPlayers = players.filter(player => player.id !== User);
       setPlayersList(filteredPlayers);
     } else {
@@ -80,7 +79,7 @@ export default function CreateChatWindow() {
       });
       const data = await res.json();
       if (data.msg) {
-        console.log(data.msg);
+        console.log('Chat created');
       } else {
         console.log('Chat creation failed');
         console.log(data.error);

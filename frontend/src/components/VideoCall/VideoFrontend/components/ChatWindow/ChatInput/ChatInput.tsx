@@ -62,12 +62,13 @@ const useStyles = makeStyles()(theme => ({
 interface ChatInputProps {
   conversation: TextConversation;
   isChatWindowOpen: boolean;
+  isGlobal: boolean;
 }
 
 const ALLOWED_FILE_TYPES =
   'audio/*, image/*, text/*, video/*, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document .xslx, .ppt, .pdf, .key, .svg, .csv';
 
-export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputProps) {
+export default function ChatInput({ conversation, isChatWindowOpen, isGlobal }: ChatInputProps) {
   const { classes, cx } = useStyles();
   const [messageBody, setMessageBody] = useState('');
   const [isSendingFile, setIsSendingFile] = useState(false);
@@ -98,9 +99,13 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
   };
 
   const handleSendMessage = (message: string) => {
-    if (isValidMessage) {
-      conversation.sendGlobalMessage(message.trim());
-      setMessageBody('');
+    if (isGlobal) {
+      if (isValidMessage) {
+        conversation.sendGlobalMessage(message.trim());
+        setMessageBody('');
+      }
+    } else {
+      // TODO: send message to specific user
     }
   };
 
