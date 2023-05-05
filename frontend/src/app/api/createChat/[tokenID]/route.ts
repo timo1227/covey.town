@@ -1,67 +1,72 @@
 import dbConnect from '../../../../utils/dbConnect';
 import Town from '../../../../models/Town';
 
-export async function PUT(req: Request, { params: { tokenID } }: { params: { tokenID: string } }) {
+export async function PUT(req: Request, { params }: { params: { tokenID: string } }) {
   await dbConnect();
   const { townID, playerChatToken } = await req.json();
 
-  try {
-    // Find town by townID
-    const town = await Town.findOne({ townID });
+  // Find town by townID
+  const town = await Town.findOne({ townID }).catch((err: Error) => {
+    console.log('Error on findOne: ', err);
+    return new Response(JSON.stringify({ error: 'Error on findOne: ' + err }), { status: 400 });
+  });
 
-    // Find the Sender and User in the townUsers array
-    const [townSender, townUser] = town.townUsers.filter((user: { tokenID: string }) =>
-      [tokenID, playerChatToken].includes(user.tokenID),
-    );
+  // Find the Sender in the townUsers array
+  const townSender = town.townUsers.find(
+    (user: { tokenID: string }) => user.tokenID === params.tokenID,
+  );
 
-    // If the sender already has a chat with the player, return
-    // const senderChatExists = townSender.chats.find(
-    //   (chat: { tokenID: string }) => chat.tokenID === playerChatToken,
-    // );
-    // if (senderChatExists) {
-    //   return new Response(JSON.stringify({ msg: 'Chat already exists between sender and player' }));
-    // }
+  // If the sender already has a chat with the player, return
+  const senderChatExists = townSender.chats.find(
+    (chat: { tokenID: string }) => chat.tokenID === playerChatToken,
+  );
+  if (senderChatExists) {
+    return new Response(JSON.stringify({ msg: 'Chat already exists between sender and player' }));
+  }
 
-    // If the player already has a chat with the sender, return
-    // townSender.chats.forEach((chat: { tokenID: string }) => {
-    //   console.log('chat.tokenID: ', chat.tokenID);
-    //   console.log('playerChatToken: ', playerChatToken);
-    //   if (chat.tokenID === playerChatToken) {
-    //     return new Response(
-    //       JSON.stringify({ msg: 'Chat already exists between sender and player' }),
-    //     );
-    //   }
-    // });
+  // Find the user in the townUsers array
+  const townUser = town.townUsers.find(
+    (user: { tokenID: string }) => user.tokenID === playerChatToken,
+  );
 
-    console.log(townSender.chats);
-
-    // Create new chats for sender and user
-    const senderChat = {
+  const senderChats = [
+    ...townSender.chats,
+    {
       userName: townUser.userName,
       tokenID: townUser.tokenID,
-    };
-    const userChat = {
+    },
+  ];
+
+  const userChats = [
+    ...townUser.chats,
+    {
       userName: townSender.userName,
       tokenID: townSender.tokenID,
-    };
+    },
+  ];
 
-    // Remove old townUser and townSender objects from townUsers array
-    town.townUsers = town.townUsers.filter(
-      (user: { tokenID: string }) => ![playerChatToken, tokenID].includes(user.tokenID),
-    );
+  // DELETE TOWNUSER AND TOWNSENDER FROM townUsers array
+  town.townUsers = town.townUsers.filter(
+    (user: { tokenID: string }) => user.tokenID !== playerChatToken,
+  );
 
-    // Replace townSender.chats and townUser.chats with new chat arrays
-    townSender.chats = townSender.chats.concat(senderChat);
-    townUser.chats = townUser.chats.concat(userChat);
+  // DELETE TOWNUSER AND TOWNSENDER FROM townUsers array
+  town.townUsers = town.townUsers.filter(
+    (user: { tokenID: string }) => user.tokenID !== params.tokenID,
+  );
 
-    // Push new townUser and townSender objects to townUsers array
-    town.townUsers = town.townUsers.concat(townUser, townSender);
+  // Replace townSender.chats with new senderChats array
+  townSender.chats = senderChats;
+  townUser.chats = userChats;
 
-    await Promise.all([town.save()]);
+  // Push new User to townUsers array
+  town.townUsers.push(townUser);
+  town.townUsers.push(townSender);
 
-    return new Response(JSON.stringify({ msg: 'Successfully ' }));
-  } catch (error) {
-    console.log('Error:', error);
-    return new Response(JSON.stringify({ error: 'Error: ' + error }), { status: 400 });
-  }
+  await town.save().catch((err: Error) => {
+    console.log('Error on save: ', err);
+    return new Response(JSON.stringify({ error: 'Error on save: ' + err }), { status: 400 });
+  });
+
+  return new Response(JSON.stringify({ msg: 'Successfully updated Town: ' + town }));
 }
