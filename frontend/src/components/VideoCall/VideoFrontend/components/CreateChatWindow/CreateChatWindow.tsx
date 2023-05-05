@@ -65,8 +65,28 @@ export default function CreateChatWindow() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // CREATE CHAT FROM SID AND NAME
-    console.log(playerChatToken);
+    const addChat = async ({ townID }: { townID: string }) => {
+      const token = townController.userID;
+      const res = await fetch(`/api/createChat/${token}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          townID,
+          playerChatToken,
+        }),
+      });
+      const data = await res.json();
+      if (data.msg) {
+        console.log('Chat created');
+      } else {
+        console.log('Chat creation failed');
+        console.log(data.error);
+      }
+    };
+    if (playerChatToken) addChat({ townID: coveyRoom });
+    setCreateChatWindowOpen(false);
   };
 
   return (
@@ -84,7 +104,7 @@ export default function CreateChatWindow() {
           <select onChange={handleChange} className='ml-2 p-2 border rounded-md'>
             <option value=''>Select a user</option>
             {playersList.map(player => (
-              <option key={player.id} value={player.chatToken}>
+              <option key={player.id} value={player.id}>
                 {player.userName}
               </option>
             ))}
