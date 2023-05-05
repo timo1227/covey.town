@@ -9,9 +9,9 @@ import Snackbar from '../../Snackbar/Snackbar';
 const useStyles = makeStyles()(theme => ({
   chatInputContainer: {
     borderTop: '1px solid #e4e7e9',
-    borderBottom: '1px solid #e4e7e9',
     padding: '1em 1.2em 1em',
     position: 'relative',
+    width: '20rem',
     bottom: 0,
   },
   textArea: {
@@ -62,12 +62,19 @@ const useStyles = makeStyles()(theme => ({
 interface ChatInputProps {
   conversation: TextConversation;
   isChatWindowOpen: boolean;
+  isGlobal: boolean;
+  directMessageUsername: string | null;
 }
 
 const ALLOWED_FILE_TYPES =
   'audio/*, image/*, text/*, video/*, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document .xslx, .ppt, .pdf, .key, .svg, .csv';
 
-export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputProps) {
+export default function ChatInput({
+  conversation,
+  isChatWindowOpen,
+  isGlobal,
+  directMessageUsername,
+}: ChatInputProps) {
   const { classes, cx } = useStyles();
   const [messageBody, setMessageBody] = useState('');
   const [isSendingFile, setIsSendingFile] = useState(false);
@@ -97,10 +104,35 @@ export default function ChatInput({ conversation, isChatWindowOpen }: ChatInputP
     setMessageBody(event.target.value);
   };
 
-  const handleSendMessage = (message: string) => {
-    if (isValidMessage) {
-      conversation.sendGlobalMessage(message.trim());
-      setMessageBody('');
+  const handleSendMessage = async (message: string) => {
+    if (isGlobal) {
+      if (isValidMessage) {
+        conversation.sendGlobalMessage(message.trim());
+        setMessageBody('');
+      }
+    } else {
+      // TODO: send message to specific user
+      if (isValidMessage) {
+        setMessageBody('');
+        const res = await fetch(
+          `/api/message/${directMessageUsername}/${coveyTownController.townID}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              tokenID: coveyTownController.userID,
+              message: message.trim(),
+            }),
+          },
+        );
+        const json = await res.json();
+        if (json.error) {
+          console.log('error sending message to specific user', json.error);
+          return;
+        }
+      }
     }
   };
 

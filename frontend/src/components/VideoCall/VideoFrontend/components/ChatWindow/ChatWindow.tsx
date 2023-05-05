@@ -9,10 +9,11 @@ const useStyles = makeStyles()((theme: Theme) => ({
   chatWindowContainer: {
     pointerEvents: 'auto',
     background: '#FFFFFF',
+    borderRadius: '2rem',
+    border: '10px solid #E4E7E9',
     zIndex: 1000,
     display: 'flex',
     flexDirection: 'column',
-    borderLeft: '1px solid #E4E7E9',
     [theme.breakpoints.down('md')]: {
       position: 'fixed',
       top: 0,
@@ -22,9 +23,9 @@ const useStyles = makeStyles()((theme: Theme) => ({
       zIndex: 100,
     },
     position: 'fixed',
-    bottom: 0,
-    left: 0,
-    top: 0,
+    bottom: 70,
+    left: 20,
+    top: 100,
   },
   hide: {
     display: 'none',
@@ -37,13 +38,23 @@ const useStyles = makeStyles()((theme: Theme) => ({
 
 export default function ChatWindow() {
   const { classes, cx } = useStyles();
-  const { isChatWindowOpen, messages, conversation } = useChatContext();
+  const { isChatWindowOpen, messages, conversation, isGlobal, directMessageUsername } =
+    useChatContext();
 
   return (
     <aside className={cx(classes.chatWindowContainer, { [classes.hide]: !isChatWindowOpen })}>
       <ChatWindowHeader />
-      <MessageList messages={messages} />
-      <ChatInput conversation={conversation!} isChatWindowOpen={isChatWindowOpen} />
+      <MessageList
+        messages={messages}
+        isGlobal={isGlobal}
+        directMessageUsername={directMessageUsername}
+      />
+      <ChatInput
+        conversation={conversation!}
+        isChatWindowOpen={isChatWindowOpen}
+        isGlobal={isGlobal}
+        directMessageUsername={directMessageUsername}
+      />
     </aside>
   );
 }

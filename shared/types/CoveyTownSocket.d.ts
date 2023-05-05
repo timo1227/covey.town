@@ -30,6 +30,7 @@ export type TownSettingsUpdate = {
 export type Direction = 'front' | 'back' | 'left' | 'right';
 export interface Player {
   id: string;
+  chatToken?: string;
   userName: string;
   location: PlayerLocation;
 };
@@ -55,6 +56,8 @@ export type ChatMessage = {
 
 export interface ConversationArea {
   id: string;
+  chatToken?: string;
+  conversationSID?: string;
   topic?: string;
   occupantsByID: string[];
 };

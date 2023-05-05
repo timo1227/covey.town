@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 import { ChatMessage } from '../types/CoveyTownSocket';
 import TownController from './TownController';
+import { Conversation, Client } from '@twilio/conversations';
 
 /**
  * A basic representation of a text conversation, bridged over a socket.io client
@@ -72,3 +73,49 @@ export default class TextConversation {
   }
 }
 type MessageCallback = (message: ChatMessage) => void;
+
+export async function newClient(chatToken: string): Promise<Client | undefined> {
+  const client = new Client(chatToken);
+
+  client.on('stateChanged', state => {
+    if (state == 'initialized') return client;
+  });
+
+  return undefined;
+}
+
+export async function addConversation(name: string | undefined, client: Client) {
+  if (client === undefined) {
+    return undefined;
+  }
+  if (name === undefined || name.length === 0) {
+    return undefined;
+  }
+
+  try {
+    const conversation = await client.createConversation({
+      friendlyName: name,
+    });
+
+    return conversation;
+  } catch {
+    return undefined;
+  }
+}
+
+export async function getConversationFromSID(
+  chatToken: string | undefined,
+  conversationSID: string | undefined,
+): Promise<Conversation | undefined> {
+  if (chatToken === undefined || conversationSID === undefined) {
+    throw Error('Chat token or chat SID are undefined. Unable to get conversation');
+  }
+  const client = newClient(chatToken);
+
+  try {
+    const conversation = (await client)?.getConversationBySid(conversationSID);
+    return await conversation;
+  } catch {
+    return undefined;
+  }
+}
