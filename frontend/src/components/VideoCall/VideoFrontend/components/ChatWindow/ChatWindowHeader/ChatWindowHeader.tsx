@@ -5,6 +5,7 @@ import CloseIcon from '../../../icons/CloseIcon';
 import useTownController from '../../../../../../hooks/useTownController';
 
 import useChatContext from '../../../hooks/useChatContext/useChatContext';
+import { error } from 'console';
 
 const useStyles = makeStyles()(() => ({
   container: {
@@ -37,8 +38,13 @@ interface Chats {
 
 export default function ChatWindowHeader() {
   const { classes } = useStyles();
-  const { setIsChatWindowOpen, setIsGlobal, isChatWindowOpen, isCreateChatWindowOpen } =
-    useChatContext();
+  const {
+    setIsChatWindowOpen,
+    setIsGlobal,
+    isChatWindowOpen,
+    isCreateChatWindowOpen,
+    setdirectMessageUsername,
+  } = useChatContext();
   const townController = useTownController();
   const [chatList, setChatList] = useState<Chats[]>([]);
 
@@ -48,7 +54,10 @@ export default function ChatWindowHeader() {
       const townId = townController.townID;
       const res = await fetch(`/api/chats/${userId}/${townId}`);
       const data = await res.json();
-      setChatList(data);
+      console.log(data);
+      if (!data.error) {
+        setChatList(data);
+      }
     };
     getChats();
   }, [townController?.townID, townController.userID, isChatWindowOpen, isCreateChatWindowOpen]);
@@ -61,6 +70,7 @@ export default function ChatWindowHeader() {
         id='chatList'
         className='block px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
         onChange={e => {
+          setdirectMessageUsername(e.target.value);
           if (e.target.value === 'Global') {
             setIsGlobal(true);
           } else {
@@ -71,7 +81,7 @@ export default function ChatWindowHeader() {
           Global
         </option>
         {chatList &&
-          chatList.map((chat: any) => (
+          chatList.map((chat: Chats) => (
             <option key={chat.tokenID} value={chat.tokenID}>
               {chat.userName}
             </option>

@@ -38,16 +38,22 @@ const useStyles = makeStyles()((theme: Theme) => ({
 
 export default function ChatWindow() {
   const { classes, cx } = useStyles();
-  const { isChatWindowOpen, messages, conversation, isGlobal } = useChatContext();
+  const { isChatWindowOpen, messages, conversation, isGlobal, directMessageUsername } =
+    useChatContext();
 
   return (
     <aside className={cx(classes.chatWindowContainer, { [classes.hide]: !isChatWindowOpen })}>
       <ChatWindowHeader />
-      <MessageList messages={messages} />
+      <MessageList
+        messages={messages}
+        isGlobal={isGlobal}
+        directMessageUsername={directMessageUsername}
+      />
       <ChatInput
         conversation={conversation!}
         isChatWindowOpen={isChatWindowOpen}
         isGlobal={isGlobal}
+        directMessageUsername={directMessageUsername}
       />
     </aside>
   );

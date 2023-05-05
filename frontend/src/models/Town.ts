@@ -9,11 +9,14 @@ interface Users {
   userName: string;
   tokenID: string;
   chats: Array<Chat>;
-  messages: {
-    tokenID: string;
-    message: string;
-    timestamp: string;
-  };
+  messages: [
+    {
+      userName: string;
+      tokenID: string;
+      message: string;
+      timestamp: string;
+    },
+  ];
 }
 
 const TownSchema = new mongoose.Schema({

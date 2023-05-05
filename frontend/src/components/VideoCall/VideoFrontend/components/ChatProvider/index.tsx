@@ -11,6 +11,8 @@ type ChatContextType = {
   setCreateChatWindowOpen: (isCreateChatWindowOpen: boolean) => void;
   isGlobal: boolean;
   setIsGlobal: (isGlobal: boolean) => void;
+  directMessageUsername: string | null;
+  setdirectMessageUsername: (username: string | null) => void;
   hasUnreadMessages: boolean;
   messages: ChatMessage[];
   conversation: TextConversation | null;
@@ -33,6 +35,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
   const [isGlobal, setIsGlobal] = useState(true);
+  const [directMessageUsername, setdirectMessageUsername] = useState<string | null>(null);
 
   useEffect(() => {
     if (conversation) {
@@ -79,6 +82,8 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         conversation,
         isGlobal,
         setIsGlobal,
+        directMessageUsername,
+        setdirectMessageUsername,
       }}>
       {children}
     </ChatContext.Provider>

@@ -63,12 +63,18 @@ interface ChatInputProps {
   conversation: TextConversation;
   isChatWindowOpen: boolean;
   isGlobal: boolean;
+  directMessageUsername: string | null;
 }
 
 const ALLOWED_FILE_TYPES =
   'audio/*, image/*, text/*, video/*, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document .xslx, .ppt, .pdf, .key, .svg, .csv';
 
-export default function ChatInput({ conversation, isChatWindowOpen, isGlobal }: ChatInputProps) {
+export default function ChatInput({
+  conversation,
+  isChatWindowOpen,
+  isGlobal,
+  directMessageUsername,
+}: ChatInputProps) {
   const { classes, cx } = useStyles();
   const [messageBody, setMessageBody] = useState('');
   const [isSendingFile, setIsSendingFile] = useState(false);
@@ -98,7 +104,7 @@ export default function ChatInput({ conversation, isChatWindowOpen, isGlobal }: 
     setMessageBody(event.target.value);
   };
 
-  const handleSendMessage = (message: string) => {
+  const handleSendMessage = async (message: string) => {
     if (isGlobal) {
       if (isValidMessage) {
         conversation.sendGlobalMessage(message.trim());
@@ -106,6 +112,27 @@ export default function ChatInput({ conversation, isChatWindowOpen, isGlobal }: 
       }
     } else {
       // TODO: send message to specific user
+      if (isValidMessage) {
+        setMessageBody('');
+        const res = await fetch(
+          `/api/message/${directMessageUsername}/${coveyTownController.townID}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              tokenID: coveyTownController.userID,
+              message: message.trim(),
+            }),
+          },
+        );
+        const json = await res.json();
+        if (json.error) {
+          console.log('error sending message to specific user', json.error);
+          return;
+        }
+      }
     }
   };
 
