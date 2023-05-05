@@ -69,7 +69,7 @@ export default class ConversationArea extends InteractableArea {
     if (this._occupants.length === 0) {
       this.topic = undefined;
       if (this.conversation !== undefined) removeConversation(this.conversation);
-      //this.conversation?.on('removed', this._emitAreaChanged );
+      // this.conversation?.on('removed', this._emitAreaChanged );
       this._emitAreaChanged();
     }
   }
