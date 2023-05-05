@@ -96,7 +96,28 @@ export default function TownSelection(): JSX.Element {
         const videoToken = newController.providerVideoToken;
         assert(videoToken);
         await videoConnect(videoToken);
+        const token = newController.userID;
         setTownController(newController);
+
+        // ADD THE PLAYER TO THE COLLECTION IN THE TOWN
+        const res = await fetch('/api/towns', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            townID: coveyRoomID,
+            townUser: {
+              userName: userName,
+              tokenID: token,
+              chats: [],
+              messages: [],
+            },
+          }),
+        });
+        if (!res.ok) {
+          throw new Error(`Failed to add player to town: ${res.status} ${res.statusText}`);
+        }
       } catch (err) {
         if (err instanceof Error) {
           toast({
@@ -162,6 +183,20 @@ export default function TownSelection(): JSX.Element {
         isClosable: true,
         duration: null,
       });
+      // Create A Collection for the town in DB
+      const res = await fetch('/api/towns', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          townID: newTownInfo.townID,
+          townFriendlyName: newTownName,
+        }),
+      });
+      if (!res.ok) {
+        throw new Error(`Failed to create town in DB: ${res.status} ${res.statusText}`);
+      }
       await handleJoin(newTownInfo.townID);
     } catch (err) {
       if (err instanceof Error) {
